@@ -1,6 +1,6 @@
-// Connect to DB
 import { json } from 'body-parser'
 import db from '../models/index'
+import CRUDService from '../services/CRUDService'
 
 const getHomePage = async (req, res) => {
   try {
@@ -13,6 +13,19 @@ const getHomePage = async (req, res) => {
   }
 }
 
+const getCRUD = (req, res) => {
+  return res.render('crud.ejs')
+}
+
+// need async-await because creating a new user need more time
+const postCRUD = async (req, res) => {
+  // send all the information from the client
+  const message = await CRUDService.createNewUser(req.body)
+  return res.send(message)
+}
+
 module.exports = {
   getHomePage: getHomePage,
+  getCRUD: getCRUD,
+  postCRUD: postCRUD,
 }

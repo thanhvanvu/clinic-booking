@@ -6,6 +6,10 @@ let Router = express.Router()
 let initWebRoutes = (app) => {
   Router.route('/').get(homeControllers.getHomePage)
 
+  Router.route('/crud').get(homeControllers.getCRUD)
+
+  Router.route('/post-crud').post(homeControllers.postCRUD)
+
   return app.use('/', Router)
 }
 
