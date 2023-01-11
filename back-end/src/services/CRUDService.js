@@ -45,6 +45,7 @@ const createNewUser = async (userData) => {
   })
 }
 
+// Function get all users from the database
 const getAllUser = async () => {
   try {
     const users = await db.User.findAll({
@@ -57,7 +58,52 @@ const getAllUser = async () => {
   }
 }
 
+// Function to get the user by ID
+const getUserInfoById = async (userId) => {
+  try {
+    const user = await db.User.findOne({
+      where: { id: userId },
+      raw: true,
+    })
+    return user
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Function to update user infomation
+const updaterUserData = async (userData) => {
+  try {
+    const user = await db.User.findOne({
+      where: { id: userData.id },
+    })
+
+    if (user) {
+      user.set({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        address: userData.address,
+      })
+
+      // save updated user into database
+      await user.save()
+
+      const allUpdatedUsers = await db.User.findAll({
+        raw: true,
+      })
+
+      return allUpdatedUsers
+    } else {
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createNewUser: createNewUser,
   getAllUser: getAllUser,
+  getUserInfoById: getUserInfoById,
+  updaterUserData: updaterUserData,
 }

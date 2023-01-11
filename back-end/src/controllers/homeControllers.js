@@ -1,4 +1,5 @@
 import { json } from 'body-parser'
+import e from 'express'
 import db from '../models/index'
 import CRUDService from '../services/CRUDService'
 
@@ -30,7 +31,7 @@ const postCRUD = async (req, res) => {
 const displayGetCRUD = async (req, res) => {
   try {
     const usersData = await CRUDService.getAllUser()
-    console.log(usersData)
+    // console.log(usersData)
 
     // send data to views
     return res.render('userInformation.ejs', {
@@ -41,9 +42,44 @@ const displayGetCRUD = async (req, res) => {
   }
 }
 
+const editCRUD = async (req, res) => {
+  try {
+    // use query to get the parameter from the url
+    const userId = req.query.id
+
+    // check if url has id or not
+    if (userId) {
+      // get user info by id
+      const userData = await CRUDService.getUserInfoById(userId)
+      // console.log(userData)
+
+      // send data to views
+      return res.render('editCrud.ejs', {
+        data: userData,
+      })
+    } else {
+      return res.send('User not found')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const editPutCRUD = async (req, res) => {
+  const userData = req.body
+  const allUpdatedUsers = await CRUDService.updaterUserData(userData)
+
+  // update the userInformation page
+  return res.render('userInformation.ejs', {
+    dataTable: allUpdatedUsers,
+  })
+}
+
 module.exports = {
   getHomePage: getHomePage,
   getCRUD: getCRUD,
   postCRUD: postCRUD,
   displayGetCRUD: displayGetCRUD,
+  editCRUD: editCRUD,
+  editPutCRUD: editPutCRUD,
 }
