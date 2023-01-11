@@ -3,9 +3,26 @@ import db from '../models/index'
 
 const salt = bcrypt.genSaltSync(10)
 
+// function to hash password
+const hashUserPassword = (password) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // need to wait to hash the password
+      const hashPassword = await bcrypt.hashSync(password, salt)
+
+      // resolve same as return
+      resolve(hashPassword)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+// function to create a new user
 const createNewUser = async (userData) => {
   return new Promise(async (resolve, reject) => {
     try {
+      // call function to hash a password
       const hashPasswordFromBcrypt = await hashUserPassword(userData.password)
 
       // create user. User is a model name
@@ -28,20 +45,19 @@ const createNewUser = async (userData) => {
   })
 }
 
-const hashUserPassword = (password) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      // need to wait to hash the password
-      const hashPassword = await bcrypt.hashSync(password, salt)
+const getAllUser = async () => {
+  try {
+    const users = await db.User.findAll({
+      raw: true,
+    })
 
-      // resolve same as return
-      resolve(hashPassword)
-    } catch (error) {
-      reject(error)
-    }
-  })
+    return users
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 module.exports = {
   createNewUser: createNewUser,
+  getAllUser: getAllUser,
 }

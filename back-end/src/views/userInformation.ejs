@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+    <title>User Information</title>
+  </head>
+  <body>
+    <table style="width: 100%">
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>email</th>
+      </tr>
+      <% for(let i=0; i<dataTable.length; i++) {%>
+        <tr>
+          <th><%=dataTable[i].firstName%></th>
+          <th><%=dataTable[i].lastName%></th>
+          <th><%=dataTable[i].email%></th>
+        </tr>
+      <% } %>
+    </table>
+  </body>
+</html>
