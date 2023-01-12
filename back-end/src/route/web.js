@@ -16,6 +16,8 @@ let initWebRoutes = (app) => {
 
   Router.route('/put-crud').post(homeControllers.editPutCRUD)
 
+  Router.route('/delete-crud').get(homeControllers.deletePutCRUD)
+
   return app.use('/', Router)
 }
 

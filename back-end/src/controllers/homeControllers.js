@@ -75,6 +75,21 @@ const editPutCRUD = async (req, res) => {
   })
 }
 
+const deletePutCRUD = async (req, res) => {
+  // use query to get the parameter from the url
+  const userId = req.query.id
+
+  if (userId) {
+    const allUpdatedUsers = await CRUDService.deleteUserById(userId)
+
+    return res.render('userInformation.ejs', {
+      dataTable: allUpdatedUsers,
+    })
+  } else {
+    return res.send('user not found')
+  }
+}
+
 module.exports = {
   getHomePage: getHomePage,
   getCRUD: getCRUD,
@@ -82,4 +97,5 @@ module.exports = {
   displayGetCRUD: displayGetCRUD,
   editCRUD: editCRUD,
   editPutCRUD: editPutCRUD,
+  deletePutCRUD: deletePutCRUD,
 }

@@ -101,9 +101,31 @@ const updaterUserData = async (userData) => {
   }
 }
 
+// Function to delete user information
+const deleteUserById = async (userId) => {
+  try {
+    const user = await db.User.findOne({
+      where: { id: userId },
+    })
+
+    if (user) {
+      await user.destroy()
+
+      const allUpdatedUsers = await db.User.findAll({
+        raw: true,
+      })
+
+      return allUpdatedUsers
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createNewUser: createNewUser,
   getAllUser: getAllUser,
   getUserInfoById: getUserInfoById,
   updaterUserData: updaterUserData,
+  deleteUserById: deleteUserById,
 }
