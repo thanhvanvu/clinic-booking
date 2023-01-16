@@ -12,7 +12,7 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 300px;
     border-radius: 10px;
     margin: auto;
     width: 400px;
@@ -35,8 +35,18 @@
         margin: 7px auto;
         font-family: poppinsMedium;
 
-        input {
-          margin-top: 7px;
+        .custom-password {
+          position: relative;
+          input {
+            margin-top: 7px;
+          }
+
+          i {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+          }
         }
       }
 
@@ -50,8 +60,8 @@
         border-radius: 20px;
         background: linear-gradient(
           120deg,
-          rgb(34, 195, 131) 0%,
-          rgb(235, 78, 78) 100%
+          rgb(235, 78, 78) 0%,
+          rgb(34, 195, 131) 100%
         );
         margin-top: 20px;
         color: white;
@@ -79,6 +89,7 @@
         display: flex;
         justify-content: center;
         margin-top: 10px;
+
         .facebook {
           font-size: 30px;
           background-color: rgb(23, 168, 252);

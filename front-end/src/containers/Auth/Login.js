@@ -10,7 +10,29 @@ import { FormattedMessage } from 'react-intl'
 class Login extends Component {
   constructor(props) {
     super(props)
-    this.btnLogin = React.createRef()
+    this.state = {
+      username: '',
+      password: '',
+      hidePassword: true,
+    }
+  }
+
+  // set data from the form to states
+  handleOnchangeInput = (event) => {
+    // setState used to set a new state
+    this.setState({
+      [event.target.name]: event.target.value,
+    })
+  }
+
+  // function to handle login button
+  handleLogin = () => {
+    console.log(this.state)
+  }
+
+  hidePassword = () => {
+    this.setState({ hidePassword: !this.state.hidePassword })
+    console.log(this.state.showHidePassword)
   }
 
   render() {
@@ -23,6 +45,9 @@ class Login extends Component {
             <div className="col-12 form-group text-login-input">
               <label>Username:</label>
               <input
+                name="username"
+                value={this.state.username}
+                onChange={(event) => this.handleOnchangeInput(event)}
                 type="text"
                 placeholder="Enter your username"
                 className="form-control"
@@ -31,15 +56,34 @@ class Login extends Component {
 
             <div className="col-12 form-grou text-login-input">
               <label>Password:</label>
-              <input
-                type="text"
-                placeholder="Enter your password"
-                className="form-control"
-              ></input>
+              <div className="custom-password">
+                <input
+                  name="password"
+                  value={this.state.password}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                  type={this.state.hidePassword ? 'password' : 'text'}
+                  placeholder="Enter your password"
+                  className="form-control"
+                ></input>
+                <span onClick={() => this.hidePassword()}>
+                  <i
+                    className={
+                      this.state.hidePassword
+                        ? 'fas fa-eye-slash'
+                        : 'fas fa-eye'
+                    }
+                  ></i>
+                </span>
+              </div>
             </div>
 
             <div className="col-12">
-              <button className="login-button">Login</button>
+              <button
+                className="login-button"
+                onClick={() => this.handleLogin()}
+              >
+                Login
+              </button>
             </div>
 
             <div className="col-12 ">
