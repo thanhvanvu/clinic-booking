@@ -9,3 +9,44 @@ $fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
 
 @import 'base';
 @import 'form';
+
+/* define a font */
+@font-face {
+  font-family: myriadproRegular;
+  src: url('.././assets/myriad-pro/MYRIADPRO-REGULAR.woff');
+}
+
+@font-face {
+  font-family: myriadproBold;
+  src: url('.././assets/myriad-pro/MYRIADPRO-BOLD.woff');
+}
+
+@font-face {
+  font-family: overpasBlack;
+  src: url('.././assets/Overpass/Overpass-Black.ttf');
+}
+
+@font-face {
+  font-family: overpasRegular;
+  src: url('.././assets/Overpass/Overpass-Regular.ttf');
+}
+
+@font-face {
+  font-family: overpasExtraBold;
+  src: url('.././assets/Overpass/Overpass-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: poppinsExtraBold;
+  src: url('.././assets/Poppins/Poppins-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: poppinsMedium;
+  src: url('.././assets/Poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+  font-family: poppinsRegular;
+  src: url('.././assets/Poppins/Poppins-Regular.ttf');
+}
