@@ -1,5 +1,5 @@
 import { json } from 'body-parser'
-import e from 'express'
+import express from 'express'
 import db from '../models/index'
 import CRUDService from '../services/CRUDService'
 

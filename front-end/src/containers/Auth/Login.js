@@ -30,9 +30,9 @@ class Login extends Component {
     console.log(this.state)
   }
 
+  // show hide password
   hidePassword = () => {
     this.setState({ hidePassword: !this.state.hidePassword })
-    console.log(this.state.showHidePassword)
   }
 
   render() {
