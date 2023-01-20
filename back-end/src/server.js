@@ -4,6 +4,7 @@ import viewEngine from './config/viewEngine'
 import initWebRoutes from './route/web'
 import userRoute from './route/userRoute'
 import connectDB from './config/connectDB'
+import cors from 'cors'
 
 // config dotenv
 require('dotenv').config()
@@ -12,6 +13,13 @@ require('dotenv').config()
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+const corsOptions = {
+  origin: process.env.REACT_APP_FRONTEND_URL || 'http://localhost:3000',
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+}
+app.use(cors(corsOptions))
 
 viewEngine(app)
 

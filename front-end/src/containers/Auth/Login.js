@@ -5,15 +5,17 @@ import { push } from 'connected-react-router'
 import * as actions from '../../store/actions'
 
 import './Login.scss'
+import { handleLoginApi } from '../../services/userService'
 import { FormattedMessage } from 'react-intl'
 
 class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
+      email: '',
       password: '',
       hidePassword: true,
+      errorMessage: '',
     }
   }
 
@@ -26,8 +28,29 @@ class Login extends Component {
   }
 
   // function to handle login button
-  handleLogin = () => {
-    console.log(this.state)
+  handleLogin = async () => {
+    try {
+      // clear errorMessage everytime user login
+      this.setState({ errorMessage: '' })
+
+      // call api in userService and save data into response
+      const response = await handleLoginApi(
+        this.state.email,
+        this.state.password
+      )
+
+      if (response.errCode !== 0) {
+        this.setState({ errorMessage: response.message })
+      } else {
+        console.log(response.user)
+        this.props.userLoginSuccess(response.user)
+        // save user infomation into redux
+        console.log('login successully')
+      }
+    } catch (error) {
+      console.log(error)
+      this.setState({ errorMessage: error.response.data.message })
+    }
   }
 
   // show hide password
@@ -38,18 +61,25 @@ class Login extends Component {
   render() {
     return (
       <div className="login-background">
-        <div className="login-container">
+        <div className="login-container" onSubmit={() => this.handleLogin()}>
           <div className="login-content row">
             <div className="col-12 text-login">Login</div>
 
+            <div
+              className="col-12 error-message"
+              value={this.state.errorMessage}
+            >
+              {this.state.errorMessage}
+            </div>
+
             <div className="col-12 form-group text-login-input">
-              <label>Username:</label>
+              <label>Email:</label>
               <input
-                name="username"
-                value={this.state.username}
+                name="email"
+                value={this.state.email}
                 onChange={(event) => this.handleOnchangeInput(event)}
                 type="text"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
                 className="form-control"
               ></input>
             </div>
@@ -79,6 +109,7 @@ class Login extends Component {
 
             <div className="col-12">
               <button
+                type="submit"
                 className="login-button"
                 onClick={() => this.handleLogin()}
               >
@@ -114,9 +145,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     navigate: (path) => dispatch(push(path)),
-    adminLoginSuccess: (adminInfo) =>
-      dispatch(actions.adminLoginSuccess(adminInfo)),
-    adminLoginFail: () => dispatch(actions.adminLoginFail()),
+    userLoginFail: () => dispatch(actions.userLoginFail()),
+    userLoginSuccess: (userInfo) =>
+      dispatch(actions.userLoginSuccess(userInfo)),
   }
 }
 

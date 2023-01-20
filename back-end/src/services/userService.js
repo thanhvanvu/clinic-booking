@@ -6,11 +6,11 @@ const handleUserLogin = async (email, password) => {
   try {
     const userData = {}
 
-    // find user in database
+    // 4. find user in database
     const isUserExist = await checkUserEmail(email)
 
     if (isUserExist) {
-      // find user in database
+      // 6. find 1 user in database
       let user = await db.User.findOne({
         attributes: ['email', 'roleId', 'password'],
         where: { email: email },
@@ -18,7 +18,7 @@ const handleUserLogin = async (email, password) => {
       })
 
       if (user) {
-        //compare password
+        // 7. Compare password
         const isPasswordCorrect = bcrypt.compareSync(password, user.password)
 
         if (isPasswordCorrect) {
@@ -54,6 +54,7 @@ const handleUserLogin = async (email, password) => {
 
 const checkUserEmail = async (userEmail) => {
   try {
+    // 5. fine 1 user in database
     const user = await db.User.findOne({
       where: {
         email: userEmail,

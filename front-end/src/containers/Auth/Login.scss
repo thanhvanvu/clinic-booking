@@ -31,9 +31,19 @@
         font-family: poppinsExtraBold;
       }
 
+      .error-message {
+        text-align: center;
+        font-family: poppinsMedium;
+        margin-top: 7px;
+        color: red;
+      }
+
       .text-login-input {
         margin: 7px auto;
         font-family: poppinsMedium;
+        input {
+          margin-top: 7px;
+        }
 
         .custom-password {
           position: relative;
