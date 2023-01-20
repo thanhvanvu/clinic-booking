@@ -71,7 +71,47 @@ const checkUserEmail = async (userEmail) => {
   }
 }
 
+const handleGetAllUsers = async () => {
+  try {
+    const usersData = await db.User.findAll({
+      raw: true,
+    })
+    return usersData
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleGetOneUser = async (userId) => {
+  try {
+    const userData = {}
+
+    const user = await db.User.findOne({
+      where: { id: userId },
+      raw: true,
+    })
+
+    if (user) {
+      userData.status = 'Success'
+      userData.errCode = 0
+      userData.message = 'OK'
+      delete user.password // remove password attribute
+      userData.user = user
+    } else {
+      userData.status = 'Fail'
+      userData.errCode = 1
+      userData.message = 'User not found'
+    }
+
+    return userData
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   handleUserLogin: handleUserLogin,
   checkUserEmail: checkUserEmail,
+  handleGetAllUsers: handleGetAllUsers,
+  handleGetOneUser: handleGetOneUser,
 }

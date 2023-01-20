@@ -29,6 +29,40 @@ const login = async (req, res) => {
   }
 }
 
+const getAllUsers = async (req, res) => {
+  try {
+    const usersData = await userService.handleGetAllUsers()
+
+    return res.status(200).json({
+      status: 'Success',
+      errCode: 0,
+      message: 'OK',
+      results: usersData.length,
+      usersData: usersData,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getOneUser = async (req, res) => {
+  try {
+    const userId = req.body.id
+    const userData = await userService.handleGetOneUser(userId)
+
+    return res.status(200).json({
+      status: userData.status,
+      errCode: userData.errCode,
+      message: userData.message,
+      user: userData.user,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   login: login,
+  getAllUsers: getAllUsers,
+  getOneUser: getOneUser,
 }
