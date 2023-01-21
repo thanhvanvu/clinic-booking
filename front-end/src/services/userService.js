@@ -16,4 +16,16 @@ const handleLoginApi = (username, password) => {
   return axios(options)
 }
 
-export { handleLoginApi }
+const getAllUsers = async () => {
+  try {
+    const options = {
+      method: 'get',
+      url: '/api/get-all-users',
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+export { handleLoginApi, getAllUsers }
