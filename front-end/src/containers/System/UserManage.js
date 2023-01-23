@@ -40,7 +40,7 @@ class UserManage extends Component {
           </tr>
 
           {this.state.users.map((user, index) => (
-            <tr>
+            <tr key={index}>
               <td>{user.email}</td>
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>

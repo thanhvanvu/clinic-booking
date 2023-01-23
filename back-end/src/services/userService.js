@@ -1,6 +1,9 @@
+import { raw } from 'body-parser'
 import e from 'express'
 import db from '../models/index'
 const bcrypt = require('bcryptjs')
+
+const salt = bcrypt.genSaltSync(10)
 
 const handleUserLogin = async (email, password) => {
   try {
@@ -109,9 +112,133 @@ const handleGetOneUser = async (userId) => {
   }
 }
 
+const handleCreateNewUser = async (userInfomation) => {
+  try {
+    // 3. check if email is exist or not?
+    const isEmailExist = await checkUserEmail(userInfomation.email)
+
+    if (isEmailExist === false) {
+      // 4. hash the password from the client
+      const hashedPassword = await hashUserPassword(userInfomation.password)
+
+      // 5. create the new user
+      const user = await db.User.create({
+        email: userInfomation.email,
+        password: hashedPassword,
+        firstName: userInfomation.firstName,
+        lastName: userInfomation.lastName,
+        address: userInfomation.address,
+        phoneNumber: userInfomation.phoneNumber,
+        gender: userInfomation.gender === '1' ? true : false,
+        roleId: userInfomation.roleId,
+        positionId: userInfomation.positionId,
+        image: userInfomation.image,
+      })
+
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'User created successfully!',
+        user,
+      }
+    } else {
+      return {
+        status: 'Fail',
+        errCode: 1,
+        message: 'Your email is already used!',
+        user: {},
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const hashUserPassword = async (userPassword) => {
+  try {
+    // 4. hash the password
+    const hashedPassword = await bcrypt.hashSync(userPassword, salt)
+
+    return hashedPassword
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deleteUserById = async (userID) => {
+  try {
+    // 4. find the user by id first
+    const user = await db.User.findOne({
+      where: { id: userID },
+    })
+
+    // 5. delete user
+    if (user) {
+      await user.destroy()
+
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'User deleted successfully',
+      }
+    } else {
+      return {
+        status: 'Fail',
+        errCode: 2,
+        message: 'User not found',
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const editUserById = async (userData) => {
+  try {
+    // 3. find the user in database
+    const user = await db.User.findOne({
+      where: { id: userData.id },
+    })
+
+    // 4. update user
+    if (user) {
+      await user.set({
+        email: userData.email,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        address: userData.address,
+        phoneNumber: userData.phoneNumber,
+        gender: userData.gender === '1' ? true : false,
+        roleId: userData.roleId,
+        positionId: userData.positionId,
+        image: userData.image,
+      })
+
+      await user.save()
+
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'User Updated Successfully!',
+      }
+    } else {
+      return {
+        status: 'Fail',
+        errCode: 1,
+        message: 'User not found!',
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   handleUserLogin: handleUserLogin,
   checkUserEmail: checkUserEmail,
   handleGetAllUsers: handleGetAllUsers,
   handleGetOneUser: handleGetOneUser,
+  handleCreateNewUser: handleCreateNewUser,
+  deleteUserById: deleteUserById,
+  editUserById: editUserById,
 }

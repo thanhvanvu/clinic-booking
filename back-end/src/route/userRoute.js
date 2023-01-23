@@ -11,6 +11,12 @@ let userRoutes = (app) => {
 
   Router.route('/api/get-one-user').get(userController.getOneUser)
 
+  Router.route('/api/create-new-user').post(userController.createNewUser)
+
+  Router.route('/api/edit-user').put(userController.editUser)
+
+  Router.route('/api/delete-user').delete(userController.deleteUser)
+
   return app.use('/', Router)
 }
 
