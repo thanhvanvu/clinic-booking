@@ -18,14 +18,32 @@ const handleLoginApi = (username, password) => {
 
 const getAllUsers = async () => {
   try {
+    // 2. create options
     const options = {
       method: 'get',
       url: '/api/get-all-users',
     }
 
+    // 3. call api
     return await axios(options)
   } catch (error) {
     console.log(error)
   }
 }
-export { handleLoginApi, getAllUsers }
+
+const handleAddUserApi = async (userInfo) => {
+  try {
+    // 4. create an option
+    const option = {
+      method: 'post',
+      url: '/api/create-new-user',
+      data: userInfo,
+    }
+
+    // 5. call API
+    return await axios(option)
+  } catch (error) {
+    console.log(error)
+  }
+}
+export { handleLoginApi, getAllUsers, handleAddUserApi }
