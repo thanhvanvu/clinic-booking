@@ -108,8 +108,8 @@ const editUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    // 1. use query to get the parameter from the url
-    const userId = req.query.id
+    // 1. req.body returns an object
+    const userId = req.body.id
 
     // 2. check if id is exist?
     if (!userId) {

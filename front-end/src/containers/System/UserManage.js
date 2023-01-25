@@ -2,8 +2,16 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './UserManage.scss'
-import { getAllUsers, handleAddUserApi } from '../../services/userService'
+import {
+  getAllUsers,
+  handleAddUserApi,
+  handleDeleteUser,
+  handleEditUserApi,
+} from '../../services/userService'
+
+import { emitter } from '../../utils/emitter'
 import ModalAddNewUser from './ModalAddNewUser'
+import ModalEditUser from './ModalEditUser'
 
 class UserManage extends Component {
   constructor(props) {
@@ -11,12 +19,21 @@ class UserManage extends Component {
     this.state = {
       users: [],
       isOpenModal: false,
+      isEditModal: false,
+      currentUser: {},
     }
   }
 
   // when component render, this function will run first
   async componentDidMount() {
     this.handleGetAllUsers()
+  }
+
+  showHideModal = () => {
+    this.setState({
+      isOpenModal: false,
+      isEditModal: false,
+    })
   }
 
   handleGetAllUsers = async () => {
@@ -38,12 +55,6 @@ class UserManage extends Component {
     })
   }
 
-  showHideModal = () => {
-    this.setState({
-      isOpenModal: false,
-    })
-  }
-
   // handle create new user in parent component
   createNewUser = async (stateChildComponent) => {
     try {
@@ -55,7 +66,38 @@ class UserManage extends Component {
         alert(response.message)
       } else {
         // 7. if no error, refesh the page again (very important)
-        this.handleGetAllUsers()
+        await this.handleGetAllUsers()
+
+        // 8. Close the modal
+        this.showHideModal()
+
+        // 9. clear modal data, then go to child component
+        // emitter.on will catch the fire
+        emitter.emit('EVENT_CLEAR_MODAL_DATA')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handleEditUser = async (user) => {
+    this.setState({ isEditModal: true })
+    this.setState({
+      currentUser: user,
+    })
+  }
+
+  editUser = async (stateChildComponent) => {
+    try {
+      // 3. go to service to call api
+      const response = await handleEditUserApi(stateChildComponent)
+
+      // 6. check error code
+      if (response.status === 'Fail') {
+        alert(response.message)
+      } else {
+        // 7. if no error, refesh the page again (very important)
+        await this.handleGetAllUsers()
 
         // 8. Close the modal
         this.showHideModal()
@@ -65,6 +107,22 @@ class UserManage extends Component {
     }
   }
 
+  deleteUser = async (user) => {
+    try {
+      if (window.confirm('Do you want to delete this user?')) {
+        // 1. get user ID
+        const userId = user.id
+
+        // 2. Go to service with ID
+        await handleDeleteUser(userId)
+
+        // 5. Refesh the page real time
+        this.handleGetAllUsers()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   render() {
     return (
       <div className="users-container px-2">
@@ -74,6 +132,17 @@ class UserManage extends Component {
           showHideModal={this.showHideModal}
           createNewUser={this.createNewUser}
         />
+
+        {/* to make sure componentDidMount get data */}
+        {this.state.isEditModal && (
+          <ModalEditUser
+            isOpen={this.state.isEditModal}
+            showHideModal={this.showHideModal}
+            currentUser={this.state.currentUser}
+            editUser={this.editUser}
+          />
+        )}
+
         <div className="title text-center">Manage Users Table</div>
         <div className="mx-1 text-right">
           <button
@@ -101,16 +170,21 @@ class UserManage extends Component {
                 <td>{user.lastName}</td>
                 <td>{user.address}</td>
                 <td>
-                  <a href="#">
-                    <button className="btn-edit" type="button">
-                      Edit
-                    </button>
-                  </a>
-                  <a href="#">
-                    <button className="btn-delete" type="button">
-                      Delete
-                    </button>
-                  </a>
+                  <button
+                    className="btn-edit"
+                    type="button"
+                    onClick={() => this.handleEditUser(user)}
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    className="btn-delete"
+                    type="button"
+                    onClick={() => this.deleteUser(user)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
