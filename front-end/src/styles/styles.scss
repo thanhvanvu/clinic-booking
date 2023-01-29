@@ -27,6 +27,11 @@ $fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
 }
 
 @font-face {
+  font-family: overpasBold;
+  src: url('.././assets/Overpass/Overpass-Bold.ttf');
+}
+
+@font-face {
   font-family: overpasRegular;
   src: url('.././assets/Overpass/Overpass-Regular.ttf');
 }
