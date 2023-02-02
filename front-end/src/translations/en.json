@@ -1,4 +1,26 @@
 {
+  "home-header": {
+    "specialist": "Medical specialist",
+    "search-doctor": "Find a doctor by specialty",
+    "health-facility": "Health facility",
+    "select-hospital": "Select hospital, clinic",
+    "doctor": "Doctor",
+    "select-doctor": "Select good doctor",
+    "health-package": "Health package",
+    "general-examination": "General Examination",
+    "support": "Support"
+  },
+
+  "home-banner": {
+    "med-foundation": "MEDICAL FOUNDATION",
+    "comp-health-care": "COMPREHENSION HEALTH CARE",
+    "specialist-exam": "Specialist Examination",
+    "physical-exam": "Physical Examination",
+    "mental-health": "Mental Health",
+    "medical-test": "Medical Test",
+    "dental-exam": "Dental Examination"
+  },
+
   "common": {
     "add": "Add",
     "edit": "Edit",
