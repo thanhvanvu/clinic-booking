@@ -8,7 +8,7 @@ module.exports = {
       {
         email: 'admin@gmail.com',
         password: '123456',
-        firstName: 'Thanh',
+        firstName: 'Thanh Van',
         lastName: 'Vu',
         address: '9911 Marisa Alexis Dr',
         phoneNumber: '2815478456',

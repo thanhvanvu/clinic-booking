@@ -233,6 +233,32 @@ const editUserById = async (userData) => {
   }
 }
 
+const handleGetAllCodes = async (codeType) => {
+  try {
+    // 3. check if codeType is exist
+    if (!codeType) {
+      return {
+        status: 'Fail',
+        errCode: 1,
+        message: 'Missing code types',
+      }
+    } else {
+      const type = await db.Allcode.findAll({
+        raw: true,
+        where: { type: codeType },
+      })
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'OK',
+        type: type,
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   handleUserLogin: handleUserLogin,
   checkUserEmail: checkUserEmail,
@@ -241,4 +267,5 @@ module.exports = {
   handleCreateNewUser: handleCreateNewUser,
   deleteUserById: deleteUserById,
   editUserById: editUserById,
+  handleGetAllCodes: handleGetAllCodes,
 }

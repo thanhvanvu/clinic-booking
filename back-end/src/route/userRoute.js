@@ -17,6 +17,8 @@ let userRoutes = (app) => {
 
   Router.route('/api/delete-user').delete(userController.deleteUser)
 
+  Router.route('/api/get-all-code').get(userController.getAllCodes)
+
   return app.use('/', Router)
 }
 

@@ -59,20 +59,6 @@ class ModalEditUser extends Component {
     return isValid
   }
 
-  // handleAddUser = async () => {
-  //   try {
-  //     // 1. validate input
-  //     const isValidInput = this.checkValidateInput()
-
-  //     if (isValidInput === true) {
-  //       // 2. send the state data back to parent component
-  //       this.props.createNewUser(this.state)
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   handleEditUser = async () => {
     try {
       // 1. validate input

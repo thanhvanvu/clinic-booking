@@ -133,6 +133,30 @@ const deleteUser = async (req, res) => {
   }
 }
 
+const getAllCodes = async (req, res) => {
+  try {
+    // 1. get type from the url
+    const codeType = req.query.type
+
+    // 2. send type to service
+    const response = await userService.handleGetAllCodes(codeType)
+
+    return res.status(200).json({
+      status: response.status,
+      errCode: response.errCode,
+      message: response.message,
+      type: response.type,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      status: 'Fail',
+      errorCode: -1,
+      message: 'Error from server',
+    })
+  }
+}
+
 module.exports = {
   login: login,
   getAllUsers: getAllUsers,
@@ -140,4 +164,5 @@ module.exports = {
   createNewUser: createNewUser,
   editUser: editUser,
   deleteUser: deleteUser,
+  getAllCodes: getAllCodes,
 }
