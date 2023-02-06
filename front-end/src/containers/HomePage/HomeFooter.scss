@@ -1,0 +1,21 @@
+.home-footer {
+  background-color: #66a9ec;
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 1170px;
+    font-family: overpasRegular;
+    padding: 20px 0;
+    color: white;
+    font-size: 12px;
+    align-items: center;
+    p {
+      margin-bottom: 0px;
+    }
+    a {
+      font-size: 30px;
+      color: black;
+    }
+  }
+}

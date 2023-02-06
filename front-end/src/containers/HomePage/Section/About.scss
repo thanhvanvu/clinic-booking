@@ -1,0 +1,15 @@
+.section-about {
+  width: 1170px;
+  margin: 0 auto;
+  .about-header {
+    padding: 30px 0;
+    line-height: 30px;
+    font-size: 25px;
+    font-family: overpasExtraBold;
+  }
+
+  .about-content {
+    display: flex;
+    justify-content: center;
+  }
+}

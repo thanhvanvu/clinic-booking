@@ -1,0 +1,36 @@
+.image-custom {
+  &.outstanding-doctor {
+    width: 278px !important;
+    border: 1px solid #eeeeee;
+    background-color: white;
+    padding: 15px 0px 60px 0px;
+    cursor: pointer;
+
+    .outer-background {
+      .outstanding-doctor {
+        width: 120px !important;
+        height: 120px !important;
+        margin: 0 auto;
+        border-radius: 50%;
+      }
+    }
+
+    .positon {
+      font-family: overpasRegular;
+      text-align: center;
+      margin-top: 10px;
+      .doctor-name {
+        font-size: 15px;
+      }
+      .doctor-position {
+        color: #acacac;
+      }
+    }
+  }
+
+  &:hover {
+    .doctor-name {
+      color: #4194e5;
+    }
+  }
+}
