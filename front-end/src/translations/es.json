@@ -1,16 +1,52 @@
 {
+  "home-header": {
+    "specialist": "Especialista médico",
+    "search-doctor": "Encontrar un médico por especialidad",
+    "health-facility": "Centro de salud",
+    "select-hospital": "Seleccionar hospital, clínica",
+    "doctor": "Médicor",
+    "select-doctor": "Seleccione un buen médico",
+    "health-package": "Paquete de salud",
+    "general-examination": "Examen general",
+    "support": "Soporte"
+  },
+
+  "home-banner": {
+    "med-foundation": "FUNDACIÓN MÉDICA",
+    "comp-health-care": "ATENCIÓN MÉDICA COMPRENSIÓN",
+    "specialist-exam": "Examen de especialista",
+    "physical-exam": "Examen Físico",
+    "mental-health": "Salud Mental",
+    "medical-test": "Examen Medico",
+    "dental-exam": "Examen dental"
+  },
+
   "menu": {
     "system": {
       "header": "Sistema",
+      "welcome": "Bienvenido, ",
       "system-administrator": {
-        "header": "System Administrator",
-        "user-manage": "User manage",
-        "product-manage": "Package manage",
+        "header": "Administrador de sistemas",
+        "user-manage": " Gestión de usuarios",
+        "user-redux": "Administrar usuarios con Redux",
         "register-package-group-or-account": "Register service package for group/account"
       },
       "system-parameter": {
         "header": "System-parameter"
       }
+    },
+    "admin": {
+      "manage-user": "Usuario",
+      "manage-doctor": "Gestión de médicos",
+      "manage-admin": "Gestión de administración",
+      "clinic-menu": "Clínica",
+      "manage-clinic": "Gestión de la clínica",
+      "specialist-menu": "Especialista",
+      "manage-specialist": "Gestión especializada",
+      "handbook-menu": "Manual",
+      "manage-handbook": "Gestión de manuales",
+      "crud": "CRUD user",
+      "crud-redux": "CRUD con Redux"
     }
   }
 }

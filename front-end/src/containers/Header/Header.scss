@@ -9,11 +9,16 @@
   height: 40px;
   position: relative;
 
-  .languages {
+  .right-header-content {
+    .welcome {
+      display: inline;
+      margin-right: 20px;
+    }
     span {
       margin-right: 10px;
       cursor: pointer;
       opacity: 0.2;
+      font-weight: bold;
     }
 
     .vi {

@@ -6,15 +6,22 @@ import Navigator from '../../components/Navigator'
 import { adminMenu } from './menuApp'
 import './Header.scss'
 import { changeLanguageApp } from '../../store/actions'
-
+import { FormattedMessage } from 'react-intl'
 class Header extends Component {
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language)
   }
 
+  processLogout = () => {
+    if (window.confirm('Are you sure to log out?')) {
+      this.props.processLogout()
+    }
+  }
+
   render() {
-    const { processLogout, language } = this.props
-    console.log(this.props)
+    // get states from redux
+    const { language, userInfo } = this.props
+
     return (
       <div className="header-container">
         {/* thanh navigator */}
@@ -22,7 +29,12 @@ class Header extends Component {
           <Navigator menus={adminMenu} />
         </div>
 
-        <div className="languages">
+        <div className="right-header-content">
+          <p className="welcome">
+            <FormattedMessage id="menu.system.welcome" />
+            {userInfo && userInfo.firstName ? userInfo.firstName : ''}!
+          </p>
+
           <span
             className={language === LANGUAGES.VI ? 'vi active' : 'vi'}
             onClick={() => this.changeLanguage(LANGUAGES.VI)}
@@ -44,7 +56,7 @@ class Header extends Component {
 
           <div
             className="btn btn-logout"
-            onClick={processLogout}
+            onClick={() => this.processLogout()}
             title="Log out"
           >
             <i className="fas fa-sign-out-alt"></i>
@@ -60,6 +72,7 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
+    userInfo: state.user.userInfo,
   }
 }
 

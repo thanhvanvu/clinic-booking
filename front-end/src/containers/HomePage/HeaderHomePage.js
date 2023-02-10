@@ -92,6 +92,17 @@ class HeaderHomePage extends Component {
                   EN
                 </span>
               </div>
+              <div
+                className={
+                  language === LANGUAGES.ES
+                    ? 'language-es active'
+                    : 'language-es'
+                }
+              >
+                <span onClick={() => this.changeLanguage(LANGUAGES.ES)}>
+                  ES
+                </span>
+              </div>
             </div>
           </div>
         </div>
