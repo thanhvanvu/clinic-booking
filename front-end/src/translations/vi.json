@@ -48,5 +48,20 @@
       "crud": "CRUD người dùng",
       "crud-redux": "CRUD người dùng với Redux"
     }
+  },
+
+  "manage-user-redux": {
+    "header": "QUẢN LÝ NGƯỜI DÙNG VỚI REDUX",
+    "email": "E-mail",
+    "password": "Mật Khẩu",
+    "first-name": "Tên",
+    "last-name": "Họ",
+    "phone": "Số Điện Thoại",
+    "address": "Địa Chỉ",
+    "gender": "Giới Tính",
+    "position": "Chức Vụ",
+    "role": "Vai Trò",
+    "image": "Hình Ảnh",
+    "save": "Lưu Người Dùng"
   }
 }

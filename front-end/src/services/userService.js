@@ -81,10 +81,26 @@ const handleDeleteUser = async (userId) => {
   }
 }
 
+const handleGetAllCode = async (typeInput) => {
+  try {
+    // 3. create an option
+    const options = {
+      method: 'get',
+      url: `/api/get-all-code?type=${typeInput}`,
+    }
+
+    // 4. call API
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
   handleLoginApi,
   getAllUsers,
   handleAddUserApi,
   handleDeleteUser,
   handleEditUserApi,
+  handleGetAllCode,
 }

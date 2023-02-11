@@ -1,0 +1,19 @@
+.user-redux-container {
+  .title {
+  }
+
+  .user-redux-body {
+    label {
+      font-weight: bold;
+      font-size: 13px;
+      text-decoration: underline;
+    }
+    .container {
+      border: 1px solid #e7e7ee;
+      padding: 30px;
+      button.btn {
+        padding: 0px 20px !important;
+      }
+    }
+  }
+}

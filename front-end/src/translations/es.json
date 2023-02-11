@@ -48,5 +48,20 @@
       "crud": "CRUD user",
       "crud-redux": "CRUD con Redux"
     }
+  },
+
+  "manage-user-redux": {
+    "header": "GESTIONAR USUARIO CON REDUX",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "first-name": "Nombre de pila",
+    "last-name": "Apellido",
+    "phone": "Número de teléfono",
+    "address": "Direccion",
+    "gender": "Género",
+    "position": "Posición",
+    "role": "Role",
+    "image": "Imagen",
+    "save": "Ahorrar"
   }
 }

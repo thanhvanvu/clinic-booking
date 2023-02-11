@@ -243,6 +243,15 @@ const handleGetAllCodes = async (codeType) => {
         message: 'Missing code types',
       }
     } else {
+      if (codeType === 'all') {
+        const type = await db.Allcode.findAll()
+        return {
+          status: 'Success',
+          errCode: 0,
+          message: 'OK',
+          type: type,
+        }
+      }
       const type = await db.Allcode.findAll({
         raw: true,
         where: { type: codeType },
