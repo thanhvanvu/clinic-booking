@@ -4,8 +4,12 @@ import { connect } from 'react-redux'
 import './UserRedux.scss'
 import { handleGetAllCode } from '../../services/userService'
 import { LANGUAGES } from '../../utils'
+import NoneAvatar from '../../assets/avatar-none.png'
 
 import * as actions from '../../store/actions'
+
+import Lightbox from 'react-image-lightbox'
+import 'react-image-lightbox/style.css' // This only needs to be imported once in your app
 
 class UserRedux extends Component {
   constructor(props) {
@@ -14,6 +18,8 @@ class UserRedux extends Component {
       genderArr: [],
       positionArr: [],
       roleArr: [],
+      previewImg: '',
+      isPreviewImgOpen: false,
     }
   }
 
@@ -49,7 +55,8 @@ class UserRedux extends Component {
     // }
     // render with Redux
     this.props.getGenderStart()
-    // this.props.getPositionStart()
+    this.props.getPositionStart()
+    this.props.getRoleStart()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -64,12 +71,38 @@ class UserRedux extends Component {
     }
     // after setState, compare prev(array[...]) with this (array[...])
     // prev === this ==> do nothing
+
+    if (prevProps.positions !== this.props.positions) {
+      this.setState({
+        positionArr: this.props.positions,
+      })
+    }
+
+    if (prevProps.roles !== this.props.roles) {
+      this.setState({
+        roleArr: this.props.roles,
+      })
+    }
+  }
+
+  handleOnchangeImage = (event) => {
+    let data = event.target.files
+    let file = data[0]
+    let fileType = file.type.slice(0, 5)
+    if (file && fileType === 'image') {
+      let objectUrl = URL.createObjectURL(file)
+      this.setState({ previewImg: objectUrl })
+    }
+  }
+
+  openPreviewImg = () => {
+    if (this.state.previewImg) {
+      this.setState({ isPreviewImgOpen: true })
+    }
   }
 
   render() {
-    const { currentLanguage } = this.props
-    console.log(this.props)
-
+    const { currentLanguage, isLoading } = this.props
     let genders = this.state.genderArr
     let positions = this.state.positionArr
     let roles = this.state.roleArr
@@ -79,8 +112,21 @@ class UserRedux extends Component {
         <div className="title">
           <FormattedMessage id="manage-user-redux.header" />
         </div>
+        <div className="text-center">
+          <div className={isLoading ? ' loader' : ''}></div>
+        </div>
         <div className="user-redux-body mt-4">
           <div className="container">
+            <div className="preview-img">
+              <img
+                src={this.state.previewImg ? this.state.previewImg : NoneAvatar}
+                alt=""
+                width="100"
+                height="100"
+                onClick={() => this.openPreviewImg()}
+              />
+            </div>
+
             <div className="row">
               <div className="col-6">
                 <label>
@@ -188,7 +234,19 @@ class UserRedux extends Component {
                 <label>
                   <FormattedMessage id="manage-user-redux.image" />
                 </label>
-                <input className="form-control" type="text" />
+                <div>
+                  <input
+                    id="img-upload"
+                    className=""
+                    type="file"
+                    hidden
+                    onChange={(event) => this.handleOnchangeImage(event)}
+                  />
+                  <label id="img-upload" htmlFor="img-upload">
+                    <i className="fas fa-upload img-upload"></i>
+                    Tải ảnh
+                  </label>
+                </div>
               </div>
             </div>
             <button className="btn btn-primary mt-3">
@@ -196,6 +254,12 @@ class UserRedux extends Component {
             </button>
           </div>
         </div>
+        {this.state.isPreviewImgOpen === true && (
+          <Lightbox
+            mainSrc={this.state.previewImg}
+            onCloseRequest={() => this.setState({ isPreviewImgOpen: false })}
+          />
+        )}
       </div>
     )
   }
@@ -205,14 +269,17 @@ const mapStateToProps = (state) => {
   return {
     currentLanguage: state.app.language,
     genders: state.admin.genders,
-    positions: state.admin.position,
+    positions: state.admin.positions,
+    roles: state.admin.roles,
+    isLoading: state.admin.isLoading,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getGenderStart: () => dispatch(actions.fetchGenderStart()),
-    // getPositionStart: () => dispatch(actions.fetchPositionStart()),
+    getPositionStart: () => dispatch(actions.fetchPositionStart()),
+    getRoleStart: () => dispatch(actions.fetchRoleStart()),
   }
 }
 

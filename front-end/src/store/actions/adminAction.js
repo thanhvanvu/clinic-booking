@@ -9,6 +9,10 @@ import { handleGetAllCode } from '../../services/userService'
 export const fetchGenderStart = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({
+        type: actionTypes.FETCH_GENDER_START,
+      })
+
       let response = await handleGetAllCode('GENDER')
 
       if (response && response.errCode === 0) {
@@ -35,30 +39,63 @@ export const fetchGenderFailed = () => ({
 })
 
 // Fetch position
-// export const fetchPositionStart = () => {
-//   return async (dispatch, getState) => {
-//     try {
-//       let response = await handleGetAllCode('POSITION')
+export const fetchPositionStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_POSITION_START })
 
-//       if (response && response.errCode === 0) {
-//         dispatch(fetchPositionSuccess(response.type))
-//       } else {
-//         // if response is null
-//         dispatch(fetchPositionFailed())
-//       }
-//     } catch (error) {
-//       // case call APi fail
-//       console.log(error)
-//       dispatch(fetchPositionFailed())
-//     }
-//   }
-// }
+      let response = await handleGetAllCode('POSITION')
 
-// export const fetchPositionSuccess = (positionData) => ({
-//   type: actionTypes.FETCH_POSITION_SUCCESS,
-//   data: positionData,
-// })
+      if (response && response.errCode === 0) {
+        dispatch(fetchPositionSuccess(response.type))
+      } else {
+        // if response is null
+        dispatch(fetchPositionFailed())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(fetchPositionFailed())
+    }
+  }
+}
 
-// export const fetchPositionFailed = () => ({
-//   type: actionTypes.FETCH_POSITION_FAILED,
-// })
+export const fetchPositionSuccess = (positionData) => ({
+  type: actionTypes.FETCH_POSITION_SUCCESS,
+  data: positionData,
+})
+
+export const fetchPositionFailed = () => ({
+  type: actionTypes.FETCH_POSITION_FAILED,
+})
+
+// Fetch role
+export const fetchRoleStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_ROLE_START })
+
+      let response = await handleGetAllCode('ROLE')
+
+      if (response && response.errCode === 0) {
+        dispatch(fetchRoleSuccess(response.type))
+      } else {
+        // if response is null
+        dispatch(fetchRoleFailed())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(fetchRoleFailed())
+    }
+  }
+}
+
+export const fetchRoleSuccess = (roleData) => ({
+  type: actionTypes.FETCH_ROLE_SUCCESS,
+  data: roleData,
+})
+
+export const fetchRoleFailed = () => ({
+  type: actionTypes.FETCH_ROLE_FAILED,
+})
