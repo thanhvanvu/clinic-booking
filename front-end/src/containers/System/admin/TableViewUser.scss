@@ -1,0 +1,65 @@
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td,
+#customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#customers tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+  background-color: #ddd;
+}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #04aa6d;
+  color: white;
+}
+
+button.btn-edit {
+  background: yellow;
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin-right: 10px;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+}
+
+button.btn-edit:hover {
+  background: rgb(188, 188, 14);
+}
+
+button.btn-delete {
+  background: rgb(209, 106, 106);
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin-right: 10px;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+button.btn-delete:hover {
+  background: rgb(179, 86, 86);
+}

@@ -6,10 +6,12 @@ const initialState = {
   positions: [],
   roles: [],
   isCreateUserSuccess: '',
+  users: [],
 }
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
+    //---------------FETCH GENDER--------------------------//
     case actionTypes.FETCH_GENDER_START:
       state.isLoading = true
       return {
@@ -33,7 +35,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
       }
 
-    //---------------------------------------------//
+    //---------------FETCH POSITION--------------------------//
     case actionTypes.FETCH_POSITION_START:
       state.isLoading = true
       return {
@@ -55,7 +57,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
       }
 
-    //---------------------------------------------//
+    //---------------FETCH ROLE--------------------------//
     case actionTypes.FETCH_ROLE_START:
       state.isLoading = true
       return {
@@ -77,7 +79,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
       }
 
-    //---------------------------------------------//
+    //---------------CREATE USER--------------------------//
     case actionTypes.CREATE_USER_SUCCESS:
       // always make a copy of state, never modify the initial state directly
       state.isCreateUserSuccess = true
@@ -87,6 +89,18 @@ const appReducer = (state = initialState, action) => {
       }
     case actionTypes.CREATE_USER_FAILED:
       state.isCreateUserSuccess = false
+      return {
+        ...state,
+      }
+
+    //---------------FETCH USERS--------------------------//
+    case actionTypes.FETCH_USERS_SUCCESS:
+      // always make a copy of state, never modify the initial state directly
+      state.users = action.data
+      return {
+        ...state,
+      }
+    case actionTypes.FETCH_USERS_FAILED:
       return {
         ...state,
       }

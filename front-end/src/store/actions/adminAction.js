@@ -1,6 +1,9 @@
 import actionTypes from './actionTypes'
 import { handleGetAllCode } from '../../services/userService'
 import { handleAddUserApi } from '../../services/userService'
+import { getAllUsers } from '../../services/userService'
+import { toast } from 'react-toastify'
+import { handleDeleteUser } from '../../services/userService'
 
 // export const fetchGenderStart = () => ({
 //   type: actionTypes.FETCH_GENDER_START,
@@ -108,6 +111,7 @@ export const createNewUser = (userData) => {
       let response = await handleAddUserApi(userData)
 
       if (response && response.errCode === 0) {
+        toast.success('Create a new user successfully!')
         dispatch(createNewUserSuccess())
       } else {
         // if response is null
@@ -127,4 +131,65 @@ export const createNewUserSuccess = () => ({
 
 export const createNewUserFailed = () => ({
   type: actionTypes.CREATE_USER_FAILED,
+})
+
+// Fetch all users
+export const fetchAllUsers = () => {
+  return async (dispatch, getState) => {
+    try {
+      let response = await getAllUsers()
+
+      if (response && response.errCode === 0) {
+        // sort reverse data
+        response.usersData.reverse()
+        dispatch(fetchAllUsersSuccess(response.usersData))
+      } else {
+        // if response is null
+        dispatch(fetchAllUsersFailed())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(fetchAllUsersFailed())
+    }
+  }
+}
+
+export const fetchAllUsersSuccess = (usersData) => ({
+  type: actionTypes.FETCH_USERS_SUCCESS,
+  data: usersData,
+})
+
+export const fetchAllUsersFailed = () => ({
+  type: actionTypes.FETCH_USERS_FAILED,
+})
+
+// Delete Users
+export const deleteUserStart = (userId) => {
+  return async (dispatch, getState) => {
+    try {
+      let response = await handleDeleteUser(userId)
+
+      if (response && response.errCode === 0) {
+        toast.error('Delete user succesfully!')
+        dispatch(deleteUserSuccess())
+      } else {
+        // if response is null
+        toast.error('Delete user failed!')
+        dispatch(deleteUserFail())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(deleteUserFail())
+    }
+  }
+}
+
+export const deleteUserSuccess = () => ({
+  type: actionTypes.DELETE_USER_SUCCESS,
+})
+
+export const deleteUserFail = () => ({
+  type: actionTypes.DELETE_USER_FAILED,
 })

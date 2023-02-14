@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './UserRedux.scss'
-import { handleGetAllCode } from '../../services/userService'
-import { LANGUAGES } from '../../utils'
-import NoneAvatar from '../../assets/avatar-none.png'
-
-import * as actions from '../../store/actions'
-
+// import { handleGetAllCode } from '../../services/userService'
+import { LANGUAGES } from '../../../utils'
+import noneAvatar from '../../../assets/images/avatar-none.png'
+import * as actions from '../../../store/actions'
 import Lightbox from 'react-image-lightbox'
 import 'react-image-lightbox/style.css' // This only needs to be imported once in your app
+import TableViewUser from './TableViewUser'
 
 class UserRedux extends Component {
   constructor(props) {
@@ -118,6 +117,26 @@ class UserRedux extends Component {
         },
       })
     }
+
+    // check if list users change after creating a new user
+    // ==> set empty form
+    if (prevProps.users !== this.props.users) {
+      this.setState({
+        ...this.state,
+        userData: {
+          email: '',
+          password: '',
+          firstName: '',
+          lastName: '',
+          address: '',
+          phoneNumber: '',
+          gender: '',
+          roleId: '',
+          positionId: '',
+          image: '',
+        },
+      })
+    }
   }
 
   handleOnchangeImage = (event) => {
@@ -178,13 +197,16 @@ class UserRedux extends Component {
     }
   }
 
-  handleSaveUser = () => {
+  handleSaveUser = async () => {
     const isValid = this.checkValidateInput()
     if (isValid === false) {
       return
     } else {
-      // fire redux action
-      this.props.createNewUser(this.state.userData)
+      // fire redux action, need to wait this function to be done first
+      await this.props.createNewUser(this.state.userData)
+
+      // call fetch user function to update table
+      this.props.fetchAllUsers()
     }
   }
 
@@ -193,8 +215,6 @@ class UserRedux extends Component {
     let genders = this.state.genderArr
     let positions = this.state.positionArr
     let roles = this.state.roleArr
-
-    console.log(this.state)
 
     return (
       <div className="user-redux-container">
@@ -208,7 +228,7 @@ class UserRedux extends Component {
           <div className="container">
             <div className="preview-img">
               <img
-                src={this.state.previewImg ? this.state.previewImg : NoneAvatar}
+                src={this.state.previewImg ? this.state.previewImg : noneAvatar}
                 alt=""
                 width="100"
                 height="100"
@@ -437,6 +457,11 @@ class UserRedux extends Component {
             </button>
           </div>
         </div>
+
+        <div className="container px-0 my-4">
+          <TableViewUser />
+        </div>
+
         {this.state.isPreviewImgOpen === true && (
           <Lightbox
             mainSrc={this.state.previewImg}
@@ -456,6 +481,7 @@ const mapStateToProps = (state) => {
     roles: state.admin.roles,
     isLoading: state.admin.isLoading,
     isCreateUserSuccess: state.admin.isCreateUserSuccess,
+    users: state.admin.users,
   }
 }
 
@@ -465,6 +491,7 @@ const mapDispatchToProps = (dispatch) => {
     getPositionStart: () => dispatch(actions.fetchPositionStart()),
     getRoleStart: () => dispatch(actions.fetchRoleStart()),
     createNewUser: (userData) => dispatch(actions.createNewUser(userData)),
+    fetchAllUsers: () => dispatch(actions.fetchAllUsers()),
   }
 }
 
