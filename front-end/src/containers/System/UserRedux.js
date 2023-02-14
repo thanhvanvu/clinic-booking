@@ -20,6 +20,19 @@ class UserRedux extends Component {
       roleArr: [],
       previewImg: '',
       isPreviewImgOpen: false,
+      userData: {
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        address: '',
+        phoneNumber: '',
+        gender: '',
+        roleId: '',
+        positionId: '',
+        image: '',
+      },
+      inputValid: '',
     }
   }
 
@@ -65,22 +78,44 @@ class UserRedux extends Component {
     // compare prev(empty[]) with this ( array [...] after using Redux)
     // if prev !== this ==> setState
     if (prevProps.genders !== this.props.genders) {
+      let arrGenders = this.props.genders
       this.setState({
-        genderArr: this.props.genders,
+        genderArr: arrGenders,
+
+        // set defaut value for dropdown select menu
+        userData: {
+          ...this.state.userData,
+          gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+        },
       })
     }
     // after setState, compare prev(array[...]) with this (array[...])
     // prev === this ==> do nothing
 
     if (prevProps.positions !== this.props.positions) {
+      let arrPositions = this.props.positions
       this.setState({
         positionArr: this.props.positions,
+
+        // set defaut value for dropdown select menu
+        userData: {
+          ...this.state.userData,
+          positionId:
+            arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
+        },
       })
     }
 
     if (prevProps.roles !== this.props.roles) {
+      let arrRoles = this.props.roles
       this.setState({
-        roleArr: this.props.roles,
+        roleArr: arrRoles,
+
+        // set defaut value for dropdown select menu
+        userData: {
+          ...this.state.userData,
+          roleId: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+        },
       })
     }
   }
@@ -91,7 +126,13 @@ class UserRedux extends Component {
     let fileType = file.type.slice(0, 5)
     if (file && fileType === 'image') {
       let objectUrl = URL.createObjectURL(file)
-      this.setState({ previewImg: objectUrl })
+      this.setState({
+        previewImg: objectUrl,
+        userData: {
+          ...this.state.userData,
+          image: file,
+        },
+      })
     }
   }
 
@@ -101,11 +142,59 @@ class UserRedux extends Component {
     }
   }
 
+  handleOnchangeInput = (event) => {
+    this.setState({
+      userData: {
+        ...this.state.userData,
+        [event.target.name]: event.target.value,
+      },
+    })
+  }
+
+  checkValidateInput = () => {
+    this.setState({ inputValid: '' })
+    let userData = this.state.userData
+    let returnObj = {}
+    let isvalid = true
+    Object.entries(userData).forEach((entry) => {
+      const [key, value] = entry
+
+      if (key === 'image') {
+        // do nothing
+      } else if (value === '') {
+        isvalid = false
+        returnObj[key] = false
+      } else {
+        returnObj[key] = true
+      }
+    })
+
+    this.setState({ inputValid: returnObj })
+
+    if (isvalid === true) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  handleSaveUser = () => {
+    const isValid = this.checkValidateInput()
+    if (isValid === false) {
+      return
+    } else {
+      // fire redux action
+      this.props.createNewUser(this.state.userData)
+    }
+  }
+
   render() {
     const { currentLanguage, isLoading } = this.props
     let genders = this.state.genderArr
     let positions = this.state.positionArr
     let roles = this.state.roleArr
+
+    console.log(this.state)
 
     return (
       <div className="user-redux-container">
@@ -129,44 +218,117 @@ class UserRedux extends Component {
 
             <div className="row">
               <div className="col-6">
-                <label>
-                  <FormattedMessage id="manage-user-redux.email" />
-                </label>
-                <input className="form-control" type="email" />
+                <div style={{ display: 'flex' }}>
+                  <label>
+                    <FormattedMessage id="manage-user-redux.email" />
+                  </label>
+                </div>
+
+                <input
+                  className={
+                    this.state.inputValid.email === false
+                      ? 'form-control invalid'
+                      : 'form-control '
+                  }
+                  type="email"
+                  name="email"
+                  value={this.state.userData.email}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                />
               </div>
               <div className="col-6">
-                <label>
-                  <FormattedMessage id="manage-user-redux.password" />
-                </label>
-                <input className="form-control" type="password" />
+                <div style={{ display: 'flex' }}>
+                  <label>
+                    <FormattedMessage id="manage-user-redux.password" />
+                  </label>
+                </div>
+                <input
+                  className={
+                    this.state.inputValid.password === false
+                      ? 'form-control invalid'
+                      : 'form-control '
+                  }
+                  type="password"
+                  name="password"
+                  value={this.state.userData.password}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                />
               </div>
             </div>
             <div className="row mt-3">
               <div className="col-4">
-                <label>
-                  <FormattedMessage id="manage-user-redux.first-name" />
-                </label>
-                <input className="form-control" type="text" />
+                <div style={{ display: 'flex' }}>
+                  <label>
+                    <FormattedMessage id="manage-user-redux.first-name" />
+                  </label>
+                </div>
+                <input
+                  className={
+                    this.state.inputValid.firstName === false
+                      ? 'form-control invalid'
+                      : 'form-control '
+                  }
+                  type="text"
+                  name="firstName"
+                  value={this.state.userData.firstName}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                />
               </div>
               <div className="col-4">
-                <label>
-                  <FormattedMessage id="manage-user-redux.last-name" />
-                </label>
-                <input className="form-control" type="text" />
+                <div style={{ display: 'flex' }}>
+                  <label>
+                    <FormattedMessage id="manage-user-redux.last-name" />
+                  </label>
+                </div>
+                <input
+                  className={
+                    this.state.inputValid.lastName === false
+                      ? 'form-control invalid'
+                      : 'form-control '
+                  }
+                  type="text"
+                  name="lastName"
+                  value={this.state.userData.lastName}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                />
               </div>
               <div className="col-4">
-                <label>
-                  <FormattedMessage id="manage-user-redux.phone" />
-                </label>
-                <input className="form-control" type="text" />
+                <div style={{ display: 'flex' }}>
+                  <label>
+                    <FormattedMessage id="manage-user-redux.phone" />
+                  </label>
+                </div>
+                <input
+                  className={
+                    this.state.inputValid.phoneNumber === false
+                      ? 'form-control invalid'
+                      : 'form-control '
+                  }
+                  type="text"
+                  name="phoneNumber"
+                  value={this.state.userData.phoneNumber}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                />
               </div>
             </div>
             <div className="row mt-3">
               <div className="col-12">
-                <label>
-                  <FormattedMessage id="manage-user-redux.address" />
-                </label>
-                <input className="form-control" type="text" />
+                <div style={{ display: 'flex' }}>
+                  <label>
+                    <FormattedMessage id="manage-user-redux.address" />
+                  </label>
+                </div>
+                <input
+                  className={
+                    this.state.inputValid.address === false
+                      ? 'form-control invalid'
+                      : 'form-control '
+                  }
+                  type="text"
+                  name="address"
+                  value={this.state.userData.address}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                />
               </div>
             </div>
             <div className="row mt-3">
@@ -174,12 +336,17 @@ class UserRedux extends Component {
                 <label>
                   <FormattedMessage id="manage-user-redux.gender" />
                 </label>
-                <select className="form-control">
+                <select
+                  className="form-control"
+                  name="gender"
+                  value={this.state.userData.gender}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                >
                   {genders &&
                     genders.length > 0 &&
                     genders.map((item, index) => {
                       return (
-                        <option key={index}>
+                        <option key={index} value={item.key}>
                           {currentLanguage === LANGUAGES.VI
                             ? item.valueVI
                             : currentLanguage === LANGUAGES.EN
@@ -194,12 +361,17 @@ class UserRedux extends Component {
                 <label>
                   <FormattedMessage id="manage-user-redux.position" />
                 </label>
-                <select className="form-control">
+                <select
+                  className="form-control"
+                  name="positionId"
+                  value={this.state.userData.positionId}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                >
                   {positions &&
                     positions.length > 0 &&
                     positions.map((item, index) => {
                       return (
-                        <option key={index}>
+                        <option key={index} value={item.key}>
                           {currentLanguage === LANGUAGES.VI
                             ? item.valueVI
                             : currentLanguage === LANGUAGES.EN
@@ -214,12 +386,17 @@ class UserRedux extends Component {
                 <label>
                   <FormattedMessage id="manage-user-redux.role" />
                 </label>
-                <select className="form-control">
+                <select
+                  className="form-control"
+                  name="roleId"
+                  value={this.state.userData.roleId}
+                  onChange={(event) => this.handleOnchangeInput(event)}
+                >
                   {roles &&
                     roles.length > 0 &&
                     roles.map((item, index) => {
                       return (
-                        <option key={index}>
+                        <option key={index} value={item.key}>
                           {currentLanguage === LANGUAGES.VI
                             ? item.valueVI
                             : currentLanguage === LANGUAGES.EN
@@ -240,7 +417,10 @@ class UserRedux extends Component {
                     className=""
                     type="file"
                     hidden
-                    onChange={(event) => this.handleOnchangeImage(event)}
+                    name="image"
+                    onChange={(event) => {
+                      this.handleOnchangeImage(event)
+                    }}
                   />
                   <label id="img-upload" htmlFor="img-upload">
                     <i className="fas fa-upload img-upload"></i>
@@ -249,8 +429,11 @@ class UserRedux extends Component {
                 </div>
               </div>
             </div>
-            <button className="btn btn-primary mt-3">
-              <FormattedMessage id="manage-user-redux.save" />
+            <button
+              className="btn btn-primary mt-3"
+              onClick={() => this.handleSaveUser()}
+            >
+              <FormattedMessage id="manage-user-redux.create" />
             </button>
           </div>
         </div>
@@ -272,6 +455,7 @@ const mapStateToProps = (state) => {
     positions: state.admin.positions,
     roles: state.admin.roles,
     isLoading: state.admin.isLoading,
+    isCreateUserSuccess: state.admin.isCreateUserSuccess,
   }
 }
 
@@ -280,6 +464,7 @@ const mapDispatchToProps = (dispatch) => {
     getGenderStart: () => dispatch(actions.fetchGenderStart()),
     getPositionStart: () => dispatch(actions.fetchPositionStart()),
     getRoleStart: () => dispatch(actions.fetchRoleStart()),
+    createNewUser: (userData) => dispatch(actions.createNewUser(userData)),
   }
 }
 

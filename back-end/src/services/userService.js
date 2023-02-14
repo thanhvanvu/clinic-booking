@@ -129,7 +129,7 @@ const handleCreateNewUser = async (userInfomation) => {
         lastName: userInfomation.lastName,
         address: userInfomation.address,
         phoneNumber: userInfomation.phoneNumber,
-        gender: userInfomation.gender === '1' ? true : false,
+        gender: userInfomation.gender,
         roleId: userInfomation.roleId,
         positionId: userInfomation.positionId,
         image: userInfomation.image,

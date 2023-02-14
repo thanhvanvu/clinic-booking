@@ -5,6 +5,7 @@ const initialState = {
   genders: [],
   positions: [],
   roles: [],
+  isCreateUserSuccess: '',
 }
 
 const appReducer = (state = initialState, action) => {
@@ -72,6 +73,20 @@ const appReducer = (state = initialState, action) => {
       }
     case actionTypes.FETCH_ROLE_FAILED:
       state.isLoading = false
+      return {
+        ...state,
+      }
+
+    //---------------------------------------------//
+    case actionTypes.CREATE_USER_SUCCESS:
+      // always make a copy of state, never modify the initial state directly
+      state.isCreateUserSuccess = true
+
+      return {
+        ...state,
+      }
+    case actionTypes.CREATE_USER_FAILED:
+      state.isCreateUserSuccess = false
       return {
         ...state,
       }

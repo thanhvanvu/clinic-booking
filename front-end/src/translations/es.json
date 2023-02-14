@@ -62,6 +62,7 @@
     "position": "Posición",
     "role": "Role",
     "image": "Imagen",
-    "save": "Ahorrar"
+    "create": "Crear",
+    "error-message": "Por favor ingrese la información"
   }
 }

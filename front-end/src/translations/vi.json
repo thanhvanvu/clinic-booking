@@ -62,6 +62,7 @@
     "position": "Chức Vụ",
     "role": "Vai Trò",
     "image": "Hình Ảnh",
-    "save": "Lưu Người Dùng"
+    "create": "Tạo Người Dùng",
+    "error-message": "Vui lòng điền thông tin"
   }
 }

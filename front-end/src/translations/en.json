@@ -63,6 +63,7 @@
     "position": "Position",
     "role": "Role",
     "image": "Image",
-    "save": "Save"
+    "create": "Create",
+    "error-message": "Please enter the information"
   }
 }

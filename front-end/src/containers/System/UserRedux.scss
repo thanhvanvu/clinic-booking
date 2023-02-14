@@ -37,6 +37,7 @@
 
       .preview-img {
         margin-bottom: 30px;
+
         img {
           width: 120px;
           height: 120px;
@@ -46,6 +47,9 @@
           display: block;
           margin: 0 auto;
           cursor: pointer;
+          &:hover {
+            opacity: 0.8;
+          }
         }
       }
 
@@ -67,5 +71,36 @@
         }
       }
     }
+  }
+}
+.error-message {
+  color: red;
+  margin-left: 20px;
+}
+
+.invalid {
+  border: 1px solid red;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(1px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
