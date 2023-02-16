@@ -4,12 +4,13 @@ import { handleAddUserApi } from '../../services/userService'
 import { getAllUsers } from '../../services/userService'
 import { toast } from 'react-toastify'
 import { handleDeleteUser } from '../../services/userService'
+import { handleEditUserApi } from '../../services/userService'
 
 // export const fetchGenderStart = () => ({
 //   type: actionTypes.FETCH_GENDER_START,
 // })
 
-// fetch Gender
+//#region fetch Gender
 export const fetchGenderStart = () => {
   return async (dispatch, getState) => {
     try {
@@ -41,8 +42,9 @@ export const fetchGenderSuccess = (genderData) => ({
 export const fetchGenderFailed = () => ({
   type: actionTypes.FETCH_GENDER_FAILED,
 })
+//#endregion
 
-// Fetch position
+//#region Fetch position
 export const fetchPositionStart = () => {
   return async (dispatch, getState) => {
     try {
@@ -72,8 +74,9 @@ export const fetchPositionSuccess = (positionData) => ({
 export const fetchPositionFailed = () => ({
   type: actionTypes.FETCH_POSITION_FAILED,
 })
+//#endregion
 
-// Fetch role
+//#region Fetch role
 export const fetchRoleStart = () => {
   return async (dispatch, getState) => {
     try {
@@ -103,19 +106,21 @@ export const fetchRoleSuccess = (roleData) => ({
 export const fetchRoleFailed = () => ({
   type: actionTypes.FETCH_ROLE_FAILED,
 })
+//#endregion
 
-// Create User
+//#region Create User
 export const createNewUser = (userData) => {
   return async (dispatch, getState) => {
     try {
       let response = await handleAddUserApi(userData)
+      console.log(response)
 
       if (response && response.errCode === 0) {
         toast.success('Create a new user successfully!')
         dispatch(createNewUserSuccess())
       } else {
-        // if response is null
-        dispatch(createNewUserFailed())
+        toast.error('Failed to create a new user')
+        dispatch(createNewUserFailed(response))
       }
     } catch (error) {
       // case call APi fail
@@ -129,11 +134,13 @@ export const createNewUserSuccess = () => ({
   type: actionTypes.CREATE_USER_SUCCESS,
 })
 
-export const createNewUserFailed = () => ({
+export const createNewUserFailed = (response) => ({
   type: actionTypes.CREATE_USER_FAILED,
+  action: response,
 })
+//#endregion
 
-// Fetch all users
+//#region Fetch all users
 export const fetchAllUsers = () => {
   return async (dispatch, getState) => {
     try {
@@ -163,8 +170,9 @@ export const fetchAllUsersSuccess = (usersData) => ({
 export const fetchAllUsersFailed = () => ({
   type: actionTypes.FETCH_USERS_FAILED,
 })
+//#endregion
 
-// Delete Users
+//#region Delete Users
 export const deleteUserStart = (userId) => {
   return async (dispatch, getState) => {
     try {
@@ -193,3 +201,35 @@ export const deleteUserSuccess = () => ({
 export const deleteUserFail = () => ({
   type: actionTypes.DELETE_USER_FAILED,
 })
+//#endregion
+
+//#region  Update user
+export const updateUserStart = (userId) => {
+  return async (dispatch, getState) => {
+    try {
+      let response = await handleEditUserApi(userId)
+
+      if (response && response.errCode === 0) {
+        toast.success('Update user succesfully!')
+        dispatch(updateUserSuccess())
+      } else {
+        // if response is null
+        toast.error('Update user failed!')
+        dispatch(updateUserFail())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(updateUserFail())
+    }
+  }
+}
+
+export const updateUserSuccess = () => ({
+  type: actionTypes.UPDATE_USER_SUCCESS,
+})
+
+export const updateUserFail = () => ({
+  type: actionTypes.UPDATE_USER_FAILED,
+})
+//#endregion

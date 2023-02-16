@@ -62,7 +62,9 @@
     "position": "Chức Vụ",
     "role": "Vai Trò",
     "image": "Hình Ảnh",
+    "upload": "Tải Ảnh",
     "create": "Tạo Người Dùng",
+    "update": "Cập Nhật Người Dùng",
     "error-message": "Vui lòng điền thông tin"
   }
 }

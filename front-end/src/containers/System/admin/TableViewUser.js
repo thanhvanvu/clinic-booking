@@ -11,6 +11,7 @@ class TableViewUser extends Component {
       usersRedux: [],
     }
   }
+
   async componentDidMount() {
     this.props.fetchAllUsers()
   }
@@ -32,6 +33,11 @@ class TableViewUser extends Component {
     // refresh the table to show updated data
     this.props.fetchAllUsers()
   }
+
+  handleEditUser = async (user) => {
+    // call function from parent, then pass the paramater to it
+    this.props.handleEditUserFromParent(user)
+  }
   render() {
     return (
       <table id="customers">
@@ -50,7 +56,11 @@ class TableViewUser extends Component {
               <td>{user.lastName}</td>
               <td>{user.address}</td>
               <td>
-                <button className="btn-edit" type="button">
+                <button
+                  className="btn-edit"
+                  type="button"
+                  onClick={() => this.handleEditUser(user)}
+                >
                   Edit
                 </button>
 

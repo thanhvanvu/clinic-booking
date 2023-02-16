@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './UserRedux.scss'
-// import { handleGetAllCode } from '../../services/userService'
-import { LANGUAGES } from '../../../utils'
+import { LANGUAGES, CommonUtils } from '../../../utils'
 import noneAvatar from '../../../assets/images/avatar-none.png'
 import * as actions from '../../../store/actions'
 import Lightbox from 'react-image-lightbox'
 import 'react-image-lightbox/style.css' // This only needs to be imported once in your app
 import TableViewUser from './TableViewUser'
+import { CRUD_ACTIONS } from '../../../utils'
 
 class UserRedux extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class UserRedux extends Component {
       roleArr: [],
       previewImg: '',
       isPreviewImgOpen: false,
+      createUserErrorMessage: [],
       userData: {
         email: '',
         password: '',
@@ -31,6 +32,7 @@ class UserRedux extends Component {
         positionId: '',
         image: '',
       },
+      action: '',
       inputValid: '',
     }
   }
@@ -123,6 +125,8 @@ class UserRedux extends Component {
     if (prevProps.users !== this.props.users) {
       this.setState({
         ...this.state,
+        action: CRUD_ACTIONS.CREATE,
+        previewImg: '',
         userData: {
           email: '',
           password: '',
@@ -136,20 +140,23 @@ class UserRedux extends Component {
           image: '',
         },
       })
+    } else {
     }
   }
 
-  handleOnchangeImage = (event) => {
+  handleOnchangeImage = async (event) => {
     let data = event.target.files
     let file = data[0]
     let fileType = file.type.slice(0, 5)
     if (file && fileType === 'image') {
+      let base64 = await CommonUtils.getBase64(file)
       let objectUrl = URL.createObjectURL(file)
+
       this.setState({
         previewImg: objectUrl,
         userData: {
           ...this.state.userData,
-          image: file,
+          image: base64,
         },
       })
     }
@@ -197,17 +204,81 @@ class UserRedux extends Component {
     }
   }
 
-  handleSaveUser = async () => {
-    const isValid = this.checkValidateInput()
-    if (isValid === false) {
-      return
-    } else {
-      // fire redux action, need to wait this function to be done first
-      await this.props.createNewUser(this.state.userData)
+  handleUser = async () => {
+    if (this.state.action === CRUD_ACTIONS.UPDATE) {
+      const userData = this.state.userData
+      const isValid = this.checkValidateInput()
+      console.log(userData)
+      if (isValid === false) {
+        return
+      } else {
+        // fire redux action, need to wait this function to be done first
+        await this.props.updateUserStart(userData)
 
-      // call fetch user function to update table
-      this.props.fetchAllUsers()
+        // call fetch user function to update table
+        this.props.fetchAllUsers()
+      }
+    } else {
+      const isValid = this.checkValidateInput()
+      if (isValid === false) {
+        return
+      } else {
+        // fire redux action, need to wait this function to be done first
+        await this.props.createNewUser(this.state.userData)
+
+        // set state error if create user fail
+        this.setState({
+          createUserErrorMessage: this.props.createUserErrorMessage,
+        })
+
+        // check if any fail in redux. Yes => return
+        if (this.props.createUserErrorMessage) {
+          return
+        } else {
+          // call fetch user function to update table
+          this.props.fetchAllUsers()
+        }
+
+        return
+      }
     }
+  }
+
+  handleEditUserFromParent = async (user) => {
+    // user is data from child component
+    // set state with data from child
+
+    // handle image type buffer
+    let imageBase64 = ''
+    if (user.image.data.length === 0) {
+      this.setState({
+        previewImg: '',
+      })
+    } else {
+      const imageBuffer = Buffer.from(user.image, 'base64')
+      imageBase64 = imageBuffer.toString()
+    }
+
+    this.setState(
+      {
+        previewImg: imageBase64,
+        action: CRUD_ACTIONS.UPDATE,
+        userData: {
+          id: user.id,
+          email: user.email,
+          password: user.password,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          address: user.address,
+          phoneNumber: user.phoneNumber,
+          gender: user.gender,
+          roleId: user.roleId,
+          positionId: user.positionId,
+          image: imageBase64,
+        },
+      },
+      () => {}
+    )
   }
 
   render() {
@@ -236,8 +307,14 @@ class UserRedux extends Component {
               />
             </div>
 
+            <div className="error">{this.state.createUserErrorMessage}</div>
+
             <div className="row">
-              <div className="col-6">
+              <div
+                className={
+                  this.state.action === CRUD_ACTIONS.UPDATE ? 'col-12' : 'col-6'
+                }
+              >
                 <div style={{ display: 'flex' }}>
                   <label>
                     <FormattedMessage id="manage-user-redux.email" />
@@ -254,26 +331,29 @@ class UserRedux extends Component {
                   name="email"
                   value={this.state.userData.email}
                   onChange={(event) => this.handleOnchangeInput(event)}
+                  disabled={this.state.action === CRUD_ACTIONS.UPDATE}
                 />
               </div>
-              <div className="col-6">
-                <div style={{ display: 'flex' }}>
-                  <label>
-                    <FormattedMessage id="manage-user-redux.password" />
-                  </label>
+              {this.state.action !== CRUD_ACTIONS.UPDATE && (
+                <div className="col-6">
+                  <div style={{ display: 'flex' }}>
+                    <label>
+                      <FormattedMessage id="manage-user-redux.password" />
+                    </label>
+                  </div>
+                  <input
+                    className={
+                      this.state.inputValid.password === false
+                        ? 'form-control invalid'
+                        : 'form-control '
+                    }
+                    type="password"
+                    name="password"
+                    value={this.state.userData.password}
+                    onChange={(event) => this.handleOnchangeInput(event)}
+                  />
                 </div>
-                <input
-                  className={
-                    this.state.inputValid.password === false
-                      ? 'form-control invalid'
-                      : 'form-control '
-                  }
-                  type="password"
-                  name="password"
-                  value={this.state.userData.password}
-                  onChange={(event) => this.handleOnchangeInput(event)}
-                />
-              </div>
+              )}
             </div>
             <div className="row mt-3">
               <div className="col-4">
@@ -444,22 +524,35 @@ class UserRedux extends Component {
                   />
                   <label id="img-upload" htmlFor="img-upload">
                     <i className="fas fa-upload img-upload"></i>
-                    Tải ảnh
+                    <FormattedMessage id="manage-user-redux.upload" />
                   </label>
                 </div>
               </div>
             </div>
             <button
-              className="btn btn-primary mt-3"
-              onClick={() => this.handleSaveUser()}
+              className={
+                this.state.action === CRUD_ACTIONS.UPDATE
+                  ? 'btn btn-warning mt-3'
+                  : 'btn btn-primary mt-3'
+              }
+              onClick={() => this.handleUser()}
             >
-              <FormattedMessage id="manage-user-redux.create" />
+              <FormattedMessage
+                id={
+                  this.state.action === CRUD_ACTIONS.UPDATE
+                    ? 'manage-user-redux.update'
+                    : 'manage-user-redux.create'
+                }
+              />
             </button>
           </div>
         </div>
 
         <div className="container px-0 my-4">
-          <TableViewUser />
+          <TableViewUser
+            handleEditUserFromParent={this.handleEditUserFromParent}
+            action={this.state.action}
+          />
         </div>
 
         {this.state.isPreviewImgOpen === true && (
@@ -482,6 +575,7 @@ const mapStateToProps = (state) => {
     isLoading: state.admin.isLoading,
     isCreateUserSuccess: state.admin.isCreateUserSuccess,
     users: state.admin.users,
+    createUserErrorMessage: state.admin.createUserErrorMessage,
   }
 }
 
@@ -492,6 +586,7 @@ const mapDispatchToProps = (dispatch) => {
     getRoleStart: () => dispatch(actions.fetchRoleStart()),
     createNewUser: (userData) => dispatch(actions.createNewUser(userData)),
     fetchAllUsers: () => dispatch(actions.fetchAllUsers()),
+    updateUserStart: (userData) => dispatch(actions.updateUserStart(userData)),
   }
 }
 

@@ -7,11 +7,12 @@ const initialState = {
   roles: [],
   isCreateUserSuccess: '',
   users: [],
+  createUserErrorMessage: [],
 }
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    //---------------FETCH GENDER--------------------------//
+    //#region ---------------FETCH GENDER--------------------------//
     case actionTypes.FETCH_GENDER_START:
       state.isLoading = true
       return {
@@ -34,8 +35,9 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
       }
+    //#endregion
 
-    //---------------FETCH POSITION--------------------------//
+    //#region ---------------FETCH POSITION--------------------------
     case actionTypes.FETCH_POSITION_START:
       state.isLoading = true
       return {
@@ -56,8 +58,9 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
       }
+    //#endregion
 
-    //---------------FETCH ROLE--------------------------//
+    //#region ---------------FETCH ROLE--------------------------//
     case actionTypes.FETCH_ROLE_START:
       state.isLoading = true
       return {
@@ -78,22 +81,25 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
       }
+    //#endregion
 
-    //---------------CREATE USER--------------------------//
+    //#region ---------------CREATE USER--------------------------//
     case actionTypes.CREATE_USER_SUCCESS:
       // always make a copy of state, never modify the initial state directly
       state.isCreateUserSuccess = true
-
+      state.createUserErrorMessage = ''
       return {
         ...state,
       }
     case actionTypes.CREATE_USER_FAILED:
       state.isCreateUserSuccess = false
+      state.createUserErrorMessage = action.action.message
       return {
         ...state,
       }
+    //#endregion
 
-    //---------------FETCH USERS--------------------------//
+    //#region ---------------FETCH USERS--------------------------//
     case actionTypes.FETCH_USERS_SUCCESS:
       // always make a copy of state, never modify the initial state directly
       state.users = action.data
@@ -104,6 +110,22 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
       }
+    //#endregion
+
+    //#region  ---------------UPDATE USERS--------------------------//
+    case actionTypes.UPDATE_USER_SUCCESS:
+      // always make a copy of state, never modify the initial state directly
+      state.isCreateUserSuccess = true
+
+      return {
+        ...state,
+      }
+    case actionTypes.UPDATE_USER_FAILED:
+      state.isCreateUserSuccess = false
+      return {
+        ...state,
+      }
+    //#endregion
     default:
       return state
   }

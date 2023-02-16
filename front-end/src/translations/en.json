@@ -63,7 +63,9 @@
     "position": "Position",
     "role": "Role",
     "image": "Image",
-    "create": "Create",
+    "upload": "Upload",
+    "create": "Create User",
+    "update": "Update User",
     "error-message": "Please enter the information"
   }
 }

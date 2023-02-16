@@ -1,0 +1,13 @@
+{
+  "C_Cpp.dimInactiveRegions": false,
+  "maptz.regionfolder": {
+    "[markdown]": {
+      "defaultFoldStartRegex": "\\<!--[\\s]*#region\\(collapsed\\)[\\s]*(.*)",
+
+      "foldEnd": "<!-- #endregion -->",
+      "foldEndRegex": "\\<!--[\\s]*#endregion",
+      "foldStart": "<!-- #region [NAME] -->",
+      "foldStartRegex": "\\<!--[\\s]*#region[\\s]*(.*)"
+    }
+  }
+}

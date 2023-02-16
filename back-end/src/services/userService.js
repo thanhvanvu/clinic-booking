@@ -203,12 +203,11 @@ const editUserById = async (userData) => {
     // 4. update user
     if (user) {
       await user.set({
-        email: userData.email,
         firstName: userData.firstName,
         lastName: userData.lastName,
         address: userData.address,
         phoneNumber: userData.phoneNumber,
-        gender: userData.gender === '1' ? true : false,
+        gender: userData.gender,
         roleId: userData.roleId,
         positionId: userData.positionId,
         image: userData.image,
