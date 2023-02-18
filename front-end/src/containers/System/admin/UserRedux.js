@@ -86,7 +86,8 @@ class UserRedux extends Component {
         // set defaut value for dropdown select menu
         userData: {
           ...this.state.userData,
-          gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+          gender:
+            arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : '',
         },
       })
     }
@@ -102,7 +103,9 @@ class UserRedux extends Component {
         userData: {
           ...this.state.userData,
           positionId:
-            arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
+            arrPositions && arrPositions.length > 0
+              ? arrPositions[0].keyMap
+              : '',
         },
       })
     }
@@ -115,7 +118,7 @@ class UserRedux extends Component {
         // set defaut value for dropdown select menu
         userData: {
           ...this.state.userData,
-          roleId: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+          roleId: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : '',
         },
       })
     }
@@ -255,8 +258,9 @@ class UserRedux extends Component {
         previewImg: '',
       })
     } else {
-      const imageBuffer = Buffer.from(user.image, 'base64')
-      imageBase64 = imageBuffer.toString()
+      // const imageBuffer = Buffer.from(user.image, 'base64')
+      // imageBase64 = imageBuffer.toString()
+      imageBase64 = CommonUtils.convertBufferToBase64(user.image)
     }
 
     this.setState(
@@ -446,7 +450,7 @@ class UserRedux extends Component {
                     genders.length > 0 &&
                     genders.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {currentLanguage === LANGUAGES.VI
                             ? item.valueVI
                             : currentLanguage === LANGUAGES.EN
@@ -471,7 +475,7 @@ class UserRedux extends Component {
                     positions.length > 0 &&
                     positions.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {currentLanguage === LANGUAGES.VI
                             ? item.valueVI
                             : currentLanguage === LANGUAGES.EN
@@ -496,7 +500,7 @@ class UserRedux extends Component {
                     roles.length > 0 &&
                     roles.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {currentLanguage === LANGUAGES.VI
                             ? item.valueVI
                             : currentLanguage === LANGUAGES.EN

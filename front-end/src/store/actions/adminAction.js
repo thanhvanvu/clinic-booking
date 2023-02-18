@@ -1,10 +1,14 @@
 import actionTypes from './actionTypes'
-import { handleGetAllCode } from '../../services/userService'
-import { handleAddUserApi } from '../../services/userService'
-import { getAllUsers } from '../../services/userService'
+import {
+  handleGetAllCode,
+  handleAddUserApi,
+  getAllUsers,
+  handleDeleteUser,
+  handleEditUserApi,
+  handleGetTopDoctors,
+} from '../../services/userService'
+
 import { toast } from 'react-toastify'
-import { handleDeleteUser } from '../../services/userService'
-import { handleEditUserApi } from '../../services/userService'
 
 // export const fetchGenderStart = () => ({
 //   type: actionTypes.FETCH_GENDER_START,
@@ -113,7 +117,6 @@ export const createNewUser = (userData) => {
   return async (dispatch, getState) => {
     try {
       let response = await handleAddUserApi(userData)
-      console.log(response)
 
       if (response && response.errCode === 0) {
         toast.success('Create a new user successfully!')
@@ -145,6 +148,9 @@ export const fetchAllUsers = () => {
   return async (dispatch, getState) => {
     try {
       let response = await getAllUsers()
+
+      let responseDoctor = await handleGetTopDoctors(5)
+      console.log(responseDoctor)
 
       if (response && response.errCode === 0) {
         // sort reverse data

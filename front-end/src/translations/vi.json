@@ -66,5 +66,9 @@
     "create": "Tạo Người Dùng",
     "update": "Cập Nhật Người Dùng",
     "error-message": "Vui lòng điền thông tin"
+  },
+  "homepage": {
+    "read-more": "XEM THÊM",
+    "outstanding-doctor": "Bác sĩ nổi bật tuần qua"
   }
 }

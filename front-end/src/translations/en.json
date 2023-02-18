@@ -67,5 +67,10 @@
     "create": "Create User",
     "update": "Update User",
     "error-message": "Please enter the information"
+  },
+
+  "homepage": {
+    "read-more": "READ MORE",
+    "outstanding-doctor": "Outstanding doctors last week"
   }
 }

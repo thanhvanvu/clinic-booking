@@ -66,5 +66,9 @@
     "create": "Crear Usuario",
     "update": "Actualizar User",
     "error-message": "Por favor ingrese la información"
+  },
+  "homepage": {
+    "read-more": "LEER MÁS",
+    "outstanding-doctor": "Doctores destacados la semana pasada"
   }
 }

@@ -11,6 +11,11 @@ class CommonUtils {
       reader.onerror = (error) => reject(error)
     })
   }
+
+  static convertBufferToBase64(imageData) {
+    let imageBuffer = Buffer.from(imageData, 'base64').toString()
+    return imageBuffer
+  }
 }
 
 export default CommonUtils

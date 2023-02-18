@@ -35,6 +35,7 @@ class TableViewUser extends Component {
   }
 
   handleEditUser = async (user) => {
+    console.log(user)
     // call function from parent, then pass the paramater to it
     this.props.handleEditUserFromParent(user)
   }

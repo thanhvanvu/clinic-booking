@@ -8,7 +8,7 @@ class HomeFooter extends Component {
         <div className="wrapper">
           <p>&copy; 2023 Thanh Vu.</p>
           <a target="/blank" href="https://github.com/vvt4994">
-            <i class="fab fa-github"></i>
+            <i className="fab fa-github"></i>
           </a>
         </div>
       </div>

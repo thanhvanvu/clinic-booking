@@ -96,6 +96,21 @@ const handleGetAllCode = async (typeInput) => {
   }
 }
 
+const handleGetTopDoctors = async (limitRecord) => {
+  try {
+    // 3. create an option
+    const options = {
+      method: 'get',
+      url: `/api/top-doctor-home?limit=${limitRecord}`,
+    }
+
+    // 4. call API
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
   handleLoginApi,
   getAllUsers,
@@ -103,4 +118,5 @@ export {
   handleDeleteUser,
   handleEditUserApi,
   handleGetAllCode,
+  handleGetTopDoctors,
 }
