@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // 1 markdown (detail information) has ONLY 1 doctor.
+      // the foreign key being defined in the source model Markdown
+      Markdown.belongsTo(models.User, {
+        foreignKey: 'doctorId',
+      })
     }
   }
   Markdown.init(

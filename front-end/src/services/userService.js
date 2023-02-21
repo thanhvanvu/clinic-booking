@@ -31,6 +31,21 @@ const getAllUsers = async () => {
   }
 }
 
+const handleGetAllDoctors = async () => {
+  try {
+    // 2. create options
+    const options = {
+      method: 'get',
+      url: '/api/get-all-doctors',
+    }
+
+    // 3. call api
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const handleAddUserApi = async (userInfo) => {
   try {
     // 4. create an option
@@ -111,6 +126,20 @@ const handleGetTopDoctors = async (limitRecord) => {
   }
 }
 
+const handleCreateDoctorInfo = async (doctorInfo) => {
+  try {
+    const options = {
+      method: 'post',
+      url: '/api/save-info-doctor',
+      data: doctorInfo,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
   handleLoginApi,
   getAllUsers,
@@ -119,4 +148,6 @@ export {
   handleEditUserApi,
   handleGetAllCode,
   handleGetTopDoctors,
+  handleGetAllDoctors,
+  handleCreateDoctorInfo,
 }

@@ -5,16 +5,13 @@ import {
   getAllUsers,
   handleDeleteUser,
   handleEditUserApi,
-  handleGetTopDoctors,
+  handleGetAllDoctors,
+  handleCreateDoctorInfo,
 } from '../../services/userService'
 
 import { toast } from 'react-toastify'
 
-// export const fetchGenderStart = () => ({
-//   type: actionTypes.FETCH_GENDER_START,
-// })
-
-//#region fetch Gender
+//#region  fetch Gender
 export const fetchGenderStart = () => {
   return async (dispatch, getState) => {
     try {
@@ -48,7 +45,7 @@ export const fetchGenderFailed = () => ({
 })
 //#endregion
 
-//#region Fetch position
+//#region  Fetch position
 export const fetchPositionStart = () => {
   return async (dispatch, getState) => {
     try {
@@ -112,7 +109,7 @@ export const fetchRoleFailed = () => ({
 })
 //#endregion
 
-//#region Create User
+//#region  Create User
 export const createNewUser = (userData) => {
   return async (dispatch, getState) => {
     try {
@@ -143,14 +140,11 @@ export const createNewUserFailed = (response) => ({
 })
 //#endregion
 
-//#region Fetch all users
+//#region  Fetch all users
 export const fetchAllUsers = () => {
   return async (dispatch, getState) => {
     try {
       let response = await getAllUsers()
-
-      let responseDoctor = await handleGetTopDoctors(5)
-      console.log(responseDoctor)
 
       if (response && response.errCode === 0) {
         // sort reverse data
@@ -178,7 +172,7 @@ export const fetchAllUsersFailed = () => ({
 })
 //#endregion
 
-//#region Delete Users
+//#region  Delete Users
 export const deleteUserStart = (userId) => {
   return async (dispatch, getState) => {
     try {
@@ -237,5 +231,67 @@ export const updateUserSuccess = () => ({
 
 export const updateUserFail = () => ({
   type: actionTypes.UPDATE_USER_FAILED,
+})
+//#endregion
+
+//#region  Get All Doctors
+export const getAllDoctorsStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      let response = await handleGetAllDoctors()
+
+      if (response && response.errCode === 0) {
+        dispatch(fetchAllDoctorsSuccess(response.data))
+      } else {
+        // if response is null
+        dispatch(fetchAllDoctorsFailed())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(fetchAllDoctorsFailed())
+    }
+  }
+}
+
+export const fetchAllDoctorsSuccess = (doctorsData) => ({
+  type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+  data: doctorsData,
+})
+
+export const fetchAllDoctorsFailed = () => ({
+  type: actionTypes.FETCH_ALL_DOCTORS_FAILED,
+})
+//#endregion
+
+//#region  Create doctor information
+export const createDoctorInfoStart = (doctorInfo) => {
+  return async (dispatch, getState) => {
+    try {
+      let response = await handleCreateDoctorInfo(doctorInfo)
+
+      if (response && response.errCode === 0) {
+        toast.success('Create a doctor information successfully!')
+        dispatch(createDoctorInfoSuccess())
+      } else {
+        // if response is null
+        toast.error('Create a doctor information failed!')
+        dispatch(createDoctorInfoFailed())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      toast.succeerrorss('Create a doctor information failed!')
+      dispatch(createDoctorInfoFailed())
+    }
+  }
+}
+
+export const createDoctorInfoSuccess = (doctorsData) => ({
+  type: actionTypes.CREATE_DETAIL_DOCTOR_SUCCESS,
+})
+
+export const createDoctorInfoFailed = () => ({
+  type: actionTypes.CREATE_DETAIL_DOCTOR_FAILED,
 })
 //#endregion

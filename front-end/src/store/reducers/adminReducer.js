@@ -8,11 +8,12 @@ const initialState = {
   isCreateUserSuccess: '',
   users: [],
   createUserErrorMessage: [],
+  doctors: [],
 }
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    //#region ---------------FETCH GENDER--------------------------//
+    //#region  FETCH GENDER
     case actionTypes.FETCH_GENDER_START:
       state.isLoading = true
       return {
@@ -37,7 +38,7 @@ const appReducer = (state = initialState, action) => {
       }
     //#endregion
 
-    //#region ---------------FETCH POSITION--------------------------
+    //#region  FETCH POSITION
     case actionTypes.FETCH_POSITION_START:
       state.isLoading = true
       return {
@@ -60,7 +61,7 @@ const appReducer = (state = initialState, action) => {
       }
     //#endregion
 
-    //#region ---------------FETCH ROLE--------------------------//
+    //#region  FETCH ROLE
     case actionTypes.FETCH_ROLE_START:
       state.isLoading = true
       return {
@@ -83,7 +84,7 @@ const appReducer = (state = initialState, action) => {
       }
     //#endregion
 
-    //#region ---------------CREATE USER--------------------------//
+    //#region  CREATE USER
     case actionTypes.CREATE_USER_SUCCESS:
       // always make a copy of state, never modify the initial state directly
       state.isCreateUserSuccess = true
@@ -99,7 +100,7 @@ const appReducer = (state = initialState, action) => {
       }
     //#endregion
 
-    //#region ---------------FETCH USERS--------------------------//
+    //#region  FETCH USERS
     case actionTypes.FETCH_USERS_SUCCESS:
       // always make a copy of state, never modify the initial state directly
       state.users = action.data
@@ -112,20 +113,42 @@ const appReducer = (state = initialState, action) => {
       }
     //#endregion
 
-    //#region  ---------------UPDATE USERS--------------------------//
+    //#region  UPDATE USERS
     case actionTypes.UPDATE_USER_SUCCESS:
       // always make a copy of state, never modify the initial state directly
-      state.isCreateUserSuccess = true
 
       return {
         ...state,
       }
     case actionTypes.UPDATE_USER_FAILED:
-      state.isCreateUserSuccess = false
       return {
         ...state,
       }
     //#endregion
+
+    //#region  FETCH ALL DOCTORS
+    case actionTypes.FETCH_ALL_DOCTORS_SUCCESS:
+      // always make a copy of state, never modify the initial state directly
+      state.doctors = action.data
+
+      return {
+        ...state,
+      }
+    case actionTypes.FETCH_ALL_DOCTORS_FAILED:
+      return {
+        ...state,
+      }
+    //#endregion
+
+    case actionTypes.CREATE_DETAIL_DOCTOR_SUCCESS:
+      // always make a copy of state, never modify the initial state directly
+      return {
+        ...state,
+      }
+    case actionTypes.CREATE_DETAIL_DOCTOR_FAILED:
+      return {
+        ...state,
+      }
     default:
       return state
   }

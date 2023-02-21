@@ -8,11 +8,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // 1 table allcode is belonged to many user
+      // 1 position has MANY user
+      // the foreign key being defined in the target model USER
       Allcode.hasMany(models.User, {
         foreignKey: 'positionId',
         as: 'positionData',
       })
+
+      // 1 gender has MANY user
+      // the foreign key being defined in the target model USER
       Allcode.hasMany(models.User, {
         foreignKey: 'gender',
         as: 'genderData',

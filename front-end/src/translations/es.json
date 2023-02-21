@@ -65,7 +65,14 @@
     "upload": "Subir",
     "create": "Crear Usuario",
     "update": "Actualizar User",
-    "error-message": "Por favor ingrese la información"
+    "error-message": "Por favor ingrese la información",
+
+    "doctor-manage": {
+      "title": "CREAR INFORMACIÓN DEL MÉDICO",
+      "info": "Información",
+      "select-doctor": "Seleccionar Médico",
+      "save": "Guardar"
+    }
   },
   "homepage": {
     "read-more": "LEER MÁS",

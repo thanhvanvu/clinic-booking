@@ -9,15 +9,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      // 1 User has ONLY 1 position
+      // Foreinkey is defined in the source model USER
       User.belongsTo(models.Allcode, {
         foreignKey: 'positionId',
         targetKey: 'keyMap',
         as: 'positionData',
       })
+
+      // 1 User has ONLY 1 gender
+      // Foreinkey is defined in the source model USER
       User.belongsTo(models.Allcode, {
         foreignKey: 'gender',
         targetKey: 'keyMap',
         as: 'genderData',
+      })
+
+      // 1 doctor(user) has ONLY 1 markdown (detail information)
+      // the foreign key being defined in the target model Markdown
+      User.hasOne(models.Markdown, {
+        foreignKey: 'doctorId',
       })
     }
   }

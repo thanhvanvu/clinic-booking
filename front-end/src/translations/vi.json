@@ -65,7 +65,14 @@
     "upload": "Tải Ảnh",
     "create": "Tạo Người Dùng",
     "update": "Cập Nhật Người Dùng",
-    "error-message": "Vui lòng điền thông tin"
+    "error-message": "Vui lòng điền thông tin",
+
+    "doctor-manage": {
+      "title": "Tạo thông tin bác sĩ",
+      "info": "Thông tin",
+      "select-doctor": "Chọn bác sĩ",
+      "save": "Tạo thông tin"
+    }
   },
   "homepage": {
     "read-more": "XEM THÊM",
