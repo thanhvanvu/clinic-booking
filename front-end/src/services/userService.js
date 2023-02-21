@@ -140,6 +140,18 @@ const handleCreateDoctorInfo = async (doctorInfo) => {
   }
 }
 
+const getDetailDoctorById = async (doctorId) => {
+  try {
+    const options = {
+      method: 'get',
+      url: `/api/get-detail-doctor-by-id?id=${doctorId}`,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleLoginApi,
   getAllUsers,
@@ -150,4 +162,5 @@ export {
   handleGetTopDoctors,
   handleGetAllDoctors,
   handleCreateDoctorInfo,
+  getDetailDoctorById,
 }

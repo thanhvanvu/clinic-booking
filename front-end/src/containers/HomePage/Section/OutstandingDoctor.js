@@ -7,6 +7,7 @@ import * as actions from '../../../store/actions'
 import { CommonUtils } from '../../../utils'
 import { LANGUAGES } from '../../../utils'
 import { FormattedMessage } from 'react-intl'
+import { withRouter } from 'react-router'
 class OutstandingDoctor extends Component {
   constructor(props) {
     super(props)
@@ -21,6 +22,11 @@ class OutstandingDoctor extends Component {
     if (prevProps.topDoctors !== this.props.topDoctors) {
       this.setState({ topDoctorArr: this.props.topDoctors })
     }
+  }
+
+  handleViewDetailDoctor = (doctor) => {
+    console.log('test', doctor)
+    this.props.history.push(`/detail-doctor/${doctor.id}`)
   }
   render() {
     let settings = this.props.settings
@@ -42,7 +48,11 @@ class OutstandingDoctor extends Component {
               {topDoctorArr &&
                 topDoctorArr.length > 0 &&
                 topDoctorArr.map((doctor, index) => (
-                  <div className="image-custom outstanding-doctor" key={index}>
+                  <div
+                    className="image-custom outstanding-doctor"
+                    key={index}
+                    onClick={() => this.handleViewDetailDoctor(doctor)}
+                  >
                     <div className="outer-background">
                       <div className="bg-img outstanding-doctor">
                         <img
@@ -91,4 +101,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor)
+)

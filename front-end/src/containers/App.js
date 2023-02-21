@@ -21,6 +21,7 @@ import Header from './Header/Header'
 import System from '../routes/System'
 
 import { CustomToastCloseButton } from '../components/CustomToast'
+import DoctorDetail from './Patient/Doctor/DoctorDetail'
 
 class App extends Component {
   handlePersistorState = () => {
@@ -59,22 +60,10 @@ class App extends Component {
                     path={path.SYSTEM}
                     component={userIsAuthenticated(System)}
                   />
+                  <Route path={path.DETAIL_DOCTOR} component={DoctorDetail} />
                 </Switch>
               </CustomScrollbars>
             </div>
-
-            {/* <ToastContainer
-              className="toast-container"
-              toastClassName="toast-item"
-              bodyClassName="toast-item-body"
-              autoClose={false}
-              hideProgressBar={true}
-              pauseOnHover={false}
-              pauseOnFocusLoss={true}
-              closeOnClick={false}
-              draggable={false}
-              closeButton={<CustomToastCloseButton />}
-            /> */}
 
             <ToastContainer
               position="top-right"

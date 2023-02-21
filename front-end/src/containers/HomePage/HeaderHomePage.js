@@ -106,66 +106,68 @@ class HeaderHomePage extends Component {
             </div>
           </div>
         </div>
-        <div className="home-banner">
-          <div className="content-up">
-            <div className="title-1">
-              <FormattedMessage id="home-banner.med-foundation" />
+        {this.props.isShowBanner === true && (
+          <div className="home-banner">
+            <div className="content-up">
+              <div className="title-1">
+                <FormattedMessage id="home-banner.med-foundation" />
+              </div>
+              <div className="title-2">
+                <FormattedMessage id="home-banner.comp-health-care" />
+              </div>
+              <div className="search">
+                <i className="fas fa-search search-icon"></i>
+                <input type="text" placeholder="Tìm kiếm" />
+                <i className="fas fa-times delete-icon"></i>
+              </div>
+              <div className="option"></div>
             </div>
-            <div className="title-2">
-              <FormattedMessage id="home-banner.comp-health-care" />
+            <div className="content-down">
+              <div className="options">
+                <div className="option-child">
+                  <div className="icon">
+                    <i className="far fa-hospital"></i>
+                  </div>
+                  <div className="option-text">
+                    <FormattedMessage id="home-banner.specialist-exam" />
+                  </div>
+                </div>
+                <div className="option-child">
+                  <div className="icon">
+                    <i className="fas fa-stethoscope"></i>
+                  </div>
+                  <div className="option-text">
+                    <FormattedMessage id="home-banner.physical-exam" />
+                  </div>
+                </div>
+                <div className="option-child">
+                  <div className="icon">
+                    <i className="fas fa-heartbeat"></i>
+                  </div>
+                  <div className="option-text">
+                    <FormattedMessage id="home-banner.mental-health" />
+                  </div>
+                </div>
+                <div className="option-child">
+                  <div className="icon">
+                    <i className="fas fa-vial"></i>
+                  </div>
+                  <div className="option-text">
+                    <FormattedMessage id="home-banner.medical-test" />
+                  </div>
+                </div>
+                <div className="option-child">
+                  <div className="icon">
+                    <i className="fas fa-medkit"></i>
+                  </div>
+                  <div className="option-text">
+                    <FormattedMessage id="home-banner.dental-exam" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="search">
-              <i className="fas fa-search search-icon"></i>
-              <input type="text" placeholder="Tìm kiếm" />
-              <i className="fas fa-times delete-icon"></i>
-            </div>
-            <div className="option"></div>
           </div>
-          <div className="content-down">
-            <div className="options">
-              <div className="option-child">
-                <div className="icon">
-                  <i className="far fa-hospital"></i>
-                </div>
-                <div className="option-text">
-                  <FormattedMessage id="home-banner.specialist-exam" />
-                </div>
-              </div>
-              <div className="option-child">
-                <div className="icon">
-                  <i className="fas fa-stethoscope"></i>
-                </div>
-                <div className="option-text">
-                  <FormattedMessage id="home-banner.physical-exam" />
-                </div>
-              </div>
-              <div className="option-child">
-                <div className="icon">
-                  <i className="fas fa-heartbeat"></i>
-                </div>
-                <div className="option-text">
-                  <FormattedMessage id="home-banner.mental-health" />
-                </div>
-              </div>
-              <div className="option-child">
-                <div className="icon">
-                  <i className="fas fa-vial"></i>
-                </div>
-                <div className="option-text">
-                  <FormattedMessage id="home-banner.medical-test" />
-                </div>
-              </div>
-              <div className="option-child">
-                <div className="icon">
-                  <i className="fas fa-medkit"></i>
-                </div>
-                <div className="option-text">
-                  <FormattedMessage id="home-banner.dental-exam" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </React.Fragment>
     )
   }

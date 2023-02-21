@@ -63,6 +63,7 @@ class DoctorManage extends Component {
   }
 
   handleSelectedDoctor = (selectedDoctor) => {
+    console.log(selectedDoctor)
     this.setState({
       previewImg: selectedDoctor.image,
       selectedDoctor: selectedDoctor,

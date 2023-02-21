@@ -115,7 +115,7 @@ const handleGetDetailDoctorById = async (doctorId) => {
         where: { id: doctorId },
         raw: false,
         attributes: {
-          exclude: ['password', 'image'],
+          exclude: ['password'],
         },
         include: [
           {
