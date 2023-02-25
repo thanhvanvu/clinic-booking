@@ -36,7 +36,6 @@ class DoctorDetail extends Component {
 
   render() {
     let doctor = this.state.doctor
-    console.log(doctor)
     return (
       <>
         {/* show header menu */}

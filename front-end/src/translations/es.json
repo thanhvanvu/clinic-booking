@@ -28,13 +28,10 @@
       "system-administrator": {
         "header": "Administrador de sistemas",
         "user-manage": " Gestión de usuarios",
-        "user-redux": "Administrar usuarios con Redux",
-        "register-package-group-or-account": "Register service package for group/account"
-      },
-      "system-parameter": {
-        "header": "System-parameter"
+        "user-redux": "Administrar usuarios con Redux"
       }
     },
+
     "admin": {
       "manage-user": "Usuario",
       "manage-doctor": "Gestión de médicos",
@@ -47,6 +44,10 @@
       "manage-handbook": "Gestión de manuales",
       "crud": "CRUD user",
       "crud-redux": "CRUD con Redux"
+    },
+
+    "doctor": {
+      "manage-schedule": "Gestión de horarios"
     }
   },
 

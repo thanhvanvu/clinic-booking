@@ -9,6 +9,7 @@ import Header from '../containers/Header/Header'
 
 class System extends Component {
   render() {
+    // get value from redux
     const { systemMenuPath, isLoggedIn } = this.props
 
     return (

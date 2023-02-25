@@ -211,7 +211,6 @@ class UserRedux extends Component {
     if (this.state.action === CRUD_ACTIONS.UPDATE) {
       const userData = this.state.userData
       const isValid = this.checkValidateInput()
-      console.log(userData)
       if (isValid === false) {
         return
       } else {

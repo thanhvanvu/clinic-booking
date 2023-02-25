@@ -69,7 +69,6 @@ class DoctorManage extends Component {
   }
 
   handleSelectedDoctor = async (selectedDoctor) => {
-    console.log(selectedDoctor)
     let doctorId = selectedDoctor.value
     let response = await getDetailDoctorById(doctorId)
     if (
@@ -150,8 +149,6 @@ class DoctorManage extends Component {
   }
 
   render() {
-    console.log(this.props.isSuccess)
-    console.log(this.state)
     return (
       <div className="doctor-manage-container">
         <div className="doctor-manage title">

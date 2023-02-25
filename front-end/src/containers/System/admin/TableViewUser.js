@@ -3,12 +3,9 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './TableViewUser.scss'
 import * as actions from '../../../store/actions'
-import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css'
-// Initialize a markdown parser
-const mdParser = new MarkdownIt(/* Markdown-it options */)
 
 // Finish!
 const handleEditorChange = ({ html, text }) => {
@@ -46,7 +43,6 @@ class TableViewUser extends Component {
   }
 
   handleEditUser = async (user) => {
-    console.log(user)
     // call function from parent, then pass the paramater to it
     this.props.handleEditUserFromParent(user)
   }
@@ -90,11 +86,6 @@ class TableViewUser extends Component {
             ))}
           </tbody>
         </table>
-        <MdEditor
-          style={{ height: '500px' }}
-          renderHTML={(text) => mdParser.render(text)}
-          onChange={handleEditorChange}
-        />
       </React.Fragment>
     )
   }

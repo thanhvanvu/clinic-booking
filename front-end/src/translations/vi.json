@@ -28,13 +28,10 @@
       "system-administrator": {
         "header": "Quản trị hệ thống",
         "user-manage": "Quản lý người sử dụng",
-        "user-redux": "Quản lý người dùng bằng Redux",
-        "register-package-group-or-account": "Đăng ký gói dịch vụ cho nhóm/tài khoản"
-      },
-      "system-parameter": {
-        "header": "Tham số hệ thống"
+        "user-redux": "Quản lý người dùng bằng Redux"
       }
     },
+
     "admin": {
       "manage-user": "Người dùng",
       "manage-doctor": "Quản lý bác sĩ",
@@ -47,6 +44,10 @@
       "manage-handbook": "Quản lý cẩm nang",
       "crud": "CRUD người dùng",
       "crud-redux": "CRUD người dùng với Redux"
+    },
+
+    "doctor": {
+      "manage-schedule": "Quản lý kế hoạch khám bệnh"
     }
   },
 
