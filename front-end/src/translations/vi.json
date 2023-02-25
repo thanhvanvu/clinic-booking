@@ -71,7 +71,8 @@
       "title": "Tạo thông tin bác sĩ",
       "info": "Thông tin",
       "select-doctor": "Chọn bác sĩ",
-      "save": "Tạo thông tin"
+      "create": "Tạo thông tin",
+      "update": "Cập nhật thông tin"
     }
   },
   "homepage": {

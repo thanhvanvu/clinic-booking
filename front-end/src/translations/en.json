@@ -72,7 +72,8 @@
       "title": "CREATE DOCTOR INFORMATION",
       "info": "Information",
       "select-doctor": "Select Doctor",
-      "save": "Save"
+      "create": "Create information",
+      "update": "Save change"
     }
   },
 

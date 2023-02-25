@@ -8,6 +8,11 @@ import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 import 'react-markdown-editor-lite/lib/index.css'
 import Select from 'react-select'
+import {
+  getDetailDoctorById,
+  handleUpdateInfoDoctorById,
+} from '../../../services/userService'
+import { toast } from 'react-toastify'
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */)
 
@@ -18,9 +23,10 @@ class DoctorManage extends Component {
       previewImg: '',
       contentMarkdown: '',
       contentHTML: '',
-      selectedDoctor: '',
       description: '',
-      doctors: [],
+      selectedDoctor: '',
+      doctorArray: [],
+      hasOldDataMarkdow: false,
     }
   }
 
@@ -33,7 +39,7 @@ class DoctorManage extends Component {
     if (prevProps.doctors !== this.props.doctors) {
       let builtData = this.buildDataInputSelect(this.props.doctors)
       this.setState({
-        doctors: builtData,
+        doctorArray: builtData,
       })
     }
   }
@@ -62,21 +68,79 @@ class DoctorManage extends Component {
     })
   }
 
-  handleSelectedDoctor = (selectedDoctor) => {
+  handleSelectedDoctor = async (selectedDoctor) => {
     console.log(selectedDoctor)
+    let doctorId = selectedDoctor.value
+    let response = await getDetailDoctorById(doctorId)
+    if (
+      response &&
+      response.errCode === 0 &&
+      response.data &&
+      response.data.Markdown
+    ) {
+      let markdown = response.data.Markdown
+      this.setState({
+        contentMarkdown: markdown.contentMarkdown,
+        contentHTML: markdown.contentHTML,
+        description: markdown.description,
+        hasOldDataMarkdow: true,
+      })
+    } else {
+      this.setState({
+        contentMarkdown: '',
+        contentHTML: '',
+        description: '',
+        hasOldDataMarkdow: false,
+      })
+    }
     this.setState({
       previewImg: selectedDoctor.image,
       selectedDoctor: selectedDoctor,
     })
   }
 
-  handleSaveMarkdown = () => {
-    this.props.createDoctorInfo({
-      contentMarkdown: this.state.contentMarkdown,
-      contentHTML: this.state.contentHTML,
-      description: this.state.description,
-      doctorId: this.state.selectedDoctor.value,
-    })
+  handleMarkdown = async () => {
+    if (this.state.hasOldDataMarkdow === false) {
+      // create information
+      this.props.createDoctorInfo({
+        contentMarkdown: this.state.contentMarkdown,
+        contentHTML: this.state.contentHTML,
+        description: this.state.description,
+        doctorId: this.state.selectedDoctor.value,
+      })
+
+      // reset state
+      if (this.props.isSuccess === true) {
+        this.setState({
+          previewImg: '',
+          contentMarkdown: '',
+          contentHTML: '',
+          description: '',
+          selectedDoctor: '',
+          hasOldDataMarkdow: false,
+        })
+      }
+    } else {
+      // update information
+      let response = await handleUpdateInfoDoctorById({
+        contentMarkdown: this.state.contentMarkdown,
+        contentHTML: this.state.contentHTML,
+        description: this.state.description,
+        doctorId: this.state.selectedDoctor.value,
+      })
+
+      if (response && response.errCode === 0) {
+        toast.success('Update a doctor information successfully!')
+        this.setState({
+          previewImg: '',
+          contentMarkdown: '',
+          contentHTML: '',
+          description: '',
+          selectedDoctor: '',
+          hasOldDataMarkdow: false,
+        })
+      }
+    }
   }
 
   handleOnchangeDescription = (event) => {
@@ -86,6 +150,8 @@ class DoctorManage extends Component {
   }
 
   render() {
+    console.log(this.props.isSuccess)
+    console.log(this.state)
     return (
       <div className="doctor-manage-container">
         <div className="doctor-manage title">
@@ -112,7 +178,7 @@ class DoctorManage extends Component {
             <Select
               value={this.state.selectedDoctor}
               onChange={this.handleSelectedDoctor}
-              options={this.state.doctors}
+              options={this.state.doctorArray}
             />
             <div className="doctor-img">
               <img
@@ -130,14 +196,21 @@ class DoctorManage extends Component {
             style={{ height: '500px' }}
             renderHTML={(text) => mdParser.render(text)}
             onChange={this.handleEditorChange}
+            value={this.state.contentMarkdown}
             required
           />
         </div>
         <button
           className="doctor-manage-save"
-          onClick={() => this.handleSaveMarkdown()}
+          onClick={() => this.handleMarkdown()}
         >
-          <FormattedMessage id="manage-user-redux.doctor-manage.save" />
+          <FormattedMessage
+            id={
+              this.state.hasOldDataMarkdow === false
+                ? 'manage-user-redux.doctor-manage.create'
+                : 'manage-user-redux.doctor-manage.update'
+            }
+          />
         </button>
       </div>
     )
@@ -147,6 +220,7 @@ class DoctorManage extends Component {
 const mapStateToProps = (state) => {
   return {
     doctors: state.admin.doctors,
+    isSuccess: state.admin.isSuccess,
   }
 }
 

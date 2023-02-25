@@ -152,6 +152,20 @@ const getDetailDoctorById = async (doctorId) => {
     console.log(error)
   }
 }
+
+const handleUpdateInfoDoctorById = async (doctorInfo) => {
+  try {
+    const options = {
+      method: 'put',
+      url: '/api/update-info-doctor',
+      data: doctorInfo,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleLoginApi,
   getAllUsers,
@@ -163,4 +177,5 @@ export {
   handleGetAllDoctors,
   handleCreateDoctorInfo,
   getDetailDoctorById,
+  handleUpdateInfoDoctorById,
 }

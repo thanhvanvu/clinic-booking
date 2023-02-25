@@ -71,7 +71,8 @@
       "title": "CREAR INFORMACIÓN DEL MÉDICO",
       "info": "Información",
       "select-doctor": "Seleccionar Médico",
-      "save": "Guardar"
+      "create": "Crear información",
+      "update": "Guardar cambio"
     }
   },
   "homepage": {

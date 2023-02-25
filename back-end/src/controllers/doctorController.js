@@ -86,9 +86,36 @@ const getDetailDoctorById = async (req, res) => {
     })
   }
 }
+
+const updateInfoDoctorById = async (req, res) => {
+  try {
+    // 1. get data from client
+    let doctorInfo = req.body
+    console.log(doctorInfo.doctorId)
+    if (!doctorInfo || !doctorInfo.doctorId) {
+      return res.status(200).json({
+        status: 'Fail',
+        errCode: '1',
+        message: 'Missing required parameters!',
+      })
+    }
+
+    // 2. send data to service
+    let response = await doctorService.updateInfoDoctorById(doctorInfo)
+
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
   createInfoDoctor: createInfoDoctor,
   getDetailDoctorById: getDetailDoctorById,
+  updateInfoDoctorById: updateInfoDoctorById,
 }

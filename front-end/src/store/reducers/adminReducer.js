@@ -9,6 +9,7 @@ const initialState = {
   users: [],
   createUserErrorMessage: [],
   doctors: [],
+  isSuccess: false,
 }
 
 const appReducer = (state = initialState, action) => {
@@ -140,8 +141,10 @@ const appReducer = (state = initialState, action) => {
       }
     //#endregion
 
+    //#region  CREATE DOCTOR INFORMATION
     case actionTypes.CREATE_DETAIL_DOCTOR_SUCCESS:
       // always make a copy of state, never modify the initial state directly
+      state.isSuccess = true
       return {
         ...state,
       }
@@ -149,6 +152,7 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
       }
+    //#endregion
     default:
       return state
   }

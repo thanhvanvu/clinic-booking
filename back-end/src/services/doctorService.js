@@ -149,9 +149,44 @@ const handleGetDetailDoctorById = async (doctorId) => {
   }
 }
 
+const updateInfoDoctorById = async (doctorInfo) => {
+  try {
+    const markdownInfo = await db.Markdown.findOne({
+      where: { doctorId: doctorInfo.doctorId },
+    })
+
+    console.log(markdownInfo)
+    // 4. update user
+    if (markdownInfo) {
+      await markdownInfo.set({
+        contentHTML: doctorInfo.contentHTML,
+        contentMarkdown: doctorInfo.contentMarkdown,
+        description: doctorInfo.description,
+      })
+
+      await markdownInfo.save()
+
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'Markdown Updated Successfully!',
+      }
+    } else {
+      return {
+        status: 'Fail',
+        errCode: 1,
+        message: 'Markdown not found!',
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   handleGetTopDoctor: handleGetTopDoctor,
   handleGetAllDoctors: handleGetAllDoctors,
   handleCreateInfoDoctor: handleCreateInfoDoctor,
   handleGetDetailDoctorById: handleGetDetailDoctorById,
+  updateInfoDoctorById: updateInfoDoctorById,
 }
