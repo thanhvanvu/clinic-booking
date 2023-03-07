@@ -2,15 +2,19 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import HeaderHomePage from '../../HomePage/HeaderHomePage'
-import { getDetailDoctorById } from '../../../services/userService'
 import { CommonUtils } from '../../../utils'
 import './DoctorDetail.scss'
+import DoctorSchedule from './DoctorSchedule'
+import * as actions from '../../../store/actions'
+import HomeFooter from '../../HomePage/HomeFooter'
+import { LANGUAGES } from '../../../utils'
 class DoctorDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
       previewImg: '',
       doctor: [],
+      doctorId: '',
     }
   }
 
@@ -21,21 +25,48 @@ class DoctorDetail extends Component {
       this.props.match.params.id
     ) {
       let doctorId = this.props.match.params.id
-      let response = await getDetailDoctorById(doctorId)
-
-      if (response && response.errCode === 0) {
-        this.setState({
-          previewImg: CommonUtils.convertBufferToBase64(response.data.image),
-          doctor: response.data,
-        })
-      }
+      this.props.getDetailDoctorByIdRedux(doctorId)
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.currentDoctor !== this.props.currentDoctor) {
+      let currentDoctor = this.props.currentDoctor
+      this.setState({
+        previewImg: CommonUtils.convertBufferToBase64(currentDoctor.image),
+        doctor: currentDoctor,
+      })
+    }
+  }
 
   render() {
     let doctor = this.state.doctor
+    let language = this.props.language
+    let title
+    if (doctor && doctor.positionData) {
+      if (LANGUAGES.VI === language) {
+        title =
+          doctor.positionData.valueVI +
+          ', ' +
+          doctor.firstName +
+          ' ' +
+          doctor.lastName
+      } else if (LANGUAGES.EN === language) {
+        title =
+          doctor.positionData.valueEN +
+          ', ' +
+          doctor.firstName +
+          ' ' +
+          doctor.lastName
+      } else {
+        title =
+          doctor.positionData.valueES +
+          ', ' +
+          doctor.firstName +
+          ' ' +
+          doctor.lastName
+      }
+    }
     return (
       <>
         {/* show header menu */}
@@ -51,15 +82,7 @@ class DoctorDetail extends Component {
               />
             </div>
             <div className="doctor-summary">
-              <div className="doctor-summary-title">
-                {doctor && doctor.positionData
-                  ? doctor.positionData.valueEN +
-                    ', ' +
-                    doctor.firstName +
-                    ' ' +
-                    doctor.lastName
-                  : ''}
-              </div>
+              <div className="doctor-summary-title">{title}</div>
               <div className="doctor-summary-content">
                 Nguyên Trưởng phòng chỉ đạo tuyến tại Bệnh viện Da liễu Trung
                 ương Bác sĩ từng công tác tại Bệnh viện Da liễu Trung ương
@@ -68,8 +91,11 @@ class DoctorDetail extends Component {
             </div>
           </div>
         </div>
-        <div className="doctor-appointment">
-          <div className="appointment wrapper"></div>
+        <div className="doctor-appointment wrapper">
+          <div className="doctor-schedule">
+            <DoctorSchedule doctor={this.state.doctor} />
+          </div>
+          <div className="doctor-clinic-information"></div>
         </div>
         <div className="doctor-information">
           {doctor && doctor.Markdown && doctor.Markdown.contentHTML && (
@@ -80,17 +106,24 @@ class DoctorDetail extends Component {
           )}
         </div>
         <div className="doctor-feedback"></div>
+        <HomeFooter />
       </>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    language: state.app.language,
+    currentDoctor: state.homepage.currentDoctor,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    getDetailDoctorByIdRedux: (userData) =>
+      dispatch(actions.getDetailDoctorByIdRedux(userData)),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorDetail)

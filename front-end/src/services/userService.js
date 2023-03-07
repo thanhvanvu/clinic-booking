@@ -166,6 +166,32 @@ const handleUpdateInfoDoctorById = async (doctorInfo) => {
     console.log(error)
   }
 }
+
+const handleSaveBulkSchedule = async (scheduleInfo) => {
+  try {
+    const options = {
+      method: 'post',
+      url: '/api/bulk-create-schedule',
+      data: scheduleInfo,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleGetScheduleByDoctorId = async (doctorId, date) => {
+  try {
+    const options = {
+      method: 'get',
+      url: `/api/get-schedule?doctorId=${doctorId}&date=${date}`,
+    }
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleLoginApi,
   getAllUsers,
@@ -178,4 +204,6 @@ export {
   handleCreateDoctorInfo,
   getDetailDoctorById,
   handleUpdateInfoDoctorById,
+  handleSaveBulkSchedule,
+  handleGetScheduleByDoctorId,
 }

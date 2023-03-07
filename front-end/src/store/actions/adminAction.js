@@ -77,7 +77,7 @@ export const fetchPositionFailed = () => ({
 })
 //#endregion
 
-//#region Fetch role
+//#region  Fetch role
 export const fetchRoleStart = () => {
   return async (dispatch, getState) => {
     try {
@@ -106,6 +106,38 @@ export const fetchRoleSuccess = (roleData) => ({
 
 export const fetchRoleFailed = () => ({
   type: actionTypes.FETCH_ROLE_FAILED,
+})
+//#endregion
+
+//#region  fetch Time
+export const fetchTimeStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      // dispatch({ type: actionTypes.FETCH_ROLE_START })
+
+      let response = await handleGetAllCode('TIME')
+
+      if (response && response.errCode === 0) {
+        dispatch(fetchTimeSuccess(response.type))
+      } else {
+        // if response is null
+        dispatch(fetchTimeFailed())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(fetchTimeFailed())
+    }
+  }
+}
+
+export const fetchTimeSuccess = (roleData) => ({
+  type: actionTypes.FETCH_ALL_TIME_SUCCESS,
+  data: roleData,
+})
+
+export const fetchTimeFailed = () => ({
+  type: actionTypes.FETCH_ALL_TIME_FAILED,
 })
 //#endregion
 

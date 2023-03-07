@@ -47,7 +47,7 @@ class Header extends Component {
   render() {
     // get states from redux
     const { language, userInfo } = this.props
-    console.log(this.state.menuApp)
+
     return (
       <div className="header-container">
         {/* thanh navigator */}

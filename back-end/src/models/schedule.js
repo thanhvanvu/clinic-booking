@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      // 1 row schedule has ONLY 1 timeType
+      // Foreinkey is defined in the source model Schedule
+      Schedule.belongsTo(models.Allcode, {
+        foreignKey: 'timeType',
+        targetKey: 'keyMap',
+        as: 'timeTypeData',
+      })
     }
   }
   Schedule.init(

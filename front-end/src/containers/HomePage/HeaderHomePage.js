@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './HeaderHomePage.scss'
 import { FormattedMessage } from 'react-intl'
 import { LANGUAGES } from '../../utils/constant'
 import { changeLanguageApp } from '../../store/actions/appActions'
-
+import { withRouter } from 'react-router'
 class HeaderHomePage extends Component {
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language)
   }
+
+  goBackToHomepage = () => {
+    const { history } = this.props
+    history.push('/home')
+  }
+
   render() {
     // get language from redux
     let language = this.props.language
@@ -19,7 +24,10 @@ class HeaderHomePage extends Component {
           <div className="home-header-content">
             <div className="left-content">
               <i className="fas fa-bars"></i>
-              <div className="header-logo"></div>
+              <div
+                className="header-logo"
+                onClick={() => this.goBackToHomepage()}
+              ></div>
             </div>
 
             <div className="center-content">
@@ -186,4 +194,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderHomePage)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HeaderHomePage)
+)

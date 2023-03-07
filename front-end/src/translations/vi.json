@@ -76,8 +76,22 @@
       "update": "Cập nhật thông tin"
     }
   },
+
   "homepage": {
     "read-more": "XEM THÊM",
-    "outstanding-doctor": "Bác sĩ nổi bật tuần qua"
+    "outstanding-doctor": {
+      "homepage-title": "Bác sĩ nổi bật tuần qua",
+      "schedule": "lịch khám",
+      "no-schedule": "Lịch khám hiện tại chưa có",
+      "free1": "Chọn",
+      "free2": "và đặt ( Phí đặt lịch 0đ )"
+    }
+  },
+
+  "manage-schedule": {
+    "title": "Quản Lý Kế Hoạch Khám Bệnh Của Bác Sĩ",
+    "select-doctor": "Chọn bác sĩ",
+    "select-date": "Chọn ngày",
+    "create": "Lưu lịch khám bệnh"
   }
 }

@@ -1,0 +1,68 @@
+.manage-schedule-container {
+  .manage-schedule-title {
+    margin-bottom: 20px;
+  }
+
+  .doctor-img {
+    display: flex;
+    justify-content: center;
+  }
+
+  .err-message {
+    color: red;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .schedule-hour {
+    width: 500px;
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+
+    .grid-item {
+      justify-content: center;
+      text-align: center;
+      width: 115px;
+      padding: 10px 0;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 10px;
+      background-color: #31a3ee;
+      color: white;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &.selected {
+        background-color: red;
+      }
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    .schedule-hour {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .save-button {
+    margin: 30px auto;
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    background-color: #0071ba;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #015b97;
+      transform: translateY(3px);
+    }
+  }
+}

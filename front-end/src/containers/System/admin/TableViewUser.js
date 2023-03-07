@@ -3,14 +3,8 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './TableViewUser.scss'
 import * as actions from '../../../store/actions'
-import MdEditor from 'react-markdown-editor-lite'
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css'
-
-// Finish!
-const handleEditorChange = ({ html, text }) => {
-  console.log('handleEditorChange', html, text)
-}
 
 class TableViewUser extends Component {
   constructor(props) {

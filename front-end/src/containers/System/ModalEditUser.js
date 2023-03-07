@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import './ModalAddNewUser.scss'
-import { emitter } from '../../utils/emitter'
 import _ from 'lodash'
 
 class ModalEditUser extends Component {

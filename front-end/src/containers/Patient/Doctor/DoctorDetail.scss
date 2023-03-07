@@ -27,6 +27,18 @@
 }
 
 .doctor-appointment {
+  margin: 0 auto;
+  margin-top: 30px;
+  display: flex;
+  .doctor-schedule {
+    width: 50%;
+    height: 200px;
+  }
+
+  .doctor-clinic-information {
+    width: 50%;
+    border-left: 1px solid #dddd;
+  }
 }
 
 .doctor-information {
@@ -35,6 +47,8 @@
   border-bottom: 1px solid #cccccc;
   padding: 20px 0;
   background-color: #f9f9f9;
+  // height: 100vh;
+
   .doctor-information-content {
     margin: 0 auto;
   }

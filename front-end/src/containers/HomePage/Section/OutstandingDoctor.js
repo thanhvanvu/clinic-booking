@@ -25,7 +25,9 @@ class OutstandingDoctor extends Component {
   }
 
   handleViewDetailDoctor = (doctor) => {
-    this.props.history.push(`/detail-doctor/${doctor.id}`)
+    const { history } = this.props
+
+    history.push(`/detail-doctor/${doctor.id}`)
   }
   render() {
     let settings = this.props.settings
@@ -36,7 +38,7 @@ class OutstandingDoctor extends Component {
         <div className="section-content">
           <div className="section-header">
             <span className="header-text">
-              <FormattedMessage id="homepage.outstanding-doctor" />
+              <FormattedMessage id="homepage.outstanding-doctor.homepage-title" />
             </span>
             <button className="btn-more">
               <FormattedMessage id="homepage.read-more" />

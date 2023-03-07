@@ -55,6 +55,7 @@ class DoctorManage extends Component {
         object.value = doctor.id
         object.image = imageBase64
         result.push(object)
+        return result
       })
     }
     return result

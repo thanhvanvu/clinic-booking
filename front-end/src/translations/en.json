@@ -79,6 +79,19 @@
 
   "homepage": {
     "read-more": "READ MORE",
-    "outstanding-doctor": "Outstanding doctors last week"
+    "outstanding-doctor": {
+      "homepage-title": "Outstanding doctors last week",
+      "schedule": "Schedule",
+      "no-schedule": "Schedule is not available",
+      "free1": "Pick",
+      "free2": "and reserve ( fee $0 )"
+    }
+  },
+
+  "manage-schedule": {
+    "title": "Doctor Schedule Management",
+    "select-doctor": "Select doctor",
+    "select-date": "Select date",
+    "create": "Save Schedule"
   }
 }

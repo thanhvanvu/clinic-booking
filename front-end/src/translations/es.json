@@ -78,6 +78,19 @@
   },
   "homepage": {
     "read-more": "LEER MÁS",
-    "outstanding-doctor": "Doctores destacados la semana pasada"
+    "outstanding-doctor": {
+      "homepage-title": "Doctores destacados la semana pasada",
+      "schedule": "Cronograma",
+      "no-schedule": "El horario no está disponible",
+      "free1": "Elegir",
+      "free2": "y reserva (tarifa $0)"
+    }
+  },
+
+  "manage-schedule": {
+    "title": "Gestión De Horarios Médicos",
+    "select-doctor": "Seleccionar médico",
+    "select-date": "Seleccione fecha",
+    "create": "Guardar programa"
   }
 }

@@ -110,6 +110,57 @@ const updateInfoDoctorById = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
+
+const bulkCreateSchedule = async (req, res) => {
+  try {
+    let scheduleInfo = req.body
+
+    let response = await doctorService.handleBulkCreateSchedule(scheduleInfo)
+
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
+
+const getScheduleByDoctorId = async (req, res) => {
+  try {
+    let doctorId = req.query.doctorId
+    let date = req.query.date
+
+    let response = await doctorService.handleGetScheduleByDoctorId(
+      doctorId,
+      date
+    )
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+      data: response.data,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
   }
 }
 module.exports = {
@@ -118,4 +169,6 @@ module.exports = {
   createInfoDoctor: createInfoDoctor,
   getDetailDoctorById: getDetailDoctorById,
   updateInfoDoctorById: updateInfoDoctorById,
+  bulkCreateSchedule: bulkCreateSchedule,
+  getScheduleByDoctorId: getScheduleByDoctorId,
 }

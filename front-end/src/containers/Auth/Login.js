@@ -58,6 +58,12 @@ class Login extends Component {
     this.setState({ hidePassword: !this.state.hidePassword })
   }
 
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.handleLogin()
+    }
+  }
+
   render() {
     return (
       <div className="login-background">
@@ -66,7 +72,7 @@ class Login extends Component {
             <div className="col-12 text-login">Login</div>
 
             <div
-              className="col-12 error-message"
+              className="col-12 error-message-login"
               value={this.state.errorMessage}
             >
               {this.state.errorMessage}
@@ -81,6 +87,7 @@ class Login extends Component {
                 type="text"
                 placeholder="Enter your email"
                 className="form-control"
+                onKeyDown={(event) => this.handleKeyDown(event)}
               ></input>
             </div>
 
@@ -94,6 +101,7 @@ class Login extends Component {
                   type={this.state.hidePassword ? 'password' : 'text'}
                   placeholder="Enter your password"
                   className="form-control"
+                  onKeyDown={(event) => this.handleKeyDown(event)}
                 ></input>
                 <span onClick={() => this.hidePassword()}>
                   <i
@@ -112,6 +120,7 @@ class Login extends Component {
                 type="submit"
                 className="login-button"
                 onClick={() => this.handleLogin()}
+                onKeyDown={(event) => this.handleKeyDown(event)}
               >
                 Login
               </button>

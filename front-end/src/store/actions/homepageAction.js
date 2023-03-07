@@ -1,7 +1,8 @@
 import actionTypes from './actionTypes'
-import { handleGetTopDoctors } from '../../services/userService'
-
-import { toast } from 'react-toastify'
+import {
+  handleGetTopDoctors,
+  getDetailDoctorById,
+} from '../../services/userService'
 
 export const fetchTopDoctors = () => {
   return async (dispatch, getState) => {
@@ -29,4 +30,32 @@ export const fetchTopDoctorsSuccess = (doctorsData) => ({
 
 export const fetchTopDoctorsFail = () => ({
   type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
+})
+
+export const getDetailDoctorByIdRedux = (doctorId) => {
+  return async (dispatch, getState) => {
+    try {
+      let response = await getDetailDoctorById(doctorId)
+      let doctorData = response.data
+      if (response && response.errCode === 0) {
+        dispatch(getDetailDoctorByIdSuccess(doctorData))
+      } else {
+        // if response is null
+        dispatch(getDetailDoctorByIdFailed())
+      }
+    } catch (error) {
+      // case call APi fail
+      console.log(error)
+      dispatch(getDetailDoctorByIdFailed())
+    }
+  }
+}
+
+export const getDetailDoctorByIdSuccess = (doctorData) => ({
+  type: actionTypes.GET_CURRENT_DOCTOR_SUCCESS,
+  data: doctorData,
+})
+
+export const getDetailDoctorByIdFailed = () => ({
+  type: actionTypes.GET_CURRENT_DOCTOR_FAILED,
 })

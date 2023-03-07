@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import HeaderHomePage from './HeaderHomePage'
 import Specialist from './Section/Specialist'
@@ -13,6 +12,22 @@ import About from './Section/About'
 import HomeFooter from './HomeFooter'
 
 class HomePage extends Component {
+  componentDidMount() {
+    // Listen for changes in the browser history
+    window.addEventListener('popstate', this.handlePopstate)
+  }
+
+  componentWillUnmount() {
+    // Remove the popstate event listener when the component unmounts
+    window.removeEventListener('popstate', this.handlePopstate)
+  }
+
+  handlePopstate = () => {
+    // Prevent the user from going back to any route when on the homepage
+    if (window.location.pathname === '/') {
+      window.history.pushState(null, null, '/')
+    }
+  }
   render() {
     let settings = {
       dots: false,
@@ -21,6 +36,7 @@ class HomePage extends Component {
       slidesToShow: 4,
       slidesToScroll: 2,
     }
+
     return (
       <div>
         <HeaderHomePage isShowBanner={true} />

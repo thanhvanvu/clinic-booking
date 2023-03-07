@@ -5,6 +5,7 @@ const initialState = {
   genders: [],
   positions: [],
   roles: [],
+  allTime: [],
   isCreateUserSuccess: '',
   users: [],
   createUserErrorMessage: [],
@@ -79,6 +80,24 @@ const appReducer = (state = initialState, action) => {
         ...state,
       }
     case actionTypes.FETCH_ROLE_FAILED:
+      state.isLoading = false
+      return {
+        ...state,
+      }
+    //#endregion
+
+    //#region  FETCH TIME
+    case actionTypes.FETCH_ALL_TIME_SUCCESS:
+      let timeArr = action.data
+
+      // always make a copy of state, never modify the initial state directly
+      state.allTime = timeArr
+
+      state.isLoading = false
+      return {
+        ...state,
+      }
+    case actionTypes.FETCH_ALL_TIME_FAILED:
       state.isLoading = false
       return {
         ...state,
