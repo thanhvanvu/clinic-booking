@@ -1,5 +1,6 @@
 .doctor-manage-container {
   padding: 10px;
+  margin: 0 auto;
 
   .doctor-manage {
     text-align: center;
@@ -32,6 +33,14 @@
     }
   }
 
+  .clinic-info {
+    margin: 0 auto;
+    padding-left: 0;
+
+    .form-group {
+      padding-left: 0;
+    }
+  }
   .doctor-manage-editor {
   }
 

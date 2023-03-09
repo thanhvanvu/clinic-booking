@@ -289,6 +289,7 @@ class UserRedux extends Component {
     let genders = this.state.genderArr
     let positions = this.state.positionArr
     let roles = this.state.roleArr
+    console.log(this.state.inputValid)
 
     return (
       <div className="user-redux-container">

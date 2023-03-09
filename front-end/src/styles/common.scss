@@ -19,3 +19,8 @@
 .wrapper {
   width: 1170px;
 }
+
+.invalid {
+  border: 1px solid red;
+  animation: shake 0.5s;
+}

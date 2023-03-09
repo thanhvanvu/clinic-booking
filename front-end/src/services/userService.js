@@ -192,6 +192,34 @@ const handleGetScheduleByDoctorId = async (doctorId, date) => {
     console.log(error)
   }
 }
+
+const handleGetDoctorClinicInfo = async (doctorId) => {
+  try {
+    const options = {
+      method: 'get',
+      url: `/api/get-doctor-clinic-info?doctorId=${doctorId}`,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleCreateDoctorClinicInfo = async (ClinicInfo) => {
+  try {
+    console.log('service', ClinicInfo)
+    const options = {
+      method: 'post',
+      url: '/api/create-doctor-clinic-info',
+      data: ClinicInfo,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleLoginApi,
   getAllUsers,
@@ -206,4 +234,6 @@ export {
   handleUpdateInfoDoctorById,
   handleSaveBulkSchedule,
   handleGetScheduleByDoctorId,
+  handleGetDoctorClinicInfo,
+  handleCreateDoctorClinicInfo,
 }

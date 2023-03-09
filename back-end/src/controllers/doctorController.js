@@ -91,7 +91,6 @@ const updateInfoDoctorById = async (req, res) => {
   try {
     // 1. get data from client
     let doctorInfo = req.body
-    console.log(doctorInfo.doctorId)
     if (!doctorInfo || !doctorInfo.doctorId) {
       return res.status(200).json({
         status: 'Fail',
@@ -163,6 +162,65 @@ const getScheduleByDoctorId = async (req, res) => {
     })
   }
 }
+
+const getDoctorClinicInfoById = async (req, res) => {
+  try {
+    let doctorId = req.query.doctorId
+    if (!doctorId) {
+      return res.status(200).json({
+        status: 'Fail',
+        errCode: '1',
+        message: 'Missing required parameters!',
+      })
+    }
+    let response = await doctorService.handleGetDoctorClinicInfoById(doctorId)
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+      data: response.data,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
+
+const createDoctorClinicInfo = async (req, res) => {
+  try {
+    let doctor_clinic_info = req.body
+    console.log('data', doctor_clinic_info)
+    if (!doctor_clinic_info) {
+      return res.status(200).json({
+        status: 'Fail',
+        errCode: '1',
+        message: 'Missing required parameters!',
+      })
+    }
+
+    let response = await doctorService.handleCreateDoctorClinicInfo(
+      doctor_clinic_info
+    )
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const updateDoctorClinicInfo = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
@@ -171,4 +229,7 @@ module.exports = {
   updateInfoDoctorById: updateInfoDoctorById,
   bulkCreateSchedule: bulkCreateSchedule,
   getScheduleByDoctorId: getScheduleByDoctorId,
+  getDoctorClinicInfoById: getDoctorClinicInfoById,
+  createDoctorClinicInfo: createDoctorClinicInfo,
+  updateDoctorClinicInfo: updateDoctorClinicInfo,
 }
