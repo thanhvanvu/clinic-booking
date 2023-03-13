@@ -28,6 +28,27 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'timeType',
         as: 'timeTypeData',
       })
+
+      // 1 CITY has MANY doctorInfo (allCode hasMany doctorInfo)
+      // the foreign key being defined in the target model doctorInfo
+      Allcode.hasMany(models.DoctorInfo, {
+        foreignKey: 'cityId',
+        as: 'cityData',
+      })
+
+      // 1 PRICE has MANY doctorInfo (allCode hasMany doctorInfo)
+      // the foreign key being defined in the target model doctorInfo
+      Allcode.hasMany(models.DoctorInfo, {
+        foreignKey: 'priceId',
+        as: 'priceData',
+      })
+
+      // 1 PAYMENT has MANY doctorInfo (allCode hasMany doctorInfo)
+      // the foreign key being defined in the target model doctorInfo
+      Allcode.hasMany(models.DoctorInfo, {
+        foreignKey: 'paymentId',
+        as: 'paymentData',
+      })
     }
   }
   Allcode.init(

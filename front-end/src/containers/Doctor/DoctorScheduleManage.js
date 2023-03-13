@@ -251,7 +251,7 @@ class DoctorScheduleManage extends Component {
               <input
                 className="form-control"
                 type="date"
-                // min={new Date().toISOString().split('T')[0]}
+                min={new Date().toISOString().split('T')[0]}
                 value={this.state.date}
                 name="date"
                 onChange={(event) => this.handleOnchangeInput(event)}

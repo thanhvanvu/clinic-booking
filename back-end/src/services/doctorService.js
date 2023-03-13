@@ -9,7 +9,7 @@ const handleGetTopDoctor = async (limitRecord) => {
   try {
     const doctors = await db.User.findAll({
       limit: limitRecord,
-      order: [['createdAt', 'DESC']],
+      // order: [['createdAt', 'DESC']],
       attributes: {
         exclude: ['password'],
       },
@@ -78,7 +78,8 @@ const handleCreateInfoDoctor = async (doctorInfo) => {
     if (
       doctorInfo.doctorId === '' ||
       doctorInfo.contentHTML === '' ||
-      doctorInfo.contentMarkDown === ''
+      doctorInfo.contentMarkDown === '' ||
+      doctorInfo.description === ''
     ) {
       return {
         status: 'Fail',
@@ -135,6 +136,27 @@ const handleGetDetailDoctorById = async (doctorId) => {
 
           {
             model: db.Markdown,
+          },
+
+          {
+            model: db.DoctorInfo,
+            include: [
+              {
+                model: db.Allcode,
+                as: 'paymentData',
+                attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+              {
+                model: db.Allcode,
+                as: 'cityData',
+                attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+              {
+                model: db.Allcode,
+                as: 'priceData',
+                attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+            ],
           },
         ],
         nest: true,

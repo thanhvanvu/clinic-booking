@@ -72,6 +72,12 @@
       "title": "Tạo thông tin bác sĩ",
       "info": "Thông tin",
       "select-doctor": "Chọn bác sĩ",
+      "clinic-name": "Tên phòng khám",
+      "clinic-address": "Địa chỉ phòng khám",
+      "city": "Thành phố",
+      "price": "Chọn giá",
+      "referral-payment": "Phương thức thanh toán",
+      "note": "Ghi chú",
       "create": "Tạo thông tin",
       "update": "Cập nhật thông tin"
     }

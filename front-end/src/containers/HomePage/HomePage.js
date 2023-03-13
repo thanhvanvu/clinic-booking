@@ -12,21 +12,26 @@ import About from './Section/About'
 import HomeFooter from './HomeFooter'
 
 class HomePage extends Component {
+  state = {
+    scrollPos: 0,
+  }
+  handleScroll = () => {
+    this.setState({ scrollPos: window.pageYOffset })
+  }
   componentDidMount() {
-    // Listen for changes in the browser history
-    window.addEventListener('popstate', this.handlePopstate)
+    window.addEventListener('scroll', this.handleScroll)
+  }
+
+  componentDidUpdate() {
+    window.scrollTo(0, this.state.scrollPos)
   }
 
   componentWillUnmount() {
-    // Remove the popstate event listener when the component unmounts
-    window.removeEventListener('popstate', this.handlePopstate)
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
-  handlePopstate = () => {
-    // Prevent the user from going back to any route when on the homepage
-    if (window.location.pathname === '/') {
-      window.history.pushState(null, null, '/')
-    }
+  handleScroll = () => {
+    this.setState({ scrollPos: window.pageYOffset })
   }
   render() {
     let settings = {
@@ -37,6 +42,7 @@ class HomePage extends Component {
       slidesToScroll: 2,
     }
 
+    console.log(this.state.scrollPos)
     return (
       <div>
         <HeaderHomePage isShowBanner={true} />

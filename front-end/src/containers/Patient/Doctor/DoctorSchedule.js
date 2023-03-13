@@ -71,7 +71,6 @@ class DoctorSchedule extends Component {
             hourArr = hourArr.filter((hour) => {
               let timeRange = hour.timeTypeData.valueEN
               let time = parseInt(timeRange.split('-')[0].split(':')[0])
-              console.log(time)
               if (time > currentTime) {
                 return true
               }

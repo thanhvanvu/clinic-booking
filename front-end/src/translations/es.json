@@ -72,6 +72,12 @@
       "title": "CREAR INFORMACIÓN DEL MÉDICO",
       "info": "Información",
       "select-doctor": "Seleccionar Médico",
+      "clinic-name": "Nombre de la clínica",
+      "clinic-address": "Dirección de la clínica",
+      "city": "Ciudad",
+      "price": "Precio",
+      "referral-payment": "Pago de referencia",
+      "note": "Nota",
       "create": "Crear información",
       "update": "Guardar cambio"
     }

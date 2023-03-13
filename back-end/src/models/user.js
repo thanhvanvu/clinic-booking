@@ -31,6 +31,12 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Markdown, {
         foreignKey: 'doctorId',
       })
+
+      // 1 doctor(user) has ONLY 1 clinic info)
+      // the foreign key being defined in the target model doctorInfo
+      User.hasOne(models.DoctorInfo, {
+        foreignKey: 'doctorId',
+      })
     }
   }
   User.init(

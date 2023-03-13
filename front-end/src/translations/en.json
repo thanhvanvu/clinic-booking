@@ -72,6 +72,12 @@
       "title": "CREATE DOCTOR INFORMATION",
       "info": "Information",
       "select-doctor": "Select Doctor",
+      "clinic-name": "Clinic name",
+      "clinic-address": "Clinic address",
+      "city": "City",
+      "price": "Price",
+      "referral-payment": "Referral payment",
+      "note": "Note",
       "create": "Create information",
       "update": "Save change"
     }

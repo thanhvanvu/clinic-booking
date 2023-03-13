@@ -50,6 +50,7 @@ const getAllDoctors = async (req, res) => {
 const createInfoDoctor = async (req, res) => {
   try {
     let infoData = req.body
+    console.log(infoData)
     let response = await doctorService.handleCreateInfoDoctor(infoData)
     return res.status(200).json({
       errCode: response.errCode,

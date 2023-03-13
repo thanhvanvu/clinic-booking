@@ -139,6 +139,7 @@ class DoctorManage extends Component {
   handleSelectedDoctor = async (selectedDoctor) => {
     let doctorId = selectedDoctor.value
     let response = await getDetailDoctorById(doctorId)
+    console.log(response)
     if (
       response &&
       response.errCode === 0 &&
@@ -348,6 +349,7 @@ class DoctorManage extends Component {
         contentMarkdown: true,
       },
       markdown: {
+        ...this.state.markdown,
         contentMarkdown: text,
         contentHTML: html,
       },
@@ -359,7 +361,7 @@ class DoctorManage extends Component {
     let paymentArr = this.state.paymentArr
     let priceArr = this.state.priceArr
     let currentLanguage = this.props.language
-    console.log(this.state.doctorClinicInfo)
+    console.log(this.state.markdown)
     return (
       <div className="doctor-manage-container wrapper">
         <div className="doctor-manage title">
@@ -406,7 +408,9 @@ class DoctorManage extends Component {
 
         <div className="clinic-info row wrapper">
           <div className="col-4 form-group">
-            <label className="content-label">Tên phòng khám</label>
+            <label className="content-label">
+              <FormattedMessage id="manage-user-redux.doctor-manage.clinic-name" />
+            </label>
             <input
               className={
                 this.state.inputValidDoctorInfo.clinicName === false
@@ -419,7 +423,9 @@ class DoctorManage extends Component {
             />
           </div>
           <div className="col-8 form-group">
-            <label className="content-label">Địa chỉ phòng khám</label>
+            <label className="content-label">
+              <FormattedMessage id="manage-user-redux.doctor-manage.clinic-address" />
+            </label>
             <input
               className={
                 this.state.inputValidDoctorInfo.clinicAddress === false
@@ -432,7 +438,9 @@ class DoctorManage extends Component {
             />
           </div>
           <div className="col-4 form-group">
-            <label className="content-label">Thành phố</label>
+            <label className="content-label">
+              <FormattedMessage id="manage-user-redux.doctor-manage.city" />
+            </label>
             <select
               className={
                 this.state.inputValidDoctorInfo.selectedCity === false
@@ -462,7 +470,9 @@ class DoctorManage extends Component {
             </select>
           </div>
           <div className="col-4 form-group">
-            <label className="content-label">Chọn giá</label>
+            <label className="content-label">
+              <FormattedMessage id="manage-user-redux.doctor-manage.price" />
+            </label>
             <select
               className={
                 this.state.inputValidDoctorInfo.selectedPrice === false
@@ -492,7 +502,9 @@ class DoctorManage extends Component {
             </select>
           </div>
           <div className="col-4 form-group">
-            <label className="content-label">Phương thức thanh toán</label>
+            <label className="content-label">
+              <FormattedMessage id="manage-user-redux.doctor-manage.referral-payment" />
+            </label>
             <select
               className={
                 this.state.inputValidDoctorInfo.selectedPayment === false
@@ -522,7 +534,9 @@ class DoctorManage extends Component {
             </select>
           </div>
           <div className="col-12 form-group">
-            <label className="content-label">Lưu chú</label>
+            <label className="content-label">
+              <FormattedMessage id="manage-user-redux.doctor-manage.note" />
+            </label>
             <input
               className="form-control"
               name="note"

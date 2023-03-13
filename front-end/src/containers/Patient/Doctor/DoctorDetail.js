@@ -84,9 +84,10 @@ class DoctorDetail extends Component {
             <div className="doctor-summary">
               <div className="doctor-summary-title">{title}</div>
               <div className="doctor-summary-content">
-                Nguyên Trưởng phòng chỉ đạo tuyến tại Bệnh viện Da liễu Trung
-                ương Bác sĩ từng công tác tại Bệnh viện Da liễu Trung ương
-                Nguyên Tổng Thư ký Hiệp hội Da liễu Việt Nam
+                {doctor &&
+                  doctor.Markdown &&
+                  doctor.Markdown.description &&
+                  doctor.Markdown.description}
               </div>
             </div>
           </div>
