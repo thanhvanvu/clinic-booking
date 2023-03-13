@@ -90,7 +90,13 @@
       "schedule": "lịch khám",
       "no-schedule": "Lịch khám hiện tại chưa có",
       "free1": "Chọn",
-      "free2": "và đặt ( Phí đặt lịch 0đ )"
+      "free2": "và đặt ( Phí đặt lịch 0đ )",
+      "address-label": "địa chỉ khám",
+      "price": "giá khám: ",
+      "priority-booking": "Được ưu tiên khám trước khi đặt khám qua HealthCare Consultancy",
+      "payment": "Hình thức thanh toán: ",
+      "show-detail": "xem chi tiết",
+      "hide-detail": "ẩn bảng giá"
     }
   },
 

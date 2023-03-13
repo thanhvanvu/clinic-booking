@@ -1,0 +1,85 @@
+.clinic-information {
+  .address-label {
+    text-transform: uppercase;
+    color: #747774;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .clinic-name {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+
+  .clinic-address {
+    margin-top: 5px;
+  }
+}
+
+.price-information {
+  border-top: 1px solid #cccccc;
+  margin-top: 10px;
+  padding-top: 10px;
+
+  .price-label {
+    text-transform: uppercase;
+    color: #747774;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 0;
+
+    span {
+      color: black;
+      font-weight: lighter;
+    }
+
+    .open-price-info {
+      text-transform: capitalize;
+      margin-left: 10px;
+      cursor: pointer;
+      color: #3299ff;
+    }
+  }
+}
+
+.price-information-extend {
+  margin-top: 10px;
+
+  // padding: 5px;
+  .content-up {
+    border: 1px solid #cccccc;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #cccccc;
+
+    .price-extend {
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      text-transform: capitalize;
+      font-size: 16px;
+    }
+
+    .priority-booking {
+      padding: 0 5px;
+      padding-bottom: 5px;
+      color: #878687;
+    }
+  }
+
+  .content-down:not(span) {
+    border: 1px solid #cccccc;
+    border-top: none;
+    padding: 10px 5px 10px 5px;
+    background-color: #eeeeee;
+    text-transform: capitalize;
+    font-size: 16px;
+  }
+}
+
+.hide-price-info {
+  text-transform: capitalize;
+  font-size: 16px;
+  cursor: pointer;
+  color: #3299ff;
+  margin-top: 10px;
+}

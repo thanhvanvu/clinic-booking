@@ -90,7 +90,13 @@
       "schedule": "Schedule",
       "no-schedule": "Schedule is not available",
       "free1": "Pick",
-      "free2": "and reserve ( fee $0 )"
+      "free2": "and reserve ( fee $0 )",
+      "address-label": "clinic address",
+      "price": "price: ",
+      "priority-booking": "Priority access before booking through HealthCare Consultancy",
+      "payment": "Payment: ",
+      "show-detail": "show detail",
+      "hide-detail": "hide detail"
     }
   },
 

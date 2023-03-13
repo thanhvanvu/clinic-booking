@@ -206,13 +206,26 @@ const handleGetDoctorClinicInfo = async (doctorId) => {
   }
 }
 
-const handleCreateDoctorClinicInfo = async (ClinicInfo) => {
+const handleCreateDoctorClinicInfo = async (clinicInfo) => {
   try {
-    console.log('service', ClinicInfo)
     const options = {
       method: 'post',
       url: '/api/create-doctor-clinic-info',
-      data: ClinicInfo,
+      data: clinicInfo,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleUpdateDoctorClinicInfo = async (clinicInfo) => {
+  try {
+    const options = {
+      method: 'put',
+      url: '/api/update-doctor-clinic-info',
+      data: clinicInfo,
     }
 
     return await axios(options)
@@ -236,4 +249,5 @@ export {
   handleGetScheduleByDoctorId,
   handleGetDoctorClinicInfo,
   handleCreateDoctorClinicInfo,
+  handleUpdateDoctorClinicInfo,
 }

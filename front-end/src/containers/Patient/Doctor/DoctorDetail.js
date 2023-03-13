@@ -5,6 +5,7 @@ import HeaderHomePage from '../../HomePage/HeaderHomePage'
 import { CommonUtils } from '../../../utils'
 import './DoctorDetail.scss'
 import DoctorSchedule from './DoctorSchedule'
+import DoctorClinicInfo from './DoctorClinicInfo'
 import * as actions from '../../../store/actions'
 import HomeFooter from '../../HomePage/HomeFooter'
 import { LANGUAGES } from '../../../utils'
@@ -67,6 +68,7 @@ class DoctorDetail extends Component {
           doctor.lastName
       }
     }
+
     return (
       <>
         {/* show header menu */}
@@ -96,7 +98,9 @@ class DoctorDetail extends Component {
           <div className="doctor-schedule">
             <DoctorSchedule doctor={this.state.doctor} />
           </div>
-          <div className="doctor-clinic-information"></div>
+          <div className="doctor-clinic-information">
+            <DoctorClinicInfo doctor={this.state.doctor} />
+          </div>
         </div>
         <div className="doctor-information">
           {doctor && doctor.Markdown && doctor.Markdown.contentHTML && (

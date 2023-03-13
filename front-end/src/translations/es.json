@@ -89,7 +89,13 @@
       "schedule": "Cronograma",
       "no-schedule": "El horario no está disponible",
       "free1": "Elegir",
-      "free2": "y reserva (tarifa $0)"
+      "free2": "y reserva (tarifa $0)",
+      "address-label": "dirección de la clínica",
+      "price": "precio: ",
+      "priority-booking": "Acceso prioritario antes de reservar a través de HealthCare Consultancy",
+      "payment": "Pagos: ",
+      "show-detail": "mostrar detalle",
+      "hide-detail": "ocultar detalle"
     }
   },
 

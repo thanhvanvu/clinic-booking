@@ -373,6 +373,43 @@ const handleCreateDoctorClinicInfo = async (doctor_clinic_info) => {
   }
 }
 
+const handleUpdateDoctorClinicInfo = async (doctorClinicInfo) => {
+  try {
+    const clinicInfo = await db.DoctorInfo.findOne({
+      where: { doctorId: doctorClinicInfo.doctorId },
+    })
+
+    console.log('service', clinicInfo)
+
+    if (clinicInfo) {
+      await clinicInfo.set({
+        doctorId: doctorClinicInfo.doctorId,
+        priceId: doctorClinicInfo.priceId,
+        cityId: doctorClinicInfo.cityId,
+        paymentId: doctorClinicInfo.paymentId,
+        addressClinic: doctorClinicInfo.addressClinic,
+        nameClinic: doctorClinicInfo.nameClinic,
+      })
+
+      await clinicInfo.save()
+
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'Clinic Information Updated Successfully!',
+      }
+    } else {
+      return {
+        status: 'Fail',
+        errCode: 1,
+        message: 'Clinic Information not found!',
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   handleGetTopDoctor: handleGetTopDoctor,
   handleGetAllDoctors: handleGetAllDoctors,
@@ -383,4 +420,5 @@ module.exports = {
   handleGetScheduleByDoctorId: handleGetScheduleByDoctorId,
   handleGetDoctorClinicInfoById: handleGetDoctorClinicInfoById,
   handleCreateDoctorClinicInfo: handleCreateDoctorClinicInfo,
+  handleUpdateDoctorClinicInfo: handleUpdateDoctorClinicInfo,
 }

@@ -12,27 +12,6 @@ import About from './Section/About'
 import HomeFooter from './HomeFooter'
 
 class HomePage extends Component {
-  state = {
-    scrollPos: 0,
-  }
-  handleScroll = () => {
-    this.setState({ scrollPos: window.pageYOffset })
-  }
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
-  }
-
-  componentDidUpdate() {
-    window.scrollTo(0, this.state.scrollPos)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  handleScroll = () => {
-    this.setState({ scrollPos: window.pageYOffset })
-  }
   render() {
     let settings = {
       dots: false,
@@ -42,7 +21,6 @@ class HomePage extends Component {
       slidesToScroll: 2,
     }
 
-    console.log(this.state.scrollPos)
     return (
       <div>
         <HeaderHomePage isShowBanner={true} />

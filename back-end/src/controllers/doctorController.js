@@ -50,7 +50,6 @@ const getAllDoctors = async (req, res) => {
 const createInfoDoctor = async (req, res) => {
   try {
     let infoData = req.body
-    console.log(infoData)
     let response = await doctorService.handleCreateInfoDoctor(infoData)
     return res.status(200).json({
       errCode: response.errCode,
@@ -194,7 +193,6 @@ const getDoctorClinicInfoById = async (req, res) => {
 const createDoctorClinicInfo = async (req, res) => {
   try {
     let doctor_clinic_info = req.body
-    console.log('data', doctor_clinic_info)
     if (!doctor_clinic_info) {
       return res.status(200).json({
         status: 'Fail',
@@ -213,13 +211,42 @@ const createDoctorClinicInfo = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
   }
 }
 
 const updateDoctorClinicInfo = async (req, res) => {
   try {
+    let doctorClinicInfo = req.body
+    console.log(doctorClinicInfo)
+    if (!doctorClinicInfo) {
+      return res.status(200).json({
+        status: 'Fail',
+        errCode: '1',
+        message: 'Missing required parameters!',
+      })
+    }
+
+    let response = await doctorService.handleUpdateDoctorClinicInfo(
+      doctorClinicInfo
+    )
+
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+    })
   } catch (error) {
     console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
   }
 }
 module.exports = {

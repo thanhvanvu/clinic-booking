@@ -15,6 +15,7 @@ import {
   handleGetAllCode,
   handleGetDoctorClinicInfo,
   handleCreateDoctorClinicInfo,
+  handleUpdateDoctorClinicInfo,
 } from '../../../services/userService'
 import { toast } from 'react-toastify'
 
@@ -139,7 +140,6 @@ class DoctorManage extends Component {
   handleSelectedDoctor = async (selectedDoctor) => {
     let doctorId = selectedDoctor.value
     let response = await getDetailDoctorById(doctorId)
-    console.log(response)
     if (
       response &&
       response.errCode === 0 &&
@@ -204,8 +204,8 @@ class DoctorManage extends Component {
   }
 
   handleDoctorManage = async () => {
-    this.handleCreateUpdateClinic()
     this.handleCreateUpdateMarkdown()
+    this.handleCreateUpdateClinic()
   }
 
   handleCreateUpdateMarkdown = async () => {
@@ -268,6 +268,8 @@ class DoctorManage extends Component {
     if (this.state.hasOldClinicInfo === false) {
       // check validate
       let isValid = this.checkValidateInput(this.state.doctorClinicInfo)
+
+      // create clinic info
       if (isValid[1] === true && this.state.selectedDoctor.value) {
         let doctorClinicInfo = this.state.doctorClinicInfo
         let response = await handleCreateDoctorClinicInfo({
@@ -308,7 +310,51 @@ class DoctorManage extends Component {
         })
       }
     } else if (this.state.hasOldClinicInfo === true) {
-      console.log('need to update')
+      // check validate
+      let isValid = this.checkValidateInput(this.state.doctorClinicInfo)
+
+      // UPDATE clinic info
+      if (isValid[1] === true && this.state.selectedDoctor.value) {
+        let doctorClinicInfo = this.state.doctorClinicInfo
+        let response = await handleUpdateDoctorClinicInfo({
+          doctorId: this.state.selectedDoctor.value,
+          priceId: doctorClinicInfo.selectedPrice,
+          cityId: doctorClinicInfo.selectedCity,
+          paymentId: doctorClinicInfo.selectedPayment,
+          addressClinic: doctorClinicInfo.clinicAddress,
+          nameClinic: doctorClinicInfo.clinicName,
+        })
+
+        console.log(response)
+        if (response && response.errCode === 0) {
+          toast.success('Update a doctor information successfully!')
+
+          // reset input
+          this.setState({
+            markdown: {
+              contentMarkdown: '',
+              contentHTML: '',
+              description: '',
+            },
+            doctorClinicInfo: {
+              selectedCity: '',
+              selectedPrice: '',
+              clinicName: '',
+              clinicAddress: '',
+              note: '',
+              selectedPayment: '',
+            },
+            previewImg: '',
+            selectedDoctor: '',
+            hasOldDataMarkdow: false,
+            hasOldClinicInfo: false,
+          })
+        }
+      } else {
+        this.setState({
+          inputValidDoctorInfo: isValid[0],
+        })
+      }
     }
   }
 
@@ -361,7 +407,6 @@ class DoctorManage extends Component {
     let paymentArr = this.state.paymentArr
     let priceArr = this.state.priceArr
     let currentLanguage = this.props.language
-    console.log(this.state.markdown)
     return (
       <div className="doctor-manage-container wrapper">
         <div className="doctor-manage title">
