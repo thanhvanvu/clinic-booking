@@ -1,0 +1,24 @@
+.doctor-detail-container {
+  .doctor-detail-summary {
+    margin: 0 auto;
+    display: flex;
+    gap: 30px;
+    .doctor-image {
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    .doctor-summary {
+      width: 50%;
+      .doctor-summary-title {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .doctor-summary-content {
+        margin-top: 10px;
+      }
+    }
+  }
+}

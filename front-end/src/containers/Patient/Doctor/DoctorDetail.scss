@@ -1,31 +1,6 @@
-.doctor-detail-container {
-  // width: 100%;
-  // border: 1px solid red;
-
-  .doctor-detail-summary {
-    margin: 0 auto;
-    display: flex;
-    margin-top: 30px;
-    gap: 30px;
-    .doctor-image {
-      img {
-        border-radius: 50%;
-      }
-    }
-
-    .doctor-summary {
-      .doctor-summary-title {
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .doctor-summary-content {
-        margin-top: 10px;
-      }
-    }
-  }
+.profile-doctor {
+  margin-top: 30px;
 }
-
 .doctor-appointment {
   margin: 0 auto;
   margin-top: 30px;

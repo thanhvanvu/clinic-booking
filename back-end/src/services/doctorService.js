@@ -379,8 +379,6 @@ const handleUpdateDoctorClinicInfo = async (doctorClinicInfo) => {
       where: { doctorId: doctorClinicInfo.doctorId },
     })
 
-    console.log('service', clinicInfo)
-
     if (clinicInfo) {
       await clinicInfo.set({
         doctorId: doctorClinicInfo.doctorId,
@@ -410,6 +408,79 @@ const handleUpdateDoctorClinicInfo = async (doctorClinicInfo) => {
   }
 }
 
+const handleGetProfileDoctorById = async (doctorId) => {
+  try {
+    if (!doctorId) {
+      return {
+        status: 'Fail',
+        errCode: 1,
+        message: 'Missing Parameter!',
+      }
+    } else {
+      let doctor = await db.User.findOne({
+        where: { id: doctorId },
+        raw: false,
+        attributes: {
+          exclude: [
+            'password',
+            'createdAt',
+            'updatedAt',
+            'id',
+            'email',
+            'address',
+            'phoneNumber',
+          ],
+        },
+        include: [
+          {
+            model: db.Allcode,
+            as: 'positionData',
+            attributes: ['valueEN', 'valueES', 'valueVI'],
+          },
+          {
+            model: db.Markdown,
+            attributes: ['description'],
+          },
+          {
+            model: db.DoctorInfo,
+            include: [
+              {
+                model: db.Allcode,
+                as: 'paymentData',
+                attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+              {
+                model: db.Allcode,
+                as: 'cityData',
+                attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+              {
+                model: db.Allcode,
+                as: 'priceData',
+                attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+            ],
+          },
+        ],
+        nest: true,
+      })
+
+      // convert buffer to base64
+      if (doctor && doctor.image) {
+        doctor.image = Buffer.from(doctor.image, 'base64').toString()
+      }
+
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'OK',
+        data: doctor,
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   handleGetTopDoctor: handleGetTopDoctor,
   handleGetAllDoctors: handleGetAllDoctors,
@@ -421,4 +492,5 @@ module.exports = {
   handleGetDoctorClinicInfoById: handleGetDoctorClinicInfoById,
   handleCreateDoctorClinicInfo: handleCreateDoctorClinicInfo,
   handleUpdateDoctorClinicInfo: handleUpdateDoctorClinicInfo,
+  handleGetProfileDoctorById: handleGetProfileDoctorById,
 }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import HeaderHomePage from '../../HomePage/HeaderHomePage'
 import { CommonUtils } from '../../../utils'
 import './DoctorDetail.scss'
 import DoctorSchedule from './DoctorSchedule'
 import DoctorClinicInfo from './DoctorClinicInfo'
+import ProfileDoctor from './ProfileDoctor'
 import * as actions from '../../../store/actions'
 import HomeFooter from '../../HomePage/HomeFooter'
 import { LANGUAGES } from '../../../utils'
@@ -42,57 +42,12 @@ class DoctorDetail extends Component {
 
   render() {
     let doctor = this.state.doctor
-    let language = this.props.language
-    let title
-    if (doctor && doctor.positionData) {
-      if (LANGUAGES.VI === language) {
-        title =
-          doctor.positionData.valueVI +
-          ', ' +
-          doctor.firstName +
-          ' ' +
-          doctor.lastName
-      } else if (LANGUAGES.EN === language) {
-        title =
-          doctor.positionData.valueEN +
-          ', ' +
-          doctor.firstName +
-          ' ' +
-          doctor.lastName
-      } else {
-        title =
-          doctor.positionData.valueES +
-          ', ' +
-          doctor.firstName +
-          ' ' +
-          doctor.lastName
-      }
-    }
-
     return (
       <>
         {/* show header menu */}
         <HeaderHomePage isShowBanner={false} />
-        <div className="doctor-detail-container">
-          <div className="doctor-detail-summary wrapper">
-            <div className="doctor-image">
-              <img
-                src={this.state.previewImg}
-                alt=""
-                width="100px"
-                height="100px"
-              />
-            </div>
-            <div className="doctor-summary">
-              <div className="doctor-summary-title">{title}</div>
-              <div className="doctor-summary-content">
-                {doctor &&
-                  doctor.Markdown &&
-                  doctor.Markdown.description &&
-                  doctor.Markdown.description}
-              </div>
-            </div>
-          </div>
+        <div className="profile-doctor">
+          <ProfileDoctor doctorId={doctor.id} />
         </div>
         <div className="doctor-appointment wrapper">
           <div className="doctor-schedule">

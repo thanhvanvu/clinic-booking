@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
-import HeaderHomePage from '../../HomePage/HeaderHomePage'
-import { CommonUtils } from '../../../utils'
 import './DoctorClinicInfo.scss'
-import * as actions from '../../../store/actions'
 import { LANGUAGES } from '../../../utils'
 class DoctorClinicInfo extends Component {
   constructor(props) {

@@ -24,6 +24,9 @@ let initWebRoutes = (app) => {
   Router.route('/api/get-detail-doctor-by-id').get(
     doctorController.getDetailDoctorById
   )
+  Router.route('/api/get-profile-doctor-by-id').get(
+    doctorController.getProfileDoctorById
+  )
 
   Router.route('/api/get-doctor-clinic-info').get(
     doctorController.getDoctorClinicInfoById

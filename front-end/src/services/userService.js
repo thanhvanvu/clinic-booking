@@ -233,6 +233,19 @@ const handleUpdateDoctorClinicInfo = async (clinicInfo) => {
     console.log(error)
   }
 }
+
+const handleGetProfileDoctorByIf = async (doctorId) => {
+  try {
+    const options = {
+      method: 'get',
+      url: `/api/get-profile-doctor-by-id?id=${doctorId}`,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleLoginApi,
   getAllUsers,
@@ -250,4 +263,5 @@ export {
   handleGetDoctorClinicInfo,
   handleCreateDoctorClinicInfo,
   handleUpdateDoctorClinicInfo,
+  handleGetProfileDoctorByIf,
 }
