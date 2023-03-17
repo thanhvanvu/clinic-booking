@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { CommonUtils } from '../../utils'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './BookingModal.scss'
@@ -6,12 +7,25 @@ import { Modal } from 'reactstrap'
 import { LANGUAGES } from '../../utils'
 import ProfileDoctor from '../Patient/Doctor/ProfileDoctor'
 import * as actions from '../../store/actions'
+import { handleCreateBookingAppointment } from '../../services/userService'
+import { toast } from 'react-toastify'
 class BookingModal extends Component {
   constructor(props) {
     super(props)
     this.state = {
       currentDoctor: {},
       doctorClinicPrice: '',
+      doctorId: '',
+      email: '',
+      firstName: '',
+      lastName: '',
+      gender: '',
+      timeType: '',
+      phoneNumber: '',
+      date: '',
+      address: '',
+      examNote: '',
+      isValidInput: {},
     }
   }
 
@@ -22,6 +36,7 @@ class BookingModal extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.currentDoctor !== this.props.currentDoctor) {
       let currentDoctor = this.props.currentDoctor
+      console.log(currentDoctor)
       let doctorClinicPrice
       if (
         currentDoctor &&
@@ -31,9 +46,73 @@ class BookingModal extends Component {
         doctorClinicPrice = currentDoctor.DoctorInfo.priceData
       }
       this.setState({
+        doctorId: currentDoctor.id,
         doctorClinicPrice: doctorClinicPrice,
       })
     }
+
+    if (prevProps.selectedScheduleHour !== this.props.selectedScheduleHour) {
+      console.log(this.props.selectedScheduleHour)
+      this.setState({
+        timeType: this.props.selectedScheduleHour.timeType,
+      })
+    }
+  }
+
+  handleCreateBookingAppointment = async () => {
+    if (window.confirm('Are you sure to book the appointment ?')) {
+      // check valid input
+      let isValid = CommonUtils.checkValidateInput({
+        email: this.state.email,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        gender: this.state.gender,
+        phoneNumber: this.state.phoneNumber,
+      })
+
+      if (isValid && isValid[1]) {
+        //create booking appointment
+        let response = await handleCreateBookingAppointment({
+          doctorId: this.state.doctorId,
+          email: this.state.email,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          gender: this.state.gender,
+          timeType: this.state.timeType,
+          phoneNumber: this.state.phoneNumber,
+          date: this.state.date,
+          address: this.state.address,
+          examNote: this.state.examNote,
+        })
+
+        if (response && response.errCode === 0) {
+          toast.success('Booked a new appointment successfully!')
+
+          // close the modal
+          this.props.closeBookingModal()
+        }
+      } else {
+        this.setState({
+          isValidInput: isValid[0],
+        })
+      }
+    }
+  }
+
+  handleGenderChange = (event) => {
+    this.setState({
+      isValidInput: { ...this.state.isValidInput, gender: true },
+      gender: event.target.value,
+    })
+  }
+
+  handleOnchangeBooking = (event) => {
+    let newState = {
+      ...this.state,
+      [event.target.name]: event.target.value,
+      isValidInput: { ...this.state.isValidInput, [event.target.name]: true },
+    }
+    this.setState(newState)
   }
 
   render() {
@@ -52,6 +131,8 @@ class BookingModal extends Component {
     }
 
     let doctorClinicPrice = this.state.doctorClinicPrice
+
+    let isValid = this.state.isValidInput
     return (
       <Modal
         isOpen={isModalBooking}
@@ -81,20 +162,55 @@ class BookingModal extends Component {
                     : doctorClinicPrice.valueES}
                 </span>
               </div>
-              <div className="col-11 booking-body-content">
+              <div
+                className={
+                  isValid.email === false
+                    ? 'col-11 booking-body-content invalid'
+                    : 'col-11 booking-body-content'
+                }
+              >
                 <i class="fas fa-envelope"></i>
                 <input
                   type="email"
-                  className="col-12 "
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleOnchangeBooking}
+                  className="col-12"
                   placeholder="Patient email (required)"
                 />
               </div>
-              <div className="col-11 booking-body-content">
+              <div
+                className={
+                  isValid.firstName === false
+                    ? 'col-5 booking-body-content invalid'
+                    : 'col-5 booking-body-content'
+                }
+              >
                 <i className="fas fa-user"></i>
                 <input
                   type="text"
+                  name="firstName"
+                  value={this.state.firstName}
+                  onChange={this.handleOnchangeBooking}
                   className="col-12 "
-                  placeholder="Patient first and last name (required)"
+                  placeholder="Patient first name (required)"
+                />
+              </div>
+              <div
+                className={
+                  isValid.lastName === false
+                    ? 'col-5 booking-body-content invalid'
+                    : 'col-5 booking-body-content'
+                }
+              >
+                <i className="fas fa-user"></i>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={this.state.lastName}
+                  onChange={this.handleOnchangeBooking}
+                  className="col-12 "
+                  placeholder="Patient last name (required)"
                 />
               </div>
               <div className="col-12 fullname-note">
@@ -107,12 +223,16 @@ class BookingModal extends Component {
                       <>
                         <input
                           type="radio"
-                          defaultChecked={index === 0}
                           id={gender.keyMap}
                           value={gender.keyMap}
                           name="gender"
+                          onChange={this.handleGenderChange}
                         />
-                        <label htmlFor={gender.keyMap} key={index}>
+                        <label
+                          htmlFor={gender.keyMap}
+                          key={index}
+                          className={isValid.gender === false ? ' invalid' : ''}
+                        >
                           {language === LANGUAGES.EN
                             ? gender.valueEN
                             : language === LANGUAGES.VI
@@ -123,32 +243,60 @@ class BookingModal extends Component {
                     )
                   })}
               </div>
-              <div className="col-11 booking-body-content">
+              <div
+                className={
+                  isValid.phoneNumber === false
+                    ? 'col-11 booking-body-content invalid'
+                    : 'col-11 booking-body-content'
+                }
+              >
                 <i className="fas fa-phone"></i>
                 <input
-                  type="number"
+                  type="tel"
                   className="col-12"
+                  name="phoneNumber"
+                  value={this.state.phoneNumber}
+                  onChange={this.handleOnchangeBooking}
                   placeholder="Phone number (required)"
                 />
               </div>
-              <div className="col-11 booking-body-content">
+              <div
+                className={
+                  isValid.date === false
+                    ? 'col-11 booking-body-content invalid'
+                    : 'col-11 booking-body-content'
+                }
+              >
                 <i className="fas fa-calendar-alt"></i>
                 <input
+                  type="date"
                   className="col-12"
-                  placeholder="Year of birth (required)"
+                  name="date"
+                  value={this.state.date}
+                  onChange={this.handleOnchangeBooking}
+                  placeholder="Date of birth (required)"
                 />
               </div>
 
               <div className="col-11 booking-body-content">
                 <i className="fas fa-map-marker-alt"></i>
-                <input className="col-12" placeholder="Address" />
+                <input
+                  className="col-12"
+                  placeholder="Address"
+                  id="address1"
+                  name="address"
+                  value={this.state.address}
+                  onChange={this.handleOnchangeBooking}
+                />
               </div>
               <div className="col-11 booking-body-content exam-note">
                 <i className="fas fa-file-medical"></i>
                 <textarea
                   className="col-12"
-                  name=""
-                  id=""
+                  name="examNote"
+                  value={this.state.note}
+                  onChange={this.handleOnchangeBooking}
+                  id="note"
                   cols="30"
                   rows="3"
                   placeholder="Examination Reason"
@@ -191,7 +339,10 @@ class BookingModal extends Component {
             </div>
           </div>
           <div className="booking-modal-footer">
-            <button className="confirm-booking">
+            <button
+              className="confirm-booking"
+              onClick={this.handleCreateBookingAppointment}
+            >
               <FormattedMessage id="booking.confirm" />
             </button>
             <button className="cancel-booking" onClick={closeBookingModal}>

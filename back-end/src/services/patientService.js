@@ -10,6 +10,11 @@ const handleBookingDoctorAppointment = async (appointmentData) => {
       where: { email: appointmentData.email },
       defaults: {
         email: appointmentData.email,
+        firstName: appointmentData.firstName,
+        lastName: appointmentData.lastName,
+        gender: appointmentData.gender,
+        phoneNumber: appointmentData.phoneNumber,
+        address: appointmentData.address,
         roleId: 'R3',
       },
       raw: true,
@@ -17,7 +22,11 @@ const handleBookingDoctorAppointment = async (appointmentData) => {
     // then create a booking appointment, if timeType duplicated, do not create
     if (patientUser && patientUser[0]) {
       await db.Booking.findOrCreate({
-        where: { timeType: appointmentData.timeType },
+        where: {
+          timeType: appointmentData.timeType,
+          date: appointmentData.date,
+          patientId: patientUser[0].id,
+        },
         defaults: {
           statusId: 'S1',
           doctorId: appointmentData.doctorId,

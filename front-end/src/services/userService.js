@@ -246,6 +246,20 @@ const handleGetProfileDoctorByIf = async (doctorId) => {
     console.log(error)
   }
 }
+
+const handleCreateBookingAppointment = async (appointmentData) => {
+  try {
+    const options = {
+      method: 'post',
+      url: '/api/patient-booking-appointment',
+      data: appointmentData,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleLoginApi,
   getAllUsers,
@@ -264,4 +278,5 @@ export {
   handleCreateDoctorClinicInfo,
   handleUpdateDoctorClinicInfo,
   handleGetProfileDoctorByIf,
+  handleCreateBookingAppointment,
 }

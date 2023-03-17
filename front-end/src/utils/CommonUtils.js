@@ -28,6 +28,27 @@ class CommonUtils {
   static capitalizerFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
+
+  static checkValidateInput(inputData) {
+    let returnObj = {}
+    let isValid = true
+    Object.entries(inputData).forEach(([key, value]) => {
+      if (key === 'note') {
+        returnObj[key] = true
+      } else if (value === '') {
+        isValid = false
+        returnObj[key] = false
+      } else {
+        returnObj[key] = true
+      }
+    })
+
+    if (isValid === true) {
+      return [returnObj, true]
+    } else {
+      return [returnObj, false]
+    }
+  }
 }
 
 export default CommonUtils

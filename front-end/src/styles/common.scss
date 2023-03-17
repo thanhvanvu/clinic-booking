@@ -21,6 +21,6 @@
 }
 
 .invalid {
-  border: 1px solid red;
+  border: 1px solid red !important;
   animation: shake 0.5s;
 }
