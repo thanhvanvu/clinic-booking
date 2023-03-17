@@ -83,6 +83,26 @@
     }
   },
 
+  "doctor-profile": {
+    "booking-title": "examination booking",
+    "booking-free": "Free booking with HealthCare Consultancy"
+  },
+
+  "booking": {
+    "price": "Price booking",
+    "email-placeholder": "Patient email (required)",
+    "fullname-placeholder": "Patient first and last name (required)",
+    "fullname-note-placeholder": "Please specify Full Name, capitalize the first letter, for example: John Smith",
+    "phoneNumber-placeholder": "Phone number (required)",
+    "address-placeholder": "Address",
+    "exam-reason-placeholder": "Examination reason",
+    "booking-fee": "Booking fee",
+    "booking-free": "Free",
+    "total-fee": "Total",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+
   "homepage": {
     "read-more": "READ MORE",
     "outstanding-doctor": {

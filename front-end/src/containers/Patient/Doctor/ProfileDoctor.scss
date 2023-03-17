@@ -11,6 +11,14 @@
 
     .doctor-summary {
       width: 50%;
+
+      .booking-title {
+        text-transform: uppercase;
+      }
+
+      .booking-time-content {
+        font-weight: lighter;
+      }
       .doctor-summary-title {
         font-size: 20px;
         font-weight: bold;

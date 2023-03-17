@@ -82,6 +82,27 @@
       "update": "Guardar cambio"
     }
   },
+
+  "doctor-profile": {
+    "booking-title": "reserva de examen",
+    "booking-free": "Reserva gratis con HealthCare Consultancy"
+  },
+
+  "booking": {
+    "price": "Precio de reserva",
+    "email-placeholder": "Correo electrónico del paciente (requerido)",
+    "fullname-placeholder": "Nombre y apellido del paciente (requerido)",
+    "fullname-note-placeholder": "Por favor, especifique el nombre completo, escriba en mayúscula la primera letra, por ejemplo: John Smith",
+    "phoneNumber-placeholder": "Número de teléfono (requerido)",
+    "address-placeholder": "Dirección",
+    "exam-reason-placeholder": "Razón del examen",
+    "booking-fee": "Tarifa de reserva",
+    "booking-free": "Gratis",
+    "total-fee": "Total",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
+  },
+
   "homepage": {
     "read-more": "LEER MÁS",
     "outstanding-doctor": {

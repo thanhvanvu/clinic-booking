@@ -19,6 +19,7 @@ class DoctorSchedule extends Component {
       hourArr: [],
       isModalBooking: false,
       selectedScheduleHour: {},
+      currentDoctor: {},
     }
   }
 
@@ -54,6 +55,9 @@ class DoctorSchedule extends Component {
     }
 
     if (prevProps.currentDoctor !== this.props.currentDoctor) {
+      this.setState({
+        currentDoctor: this.props.currentDoctor,
+      })
       if (
         this.props &&
         this.props.currentDoctor &&
@@ -247,6 +251,7 @@ class DoctorSchedule extends Component {
           isModalBooking={this.state.isModalBooking}
           closeBookingModal={this.closeBookingModal}
           selectedScheduleHour={this.state.selectedScheduleHour}
+          currentDoctor={this.state.currentDoctor}
         />
       </>
     )
