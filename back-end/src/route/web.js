@@ -1,6 +1,7 @@
 import express from 'express'
 import homeControllers from '../controllers/homeControllers'
 import userController from '../controllers/userController'
+import patientController from '../controllers/patientController'
 import doctorController from '../controllers/doctorController'
 
 let Router = express.Router()
@@ -42,6 +43,11 @@ let initWebRoutes = (app) => {
     doctorController.bulkCreateSchedule
   )
   Router.route('/api/get-schedule').get(doctorController.getScheduleByDoctorId)
+
+  //Patient
+  Router.route('/api/patient-booking-appointment').post(
+    patientController.createDoctorAppointment
+  )
 
   return app.use('/', Router)
 }
