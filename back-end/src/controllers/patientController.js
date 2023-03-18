@@ -2,11 +2,11 @@ import { json } from 'body-parser'
 import express from 'express'
 import db from '../models/index'
 import patientService from '../services/patientService'
+import emailService from '../services/emailService'
 
 const createDoctorAppointment = async (req, res) => {
   try {
     let appointmentData = req.body
-
     // check if email exists ?
     if (
       !appointmentData.email ||
@@ -21,9 +21,13 @@ const createDoctorAppointment = async (req, res) => {
       })
     }
 
-    let response = await patientService.handleBookingDoctorAppointment(
-      appointmentData
-    )
+    console.log(req.body)
+
+    // send email to patient before creating the appointment
+    await emailService.sendSimpleEmail(appointmentData)
+    // let response = await patientService.handleBookingDoctorAppointment(
+    //   appointmentData
+    // )
 
     return res.status(200).json({
       errCode: response.errCode,

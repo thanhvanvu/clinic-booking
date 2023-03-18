@@ -14,8 +14,10 @@ class BookingModal extends Component {
     super(props)
     this.state = {
       currentDoctor: {},
+      clinicInfo: {},
       doctorClinicPrice: '',
       doctorId: '',
+      selectedScheduleHour: {},
       email: '',
       firstName: '',
       lastName: '',
@@ -48,12 +50,14 @@ class BookingModal extends Component {
       this.setState({
         doctorId: currentDoctor.id,
         doctorClinicPrice: doctorClinicPrice,
+        clinicInfo: currentDoctor.DoctorInfo,
       })
     }
 
     if (prevProps.selectedScheduleHour !== this.props.selectedScheduleHour) {
       console.log(this.props.selectedScheduleHour)
       this.setState({
+        selectedScheduleHour: this.props.selectedScheduleHour,
         timeType: this.props.selectedScheduleHour.timeType,
       })
     }
@@ -73,6 +77,10 @@ class BookingModal extends Component {
       if (isValid && isValid[1]) {
         //create booking appointment
         let response = await handleCreateBookingAppointment({
+          addressAppointment: this.state.clinicInfo.addressClinic,
+          nameClinicAppointment: this.state.clinicInfo.nameClinic,
+          dateAppointment: this.state.selectedScheduleHour.date,
+          timeAppointment: this.state.selectedScheduleHour.timeTypeData.valueEN,
           doctorId: this.state.doctorId,
           email: this.state.email,
           firstName: this.state.firstName,
@@ -123,7 +131,7 @@ class BookingModal extends Component {
       language,
       genders,
     } = this.props
-
+    console.log(this.props)
     // get doctorId from component parent
     let doctorId
     if (selectedScheduleHour) {
