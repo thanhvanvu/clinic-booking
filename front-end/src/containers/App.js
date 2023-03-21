@@ -21,6 +21,7 @@ import System from '../routes/System'
 
 import DoctorDetail from './Patient/Doctor/DoctorDetail'
 import Doctor from '../routes/Doctor'
+import VerifyEmail from './Patient/VerifyEmail'
 
 class App extends Component {
   handlePersistorState = () => {
@@ -64,6 +65,10 @@ class App extends Component {
                     component={userIsAuthenticated(Doctor)}
                   />
                   <Route path={path.DETAIL_DOCTOR} component={DoctorDetail} />
+                  <Route
+                    path={path.VERIFY_EMAIL_BOOKING}
+                    component={VerifyEmail}
+                  />
                 </Switch>
               </CustomScrollbars>
             </div>

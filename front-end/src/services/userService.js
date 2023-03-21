@@ -260,6 +260,23 @@ const handleCreateBookingAppointment = async (appointmentData) => {
     console.log(error)
   }
 }
+
+const handleVerifyBookingAppointment = async (token, doctorId) => {
+  try {
+    try {
+      const options = {
+        method: 'post',
+        url: `/api/verify-booking-appointment?token=${token}&doctorId=${doctorId}`,
+      }
+
+      return await axios(options)
+    } catch (error) {
+      console.log(error)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleLoginApi,
   getAllUsers,
@@ -279,4 +296,5 @@ export {
   handleUpdateDoctorClinicInfo,
   handleGetProfileDoctorByIf,
   handleCreateBookingAppointment,
+  handleVerifyBookingAppointment,
 }
