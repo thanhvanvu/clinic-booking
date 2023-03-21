@@ -2,9 +2,8 @@ import { raw } from 'body-parser'
 import e from 'express'
 import db from '../models/index'
 import nodemailer from 'nodemailer'
-require('dotenv').config()
 
-const sendSimpleEmail = async (patientInfo) => {
+const sendSimpleEmail = async (patientInfo, urlConfirm) => {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -26,15 +25,19 @@ const sendSimpleEmail = async (patientInfo) => {
 
     <p>I am writing to confirm your upcoming appointment with our healthcare center. Your appointment has been scheduled for:
 
-    <p>Date: ${patientInfo.dateAppointment}<p/>
-    <p>Time: ${patientInfo.timeAppointment}<p/>
-    <p>Address: ${patientInfo.addressAppointment}<p/>
+    <p><b>Doctor: ${patientInfo.doctorAppointment}</b><p/>
+    <p><b>Date: ${patientInfo.dateAppointment}</b><p/>
+    <p><b>Time: ${patientInfo.timeAppointment}</b><p/>
+    <p><b>Address: ${patientInfo.addressAppointment}</b><p/>
+    <p><b>Price: ${patientInfo.priceAppointment}</b><p/>
 
     <p>We kindly remind you to arrive 10-15 minutes early to allow time for check-in and to bring your insurance card and any necessary paperwork with you.</p>
 
     <p>During your appointment, we will discuss your medical history and any current concerns you may have. We will also perform a physical examination and order any necessary tests to help us diagnose and treat your condition.</p>
 
     <p>Please kindly confirm that the scheduled time and address for your appointment are correct and click the link below to confirm your appointment</p>
+
+    <a href=${urlConfirm}>Click here to confirm the appointment</a>
 
     <p>Thank you for choosing our healthcare center for your medical needs, and we look forward to seeing you soon.</p>
 

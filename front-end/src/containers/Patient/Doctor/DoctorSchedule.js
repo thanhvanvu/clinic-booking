@@ -251,7 +251,7 @@ class DoctorSchedule extends Component {
           isModalBooking={this.state.isModalBooking}
           closeBookingModal={this.closeBookingModal}
           selectedScheduleHour={this.state.selectedScheduleHour}
-          currentDoctor={this.state.currentDoctor}
+          doctorId={this.state.currentDoctor.id}
         />
       </>
     )

@@ -1,9 +1,8 @@
 import { raw } from 'body-parser'
 import e from 'express'
 import db from '../models/index'
-const bcrypt = require('bcryptjs')
 
-const handleBookingDoctorAppointment = async (appointmentData) => {
+const handleBookingDoctorAppointment = async (appointmentData, urlConfirm) => {
   try {
     // find user, if not create the account
     let patientUser = await db.User.findOrCreate({
@@ -33,6 +32,7 @@ const handleBookingDoctorAppointment = async (appointmentData) => {
           patientId: patientUser[0].id,
           date: appointmentData.date,
           timeType: appointmentData.timeType,
+          token: urlConfirm,
         },
       })
       return {
@@ -45,6 +45,44 @@ const handleBookingDoctorAppointment = async (appointmentData) => {
     console.log(error)
   }
 }
+
+const handleVerifyBookingAppointment = async (token, doctorId) => {
+  try {
+    // find the appointment with doctorId and toklen
+    let appointment = await db.Booking.findOne({
+      where: {
+        doctorId: doctorId,
+        token: token,
+        statusId: 'S1',
+      },
+    })
+
+    console.log(appointment)
+    if (!appointment) {
+      return {
+        errCode: 1,
+        status: 'Fail',
+        message: 'Appointment has been already activated or does not exist!',
+      }
+    } else {
+      // change status from pending to confirmed
+      await appointment.set({
+        statusId: 'S2',
+      })
+
+      await appointment.save()
+
+      return {
+        errCode: 0,
+        status: 'Ok',
+        message: 'Appointment activated!',
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   handleBookingDoctorAppointment,
+  handleVerifyBookingAppointment,
 }

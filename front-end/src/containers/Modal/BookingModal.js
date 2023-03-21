@@ -7,8 +7,17 @@ import { Modal } from 'reactstrap'
 import { LANGUAGES } from '../../utils'
 import ProfileDoctor from '../Patient/Doctor/ProfileDoctor'
 import * as actions from '../../store/actions'
-import { handleCreateBookingAppointment } from '../../services/userService'
+import {
+  handleCreateBookingAppointment,
+  getDetailDoctorById,
+} from '../../services/userService'
 import { toast } from 'react-toastify'
+
+// Booking Modal
+// isModalBooking: check to open the modal
+// closeBookingModal: a function from parent, to close the modal
+// selectedScheduleHour: time information
+// doctorId: id Doctor  important
 class BookingModal extends Component {
   constructor(props) {
     super(props)
@@ -35,31 +44,28 @@ class BookingModal extends Component {
     this.props.getGenderStart()
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.currentDoctor !== this.props.currentDoctor) {
-      let currentDoctor = this.props.currentDoctor
-      console.log(currentDoctor)
-      let doctorClinicPrice
-      if (
-        currentDoctor &&
-        currentDoctor.DoctorInfo &&
-        currentDoctor.DoctorInfo.priceData
-      ) {
-        doctorClinicPrice = currentDoctor.DoctorInfo.priceData
-      }
-      this.setState({
-        doctorId: currentDoctor.id,
-        doctorClinicPrice: doctorClinicPrice,
-        clinicInfo: currentDoctor.DoctorInfo,
-      })
-    }
-
+  async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.selectedScheduleHour !== this.props.selectedScheduleHour) {
       console.log(this.props.selectedScheduleHour)
       this.setState({
         selectedScheduleHour: this.props.selectedScheduleHour,
         timeType: this.props.selectedScheduleHour.timeType,
       })
+    }
+
+    if (prevProps.doctorId !== this.props.doctorId) {
+      let doctorId = this.props.doctorId
+      let response = await getDetailDoctorById(doctorId)
+      if (response && response.errCode === 0) {
+        let currentDoctor = response.data
+        let doctorClinicPrice = currentDoctor.DoctorInfo.priceData
+        this.setState({
+          currentDoctor: currentDoctor,
+          doctorId: currentDoctor.id,
+          doctorClinicPrice: doctorClinicPrice,
+          clinicInfo: currentDoctor.DoctorInfo,
+        })
+      }
     }
   }
 
@@ -77,10 +83,12 @@ class BookingModal extends Component {
       if (isValid && isValid[1]) {
         //create booking appointment
         let response = await handleCreateBookingAppointment({
+          doctorAppointment: this.state.currentDoctor.firstName,
           addressAppointment: this.state.clinicInfo.addressClinic,
           nameClinicAppointment: this.state.clinicInfo.nameClinic,
           dateAppointment: this.state.selectedScheduleHour.date,
           timeAppointment: this.state.selectedScheduleHour.timeTypeData.valueEN,
+          priceAppointment: this.state.clinicInfo.priceData.valueEN,
           doctorId: this.state.doctorId,
           email: this.state.email,
           firstName: this.state.firstName,
@@ -131,7 +139,7 @@ class BookingModal extends Component {
       language,
       genders,
     } = this.props
-    console.log(this.props)
+
     // get doctorId from component parent
     let doctorId
     if (selectedScheduleHour) {
