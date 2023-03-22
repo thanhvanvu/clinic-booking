@@ -75,7 +75,6 @@ const verifyBookingAppointment = async (req, res) => {
       })
     }
 
-    console.log(token, doctorId)
     let response = await patientService.handleVerifyBookingAppointment(
       token,
       doctorId

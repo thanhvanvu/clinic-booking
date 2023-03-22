@@ -325,7 +325,6 @@ class DoctorManage extends Component {
           nameClinic: doctorClinicInfo.clinicName,
         })
 
-        console.log(response)
         if (response && response.errCode === 0) {
           toast.success('Update a doctor information successfully!')
 

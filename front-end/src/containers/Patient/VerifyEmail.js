@@ -59,12 +59,7 @@ class VerifyEmail extends Component {
     )
   }
 }
-{
-  /* 
-<h1>
-                Your appointment has been confirmed! Please close this page.
-              </h1> */
-}
+
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,

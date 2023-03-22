@@ -3,20 +3,27 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Specialists', {
+      // title: DataTypes.STRING,
+      // descriptionHTML: DataTypes.TEXT('long'),
+      // descriptionMarkdown: DataTypes.TEXT('long'),
+      // image: DataTypes.BLOB('long'),
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-      },
-      description: {
+      tittle: {
         type: Sequelize.TEXT,
       },
+      descriptionHTML: {
+        type: Sequelize.TEXT('long'),
+      },
+      descriptionMarkdown: {
+        type: Sequelize.TEXT('long'),
+      },
       image: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB('long'),
       },
       createdAt: {
         allowNull: false,
