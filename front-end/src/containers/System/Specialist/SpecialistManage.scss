@@ -57,22 +57,30 @@
     }
   }
 
-  .specialist-manage-save {
-    margin: 30px auto;
-    display: inline-block;
-    width: 100%;
-    height: 40px;
-    background-color: #0071ba;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    border: none;
-    border-radius: 50px;
-    transition: all 0.2s;
+  .create-save-delete-btn {
+    display: flex;
+    gap: 30px;
+    .specialist-manage-save {
+      margin: 30px auto;
+      display: inline-block;
+      width: 100%;
+      height: 40px;
+      background-color: #0071ba;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      border: none;
+      border-radius: 50px;
+      transition: all 0.2s;
 
-    &:hover {
-      background-color: #015b97;
-      transform: translateY(3px);
+      &:hover {
+        background-color: #015b97;
+        transform: translateY(3px);
+      }
+
+      &.delete {
+        background-color: #dc1111;
+      }
     }
   }
 }

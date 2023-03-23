@@ -58,37 +58,65 @@ const handleGetSpecialistById = async (specialistId) => {
 }
 
 const handleUpdateSpecialistById = async (specialistData) => {
-  let specialist = await db.Specialist.findOne({
-    where: {
-      id: specialistData.id,
-    },
-  })
-
-  if (specialist) {
-    specialist.set({
-      tittle: specialistData.tittle,
-      descriptionHTML: specialistData.descriptionHTML,
-      descriptionMarkdown: specialistData.descriptionMarkdown,
-      image: specialistData.image,
+  try {
+    let specialist = await db.Specialist.findOne({
+      where: {
+        id: specialistData.id,
+      },
     })
 
-    await specialist.save()
+    if (specialist) {
+      specialist.set({
+        tittle: specialistData.tittle,
+        descriptionHTML: specialistData.descriptionHTML,
+        descriptionMarkdown: specialistData.descriptionMarkdown,
+        image: specialistData.image,
+      })
 
-    return {
-      errCode: 0,
-      status: 'Success',
-      message: 'Updated Specialist Successfully!',
-      data: specialistData,
+      await specialist.save()
+
+      return {
+        errCode: 0,
+        status: 'Success',
+        message: 'Updated Specialist Successfully!',
+        data: specialistData,
+      }
+    } else {
+      return {
+        errCode: 2,
+        status: 'Fail',
+        message: 'Specialist not found!',
+        data: specialistData,
+      }
     }
-  } else {
-    return {
-      errCode: 2,
-      status: 'Fail',
-      message: 'Specialist not found!',
-      data: specialistData,
-    }
+  } catch (error) {
+    console.log(error)
   }
+}
+
+const handleDeleteSpecialistById = async (specialistId) => {
   try {
+    let specialist = await db.Specialist.findOne({
+      where: {
+        id: specialistId,
+      },
+    })
+
+    if (specialist) {
+      await specialist.destroy()
+
+      return {
+        errCode: 0,
+        status: 'Success',
+        message: 'Deleted Specialist Successfully!',
+      }
+    } else {
+      return {
+        errCode: 2,
+        status: 'Fail',
+        message: 'Specialist not found!',
+      }
+    }
   } catch (error) {
     console.log(error)
   }
@@ -98,4 +126,5 @@ module.exports = {
   handleGetAllSpecialist,
   handleGetSpecialistById,
   handleUpdateSpecialistById,
+  handleDeleteSpecialistById,
 }

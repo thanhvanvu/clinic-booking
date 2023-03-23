@@ -52,9 +52,23 @@ const handleUpdateSpecialistById = async (specialistData) => {
     console.log(error)
   }
 }
+
+const handleDeleteSpecialistById = async (specialistId) => {
+  try {
+    const options = {
+      method: 'delete',
+      url: `/api/delete-specialist-by-id?id=${specialistId}`,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleCreateSpecialist,
   handleGetAllSpecialist,
   handleGetSpecialistById,
   handleUpdateSpecialistById,
+  handleDeleteSpecialistById,
 }

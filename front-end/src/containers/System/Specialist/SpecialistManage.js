@@ -8,6 +8,7 @@ import {
   handleGetAllSpecialist,
   handleGetSpecialistById,
   handleUpdateSpecialistById,
+  handleDeleteSpecialistById,
 } from '../../../services/specialistService'
 import { toast } from 'react-toastify'
 import Select from 'react-select'
@@ -153,63 +154,100 @@ class SpecialistManage extends Component {
   }
 
   handleCreateSpecialistManage = async () => {
-    let input = {
-      tittle: this.state.specialistTittle,
-      descriptionHTML: this.state.specialistContentHTML,
-      descriptionMarkdown: this.state.specialistContentMarkdown,
-    }
-    let isValidInput = CommonUtils.checkValidateInput(input)
-    this.setState({
-      inputValidation: isValidInput[0],
-    })
-
-    if (isValidInput[1] === true) {
-      let response = await handleCreateSpecialist({
+    if (window.confirm('Are you sure to create this specialist ?')) {
+      let input = {
         tittle: this.state.specialistTittle,
         descriptionHTML: this.state.specialistContentHTML,
         descriptionMarkdown: this.state.specialistContentMarkdown,
-        image: this.state.specialistImage,
+      }
+      let isValidInput = CommonUtils.checkValidateInput(input)
+      this.setState({
+        inputValidation: isValidInput[0],
       })
 
-      if (response && response.errCode === 0) {
-        toast.success('Created specialist successfully!')
-
-        // reset input
-        this.setState({
-          specialistTittle: '',
-          specialistContentHTML: '',
-          specialistContentMarkdown: '',
-          specialistImage: '',
-          specialistPreviewImg: '',
+      if (isValidInput[1] === true) {
+        let response = await handleCreateSpecialist({
+          tittle: this.state.specialistTittle,
+          descriptionHTML: this.state.specialistContentHTML,
+          descriptionMarkdown: this.state.specialistContentMarkdown,
+          image: this.state.specialistImage,
         })
+
+        if (response && response.errCode === 0) {
+          toast.success('Created specialist successfully!')
+
+          // reset input
+          this.setState({
+            specialistTittle: '',
+            specialistContentHTML: '',
+            specialistContentMarkdown: '',
+            specialistImage: '',
+            specialistPreviewImg: '',
+          })
+        }
       }
     }
   }
 
   handleUpdateSpecialistManage = async () => {
-    let input = {
-      tittle: this.state.specialistTittle,
-      descriptionHTML: this.state.specialistContentHTML,
-      descriptionMarkdown: this.state.specialistContentMarkdown,
-    }
-
-    let isValidInput = CommonUtils.checkValidateInput(input)
-
-    this.setState({
-      inputValidation: isValidInput[0],
-    })
-
-    if (isValidInput[1] === true) {
-      let response = await handleUpdateSpecialistById({
-        id: this.state.currentSpecialistId,
+    if (window.confirm('Are you sure to update this specialist ?')) {
+      let input = {
         tittle: this.state.specialistTittle,
         descriptionHTML: this.state.specialistContentHTML,
         descriptionMarkdown: this.state.specialistContentMarkdown,
-        image: this.state.specialistImage,
+      }
+
+      let isValidInput = CommonUtils.checkValidateInput(input)
+
+      this.setState({
+        inputValidation: isValidInput[0],
       })
 
+      if (isValidInput[1] === true) {
+        let response = await handleUpdateSpecialistById({
+          id: this.state.currentSpecialistId,
+          tittle: this.state.specialistTittle,
+          descriptionHTML: this.state.specialistContentHTML,
+          descriptionMarkdown: this.state.specialistContentMarkdown,
+          image: this.state.specialistImage,
+        })
+
+        if (response && response.errCode === 0) {
+          toast.success('Updated specialist successfully!')
+
+          // reset input
+          this.setState({
+            selectedSpecialist: '',
+            specialistTittle: '',
+            specialistContentHTML: '',
+            specialistContentMarkdown: '',
+            specialistImage: '',
+            specialistPreviewImg: '',
+          })
+
+          // after update, refresh the specialist array
+          let response = await handleGetAllSpecialist()
+          if (response && response.errCode === 0) {
+            let specialistData = response.data
+            let specialistSelectData =
+              this.buildSpecialistDataSelect(specialistData)
+            this.setState({
+              allSpecialistArr: specialistSelectData,
+            })
+          }
+        }
+      }
+    }
+  }
+
+  handleDeleteSpecialistManage = async () => {
+    if (window.confirm('Are you sure to delete this specialist ?')) {
+      let response = await handleDeleteSpecialistById(
+        this.state.currentSpecialistId
+      )
+
       if (response && response.errCode === 0) {
-        toast.success('Updated specialist successfully!')
+        toast.warn('Deleted specialist successfully!')
 
         // reset input
         this.setState({
@@ -343,22 +381,31 @@ class SpecialistManage extends Component {
               required
             />
           </div>
-
-          {this.state.isUpdateSpecialist === true ? (
-            <button
-              className="specialist-manage-save"
-              onClick={() => this.handleUpdateSpecialistManage()}
-            >
-              Update Chuyen Khoa
-            </button>
-          ) : (
-            <button
-              className="specialist-manage-save"
-              onClick={() => this.handleCreateSpecialistManage()}
-            >
-              Tao chuyen khoa
-            </button>
-          )}
+          <div className="create-save-delete-btn">
+            {this.state.isUpdateSpecialist === true ? (
+              <>
+                <button
+                  className="specialist-manage-save"
+                  onClick={() => this.handleUpdateSpecialistManage()}
+                >
+                  Update Chuyen Khoa
+                </button>
+                <button
+                  className="specialist-manage-save delete"
+                  onClick={() => this.handleDeleteSpecialistManage()}
+                >
+                  Delete Chuyen khoa
+                </button>
+              </>
+            ) : (
+              <button
+                className="specialist-manage-save"
+                onClick={() => this.handleCreateSpecialistManage()}
+              >
+                Tao chuyen khoa
+              </button>
+            )}
+          </div>
         </div>
       </>
     )

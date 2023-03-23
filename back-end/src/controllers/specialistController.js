@@ -116,9 +116,40 @@ const updateSpecialistById = async (req, res) => {
     })
   }
 }
+
+const deleteSpecialistById = async (req, res) => {
+  try {
+    let specialistId = req.query.id
+    if (!specialistId) {
+      return res.status(200).json({
+        errCode: 1,
+        status: 'Fail',
+        message: 'Missing parameter',
+      })
+    }
+
+    let response = await specialistService.handleDeleteSpecialistById(
+      specialistId
+    )
+
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
 module.exports = {
   createSpecialist,
   getAllSpecialist,
   getSpecialistById,
   updateSpecialistById,
+  deleteSpecialistById,
 }
