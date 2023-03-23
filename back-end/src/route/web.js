@@ -57,6 +57,15 @@ let initWebRoutes = (app) => {
   Router.route('/api/create-specialist').post(
     specialistController.createSpecialist
   )
+  Router.route('/api/get-all-specialist').get(
+    specialistController.getAllSpecialist
+  )
+  Router.route('/api/get-specialist-by-id').get(
+    specialistController.getSpecialistById
+  )
+  Router.route('/api/update-specialist-by-id').put(
+    specialistController.updateSpecialistById
+  )
 
   return app.use('/', Router)
 }

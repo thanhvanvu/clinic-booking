@@ -263,16 +263,12 @@ const handleCreateBookingAppointment = async (appointmentData) => {
 
 const handleVerifyBookingAppointment = async (token, doctorId) => {
   try {
-    try {
-      const options = {
-        method: 'post',
-        url: `/api/verify-booking-appointment?token=${token}&doctorId=${doctorId}`,
-      }
-
-      return await axios(options)
-    } catch (error) {
-      console.log(error)
+    const options = {
+      method: 'post',
+      url: `/api/verify-booking-appointment?token=${token}&doctorId=${doctorId}`,
     }
+
+    return await axios(options)
   } catch (error) {
     console.log(error)
   }
