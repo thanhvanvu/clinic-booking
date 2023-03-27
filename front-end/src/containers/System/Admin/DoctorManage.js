@@ -54,11 +54,11 @@ class DoctorManage extends Component {
         clinicAddress: '',
         note: '',
         selectedPayment: '',
+        specialist: {},
+        specialistId: '',
       },
 
-      specialist: {},
       allSpecialistArr: [],
-      specialistId: '',
     }
   }
 
@@ -223,8 +223,8 @@ class DoctorManage extends Component {
           clinicAddress: data.addressClinic,
           note: data.note,
           selectedPayment: data.paymentId,
+          specialist: buildSpecialistData,
         },
-        specialist: buildSpecialistData,
       })
     } else {
       this.setState({
@@ -287,7 +287,17 @@ class DoctorManage extends Component {
 
   handleSelectSpecialist = (specialist) => {
     if (specialist) {
-      this.setState({ specialistId: specialist.value, specialist: specialist })
+      this.setState({
+        inputValidDoctorInfo: {
+          ...this.state.inputValidDoctorInfo,
+          specialistId: true,
+        },
+        doctorClinicInfo: {
+          ...this.state.doctorClinicInfo,
+          specialistId: specialist.value,
+          specialist: specialist,
+        },
+      })
     }
   }
 
@@ -362,7 +372,7 @@ class DoctorManage extends Component {
         let doctorClinicInfo = this.state.doctorClinicInfo
         let response = await handleCreateDoctorClinicInfo({
           doctorId: this.state.selectedDoctor.value,
-          specialistId: this.state.specialistId,
+          specialistId: doctorClinicInfo.specialistId,
           priceId: doctorClinicInfo.selectedPrice,
           cityId: doctorClinicInfo.selectedCity,
           paymentId: doctorClinicInfo.selectedPayment,
@@ -386,6 +396,8 @@ class DoctorManage extends Component {
               clinicAddress: '',
               note: '',
               selectedPayment: '',
+              specialistId: '',
+              specialist: {},
             },
             previewImg: '',
             selectedDoctor: '',
@@ -407,7 +419,7 @@ class DoctorManage extends Component {
         let doctorClinicInfo = this.state.doctorClinicInfo
         let response = await handleUpdateDoctorClinicInfo({
           doctorId: this.state.selectedDoctor.value,
-          specialistId: this.state.specialistId,
+          specialistId: doctorClinicInfo.specialistId,
           priceId: doctorClinicInfo.selectedPrice,
           cityId: doctorClinicInfo.selectedCity,
           paymentId: doctorClinicInfo.selectedPayment,
@@ -432,14 +444,13 @@ class DoctorManage extends Component {
               clinicAddress: '',
               note: '',
               selectedPayment: '',
+              specialist: {},
+              specialistId: '',
             },
             previewImg: '',
             selectedDoctor: '',
             hasOldDataMarkdow: false,
             hasOldClinicInfo: false,
-
-            specialist: {},
-            specialistId: '',
           })
         }
       } else {
@@ -451,7 +462,7 @@ class DoctorManage extends Component {
   }
 
   render() {
-    console.log(this.state.specialist)
+    console.log(this.state)
     let cityArr = this.state.cityArr
     let paymentArr = this.state.paymentArr
     let priceArr = this.state.priceArr
@@ -535,11 +546,19 @@ class DoctorManage extends Component {
             <label className="content-label">
               <FormattedMessage id="manage-user-redux.doctor-manage.specialist" />
             </label>
-            <Select
-              value={this.state.specialist}
-              options={this.state.allSpecialistArr}
-              onChange={(event) => this.handleSelectSpecialist(event)}
-            />
+            <div
+              className={
+                this.state.inputValidDoctorInfo.specialistId === false
+                  ? 'invalid'
+                  : ''
+              }
+            >
+              <Select
+                value={this.state.doctorClinicInfo.specialist}
+                options={this.state.allSpecialistArr}
+                onChange={(event) => this.handleSelectSpecialist(event)}
+              />
+            </div>
           </div>
           <div className="col-4 form-group">
             <label className="content-label">

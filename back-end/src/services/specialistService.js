@@ -25,7 +25,7 @@ const handleGetAllSpecialist = async () => {
   try {
     let allSpecialist = await db.Specialist.findAll({
       raw: false,
-      attributes: ['id', 'tittle'],
+      attributes: ['id', 'tittle', 'image'],
     })
 
     return {
