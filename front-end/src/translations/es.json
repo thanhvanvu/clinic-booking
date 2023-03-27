@@ -74,6 +74,7 @@
       "select-doctor": "Seleccionar Médico",
       "clinic-name": "Nombre de la clínica",
       "clinic-address": "Dirección de la clínica",
+      "specialist": "Especialista",
       "city": "Ciudad",
       "price": "Precio",
       "referral-payment": "Pago de referencia",

@@ -138,7 +138,6 @@ class SpecialistManage extends Component {
   }
 
   handleSelectSpecialist = async (specialist) => {
-    console.log(specialist)
     if (specialist) {
       let specialistId = specialist.value
 

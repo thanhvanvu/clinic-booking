@@ -346,7 +346,15 @@ const handleGetDoctorClinicInfoById = async (doctorId) => {
       where: {
         doctorId: doctorId,
       },
+      include: [
+        {
+          model: db.Specialist,
+          as: 'specialistData',
+          attributes: ['id', 'tittle'],
+        },
+      ],
       raw: false,
+      nest: true,
     })
 
     return {
@@ -382,6 +390,7 @@ const handleUpdateDoctorClinicInfo = async (doctorClinicInfo) => {
     if (clinicInfo) {
       await clinicInfo.set({
         doctorId: doctorClinicInfo.doctorId,
+        specialistId: doctorClinicInfo.specialistId,
         priceId: doctorClinicInfo.priceId,
         cityId: doctorClinicInfo.cityId,
         paymentId: doctorClinicInfo.paymentId,
