@@ -1,32 +1,54 @@
-.doctor-detail-container {
-  .doctor-detail-summary {
-    margin: 0 auto;
-    display: flex;
-    gap: 30px;
-    .doctor-image {
+.doctor-detail-summary {
+  display: flex;
+  gap: 30px;
+
+  .doctor-image {
+    img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+    }
+
+    // css for specialist component
+    &.specialist {
       img {
         border-radius: 50%;
+        width: 100px;
+        height: 100px;
+      }
+      span {
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+        color: #18a6ca;
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .doctor-summary {
+    width: 100%;
+
+    .doctor-summary-title {
+      font-size: 20px;
+      font-weight: bold;
+
+      &.specialist {
+        color: #45c3d2;
       }
     }
 
-    .doctor-summary {
-      width: 50%;
+    .doctor-summary-content {
+      margin-top: 10px;
+    }
 
-      .booking-title {
-        text-transform: uppercase;
-      }
+    .booking-title {
+      text-transform: uppercase;
+    }
 
-      .booking-time-content {
-        font-weight: lighter;
-      }
-      .doctor-summary-title {
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .doctor-summary-content {
-        margin-top: 10px;
-      }
+    .booking-time-content {
+      font-weight: lighter;
     }
   }
 }

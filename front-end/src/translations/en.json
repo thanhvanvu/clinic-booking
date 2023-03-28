@@ -86,7 +86,8 @@
 
   "doctor-profile": {
     "booking-title": "examination booking",
-    "booking-free": "Free booking with HealthCare Consultancy"
+    "booking-free": "Free booking with HealthCare Consultancy",
+    "see-more": "See more"
   },
 
   "booking": {
@@ -106,6 +107,11 @@
 
   "homepage": {
     "read-more": "READ MORE",
+
+    "specialist": {
+      "homepage-tittle": "Popular specialist"
+    },
+
     "outstanding-doctor": {
       "homepage-title": "Outstanding doctors last week",
       "schedule": "Schedule",

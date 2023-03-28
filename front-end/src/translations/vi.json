@@ -86,7 +86,8 @@
 
   "doctor-profile": {
     "booking-title": "đặt lịch khám",
-    "booking-free": "Miễn phí đặt lịch với HealthCare Consultancy"
+    "booking-free": "Miễn phí đặt lịch với HealthCare Consultancy",
+    "see-more": "Xem thêm"
   },
 
   "booking": {
@@ -107,6 +108,11 @@
 
   "homepage": {
     "read-more": "XEM THÊM",
+
+    "specialist": {
+      "homepage-tittle": "Chuyên khoa phổ biến"
+    },
+
     "outstanding-doctor": {
       "homepage-title": "Bác sĩ nổi bật tuần qua",
       "schedule": "lịch khám",

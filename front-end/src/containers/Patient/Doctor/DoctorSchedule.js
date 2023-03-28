@@ -30,20 +30,39 @@ class DoctorSchedule extends Component {
       dateArr: arrDate,
     })
 
-    // call api to get schedule hours
-    // if (this.props && this.props.currentDoctor && this.props.currentDoctor.id) {
-    //   let doctorId = this.props.currentDoctor.id // get doctorId from parent component and save into state
-    //   let response = await handleGetScheduleByDoctorId(
-    //     doctorId,
-    //     this.state.date
-    //   )
-    //   if (response && response.errCode === 0) {
-    //     // check if hour array has the past time or not ?
-    //     this.setState({
-    //       hourArr: response.data,
-    //     })
-    //   }
-    // }
+    //#region  For Specialist component
+    if (this.props.doctorId) {
+      let doctorId = this.props.doctorId
+      this.setState({
+        doctorId: doctorId,
+      })
+      let response = await handleGetScheduleByDoctorId(
+        doctorId,
+        this.state.date
+      )
+      if (response && response.errCode === 0) {
+        //#region  Filter the hour array if it has the past time
+        let todayDate = moment(new Date()).format('YYYY-MM-DD')
+        let currentTime = parseInt(moment(new Date()).format('HH'))
+        let hourArr = response.data
+
+        if (hourArr && hourArr[0] && todayDate === hourArr[0].date) {
+          hourArr = hourArr.filter((hour) => {
+            let timeRange = hour.timeTypeData.valueEN
+            let time = parseInt(timeRange.split('-')[0].split(':')[0])
+            if (time > currentTime) {
+              return true
+            }
+          })
+        }
+        //#endregion
+
+        this.setState({
+          hourArr: hourArr,
+        })
+      }
+    }
+    //#endregion
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -54,79 +73,68 @@ class DoctorSchedule extends Component {
       })
     }
 
-    if (prevProps.currentDoctor !== this.props.currentDoctor) {
+    if (prevProps.doctorId !== this.props.doctorId) {
+      let doctorId = this.props.doctorId // get doctorId from parent component and save into state
       this.setState({
-        currentDoctor: this.props.currentDoctor,
+        doctorId: doctorId,
       })
-      if (
-        this.props &&
-        this.props.currentDoctor &&
-        this.props.currentDoctor.id
-      ) {
-        let doctorId = this.props.currentDoctor.id // get doctorId from parent component and save into state
-        let response = await handleGetScheduleByDoctorId(
-          doctorId,
-          this.state.date
-        )
-        if (response && response.errCode === 0) {
-          //#region  Filter the hour array if it has the past time
-          let todayDate = moment(new Date()).format('YYYY-MM-DD')
-          let currentTime = parseInt(moment(new Date()).format('HH'))
-          let hourArr = response.data
 
-          if (hourArr && hourArr[0] && todayDate === hourArr[0].date) {
-            hourArr = hourArr.filter((hour) => {
-              let timeRange = hour.timeTypeData.valueEN
-              let time = parseInt(timeRange.split('-')[0].split(':')[0])
-              if (time > currentTime) {
-                return true
-              }
-            })
-          }
-          //#endregion
+      let response = await handleGetScheduleByDoctorId(
+        doctorId,
+        this.state.date
+      )
+      if (response && response.errCode === 0) {
+        //#region  Filter the hour array if it has the past time
+        let todayDate = moment(new Date()).format('YYYY-MM-DD')
+        let currentTime = parseInt(moment(new Date()).format('HH'))
+        let hourArr = response.data
 
-          this.setState({
-            hourArr: hourArr,
+        if (hourArr && hourArr[0] && todayDate === hourArr[0].date) {
+          hourArr = hourArr.filter((hour) => {
+            let timeRange = hour.timeTypeData.valueEN
+            let time = parseInt(timeRange.split('-')[0].split(':')[0])
+            if (time > currentTime) {
+              return true
+            }
           })
         }
+        //#endregion
+
+        this.setState({
+          hourArr: hourArr,
+        })
       }
     }
 
     // if user pick another date, call api to get hour schedule
     if (prevState.date !== this.state.date) {
       // call api to get schedule hours
-      if (
-        this.props &&
-        this.props.currentDoctor &&
-        this.props.currentDoctor.id
-      ) {
-        let doctorId = this.props.currentDoctor.id // get doctorId from parent component and save into state
-        let response = await handleGetScheduleByDoctorId(
-          doctorId,
-          this.state.date
-        )
-        if (response && response.errCode === 0) {
-          //#region  Filter the hour array if it has the past time
-          let todayDate = moment(new Date()).format('YYYY-MM-DD')
-          let currentTime = parseInt(moment(new Date()).format('HH'))
-          let hourArr = response.data
+      let doctorId = this.state.doctorId // get doctorId from parent component and save into state
+      let response = await handleGetScheduleByDoctorId(
+        doctorId,
+        this.state.date
+      )
+      if (response && response.errCode === 0) {
+        //#region  Filter the hour array if it has the past time
+        let todayDate = moment(new Date()).format('YYYY-MM-DD')
+        let currentTime = parseInt(moment(new Date()).format('HH'))
+        let hourArr = response.data
 
-          if (hourArr && hourArr[0] && todayDate === hourArr[0].date) {
-            hourArr = hourArr.filter((hour) => {
-              let timeRange = hour.timeTypeData.valueEN
-              let time = parseInt(timeRange.split('-')[0].split(':')[0])
-              console.log(time)
-              if (time > currentTime) {
-                return true
-              }
-            })
-          }
-          //#endregion
+        if (hourArr && hourArr[0] && todayDate === hourArr[0].date) {
+          hourArr = hourArr.filter((hour) => {
+            let timeRange = hour.timeTypeData.valueEN
+            let time = parseInt(timeRange.split('-')[0].split(':')[0])
 
-          this.setState({
-            hourArr: hourArr,
+            if (time > currentTime) {
+              return true
+            }
           })
         }
+        //#endregion
+
+        this.setState({
+          hourArr: hourArr,
+        })
       }
     }
   }
@@ -176,7 +184,6 @@ class DoctorSchedule extends Component {
   }
 
   handleClickScheduleTime = (hour) => {
-    console.log(hour)
     this.setState({
       isModalBooking: true,
       selectedScheduleHour: hour,
@@ -251,7 +258,7 @@ class DoctorSchedule extends Component {
           isModalBooking={this.state.isModalBooking}
           closeBookingModal={this.closeBookingModal}
           selectedScheduleHour={this.state.selectedScheduleHour}
-          doctorId={this.state.currentDoctor.id}
+          doctorId={this.state.doctorId}
         />
       </>
     )
@@ -261,7 +268,6 @@ class DoctorSchedule extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
-    currentDoctor: state.homepage.currentDoctor,
   }
 }
 

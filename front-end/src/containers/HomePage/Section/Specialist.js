@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './Specialist.scss'
 import Slider from 'react-slick'
@@ -25,7 +26,6 @@ class Specialist extends Component {
   componentDidUpdate() {}
 
   handleViewSpecialist = (specialist) => {
-    console.log(this.props)
     const { history } = this.props
     history.push(`/detail-specialist/${specialist.id}`)
   }
@@ -37,8 +37,12 @@ class Specialist extends Component {
       <div className="section-share section-specialist">
         <div className="section-content">
           <div className="section-header">
-            <span className="header-text">Chuyên Khoa Phổ Biến</span>
-            <button className="btn-more">XEM THÊM</button>
+            <span className="header-text">
+              <FormattedMessage id="homepage.specialist.homepage-tittle" />
+            </span>
+            <button className="btn-more">
+              <FormattedMessage id="homepage.read-more" />
+            </button>
           </div>
           <div className="section-body">
             <Slider {...settings}>

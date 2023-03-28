@@ -15,14 +15,14 @@ class CustomScrollbars extends Component {
     return scrollbars.getScrollTop()
   }
 
-  scrollToBottom = () => {
-    if (!this.ref || !this.ref.current) {
-      return
-    }
-    const scrollbars = this.ref.current
-    const targetScrollTop = scrollbars.getScrollHeight()
-    this.scrollTo(targetScrollTop)
-  }
+  // scrollToBottom = () => {
+  //   if (!this.ref || !this.ref.current) {
+  //     return
+  //   }
+  //   const scrollbars = this.ref.current
+  //   const targetScrollTop = scrollbars.getScrollHeight()
+  //   this.scrollTo(targetScrollTop)
+  // }
 
   scrollTo = (targetTop) => {
     const { quickScroll } = this.props

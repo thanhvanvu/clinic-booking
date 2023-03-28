@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './DoctorClinicInfo.scss'
 import { LANGUAGES } from '../../../utils'
+import { getDetailDoctorById } from '../../../services/userService'
 class DoctorClinicInfo extends Component {
   constructor(props) {
     super(props)
@@ -12,15 +13,34 @@ class DoctorClinicInfo extends Component {
     }
   }
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    if (this.props.doctorId) {
+      let doctorId = this.props.doctorId
+      let response = await getDetailDoctorById(doctorId)
+      if (response && response.errCode === 0) {
+        let doctorData = response.data
+        if (doctorData && doctorData.DoctorInfo) {
+          let clinicInfo = doctorData.DoctorInfo
+          this.setState({
+            doctorClinicInfo: clinicInfo,
+          })
+        }
+      }
+    }
+  }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.doctor !== this.props.doctor) {
-      let currentDoctor = this.props.doctor
-      if (currentDoctor && currentDoctor.DoctorInfo) {
-        this.setState({
-          doctorClinicInfo: this.props.doctor.DoctorInfo,
-        })
+  async componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.doctorId !== this.props.doctorId) {
+      let doctorId = this.props.doctorId
+      let response = await getDetailDoctorById(doctorId)
+      if (response && response.errCode === 0) {
+        let doctorData = response.data
+        if (doctorData && doctorData.DoctorInfo) {
+          let clinicInfo = doctorData.DoctorInfo
+          this.setState({
+            doctorClinicInfo: clinicInfo,
+          })
+        }
       }
     }
   }
@@ -38,8 +58,9 @@ class DoctorClinicInfo extends Component {
   }
 
   render() {
-    let clinincInfo = this.props.doctor.DoctorInfo
+    let clinincInfo = this.state.doctorClinicInfo
     let language = this.props.language
+    let specialist = this.props.specialist
     let price = ''
     let payment = ''
     if (clinincInfo && clinincInfo.priceData) {
@@ -56,7 +77,11 @@ class DoctorClinicInfo extends Component {
     }
     return (
       <>
-        <div className="clinic-information">
+        <div
+          className={
+            specialist ? 'clinic-information specialist' : 'clinic-information'
+          }
+        >
           <div className="address-label">
             <FormattedMessage id="homepage.outstanding-doctor.address-label" />
           </div>

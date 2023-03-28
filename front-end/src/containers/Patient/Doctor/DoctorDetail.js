@@ -9,6 +9,7 @@ import ProfileDoctor from './ProfileDoctor'
 import * as actions from '../../../store/actions'
 import HomeFooter from '../../HomePage/HomeFooter'
 import { LANGUAGES } from '../../../utils'
+
 class DoctorDetail extends Component {
   constructor(props) {
     super(props)
@@ -27,6 +28,7 @@ class DoctorDetail extends Component {
     ) {
       let doctorId = this.props.match.params.id
       this.props.getDetailDoctorByIdRedux(doctorId)
+      this.setState({ doctorId: doctorId })
     }
   }
 
@@ -46,15 +48,18 @@ class DoctorDetail extends Component {
       <>
         {/* show header menu */}
         <HeaderHomePage isShowBanner={false} />
-        <div className="profile-doctor">
-          <ProfileDoctor doctorId={doctor.id} />
+
+        <div className="profile-doctor wrapper">
+          <div className="profile-doctor-doctor-detail">
+            <ProfileDoctor doctorId={doctor.id} />
+          </div>
         </div>
         <div className="doctor-appointment wrapper">
           <div className="doctor-schedule">
-            <DoctorSchedule doctor={this.state.doctor} />
+            <DoctorSchedule doctorId={doctor.id} />
           </div>
           <div className="doctor-clinic-information">
-            <DoctorClinicInfo doctor={this.state.doctor} />
+            <DoctorClinicInfo doctorId={doctor.id} />
           </div>
         </div>
         <div className="doctor-information">

@@ -86,7 +86,8 @@
 
   "doctor-profile": {
     "booking-title": "reserva de examen",
-    "booking-free": "Reserva gratis con HealthCare Consultancy"
+    "booking-free": "Reserva gratis con HealthCare Consultancy",
+    "see-more": "Ver más"
   },
 
   "booking": {
@@ -106,6 +107,11 @@
 
   "homepage": {
     "read-more": "LEER MÁS",
+
+    "specialist": {
+      "homepage-tittle": "Especialista popular"
+    },
+
     "outstanding-doctor": {
       "homepage-title": "Doctores destacados la semana pasada",
       "schedule": "Cronograma",

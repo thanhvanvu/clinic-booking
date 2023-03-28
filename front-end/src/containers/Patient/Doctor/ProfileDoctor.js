@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import './ProfileDoctor.scss'
 import { handleGetProfileDoctorByIf } from '../../../services/userService'
 import { LANGUAGES } from '../../../utils'
+import { withRouter } from 'react-router'
 
 // This component will get doctorId as a props from parent component
 // doctorId: the id of the doctor will be sent from parent component
@@ -16,6 +17,7 @@ class ProfileDoctor extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      doctorId: '',
       doctorProfile: {},
     }
   }
@@ -25,6 +27,7 @@ class ProfileDoctor extends Component {
     let doctorId = this.props.doctorId
     let profileDoctor = await this.getProfileDoctorById(doctorId)
     this.setState({
+      doctorId: this.props.doctorId,
       doctorProfile: profileDoctor,
     })
   }
@@ -33,6 +36,7 @@ class ProfileDoctor extends Component {
     if (prevProps.doctorId !== this.props.doctorId) {
       let profileDoctor = await this.getProfileDoctorById(this.props.doctorId)
       this.setState({
+        doctorId: this.props.doctorId,
         doctorProfile: profileDoctor,
       })
     }
@@ -89,9 +93,14 @@ class ProfileDoctor extends Component {
     )
   }
 
-  render() {
-    let { isShowTimeBooking, selectedScheduleHour } = this.props
+  handleViewDoctorDetail = () => {
+    const doctorId = this.state.doctorId
+    const { history } = this.props
+    history.push(`/detail-doctor/${doctorId}`)
+  }
 
+  render() {
+    let { isShowTimeBooking, selectedScheduleHour, specialist } = this.props
     let doctor = this.state.doctorProfile
     let language = this.props.language
     let title
@@ -120,33 +129,50 @@ class ProfileDoctor extends Component {
       }
     }
     return (
-      <div className="doctor-detail-container">
-        <div className="doctor-detail-summary wrapper">
-          <div className="doctor-image">
-            <img src={doctor.image} alt="" width="120px" height="120px" />
-          </div>
-          {isShowTimeBooking === true ? (
-            <div className="doctor-summary">
-              <div className="booking-title">
-                <FormattedMessage id="doctor-profile.booking-title" />
-              </div>
-              <div className="doctor-summary-title">{title}</div>
-              {this.renderTimeBooking(selectedScheduleHour)}
-            </div>
+      <div className="doctor-detail-summary">
+        <div
+          className={
+            specialist === true ? 'doctor-image specialist' : 'doctor-image'
+          }
+        >
+          <img src={doctor.image} alt="" />
+          {specialist ? (
+            <span onClick={() => this.handleViewDoctorDetail()}>
+              <FormattedMessage id="doctor-profile.see-more" />
+            </span>
           ) : (
-            <>
-              <div className="doctor-summary">
-                <div className="doctor-summary-title">{title}</div>
-                <div className="doctor-summary-content">
-                  {doctor &&
-                    doctor.Markdown &&
-                    doctor.Markdown.description &&
-                    doctor.Markdown.description}
-                </div>
-              </div>
-            </>
+            <></>
           )}
         </div>
+        {isShowTimeBooking === true ? (
+          <div className="doctor-summary">
+            <div className="booking-title">
+              <FormattedMessage id="doctor-profile.booking-title" />
+            </div>
+            <div className="doctor-summary-title">{title}</div>
+            {this.renderTimeBooking(selectedScheduleHour)}
+          </div>
+        ) : (
+          <>
+            <div className="doctor-summary">
+              <div
+                className={
+                  specialist
+                    ? 'doctor-summary-title specialist'
+                    : 'doctor-summary-title'
+                }
+              >
+                {title}
+              </div>
+              <div className="doctor-summary-content">
+                {doctor &&
+                  doctor.Markdown &&
+                  doctor.Markdown.description &&
+                  doctor.Markdown.description}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     )
   }
@@ -162,4 +188,6 @@ const mapDispatchToProps = (dispatch) => {
   return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileDoctor)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ProfileDoctor)
+)
