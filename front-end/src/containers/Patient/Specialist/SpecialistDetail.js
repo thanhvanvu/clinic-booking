@@ -7,58 +7,191 @@ import DoctorSchedule from '../Doctor/DoctorSchedule'
 import ProfileDoctor from '../Doctor/ProfileDoctor'
 import HomeFooter from '../../HomePage/HomeFooter'
 import DoctorClinicInfo from '../Doctor/DoctorClinicInfo'
+import {
+  handleGetSpecialistById,
+  handleGetDoctorInSpecialist,
+} from '../../../services/specialistService'
+import { handleGetAllCode } from '../../../services/userService'
+import { CommonUtils } from '../../../utils'
+import { LANGUAGES } from '../../../utils'
 import '../Doctor/DoctorSchedule.scss'
 class SpecialistDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      arrDoctorId: [113, 97, 101, 99],
+      specialistId: '',
+      currentSpecialist: {},
+      allDoctorInspecialist: {},
+      isSeemore: false,
+      arrDoctor: [],
+      filteredArrDoctor: [],
+      arrCity: [],
     }
   }
 
-  componentDidMount() {
-    window.scrollTo(0, 0)
+  async componentDidMount() {
+    //#region  Get specialist information by id
+    if (this.props && this.props.match && this.props.match.params) {
+      let specialistId = this.props.match.params.id
+      this.setState({
+        specialistId: specialistId,
+      })
+
+      let response = await handleGetSpecialistById(specialistId)
+      if (response && response.errCode === 0) {
+        let currentSpecialist = response.data
+        currentSpecialist.image = CommonUtils.convertBufferToBase64(
+          currentSpecialist.image
+        )
+        this.setState({
+          currentSpecialist: currentSpecialist,
+        })
+      }
+
+      let doctorResponse = await handleGetDoctorInSpecialist(specialistId)
+      if (doctorResponse && doctorResponse.errCode === 0) {
+        let dataDoctor = doctorResponse.data
+
+        this.setState({
+          arrDoctor: dataDoctor,
+          filteredArrDoctor: dataDoctor,
+        })
+      }
+    }
+    //#endregion
+
+    let cityResponse = await handleGetAllCode('CITY')
+    if (cityResponse && cityResponse.errCode === 0) {
+      let cityData = cityResponse.type
+
+      if (cityData.length > 0) {
+        // move the last element to the top
+        let lastCity = cityData.pop()
+        cityData.unshift(lastCity)
+        this.setState({
+          arrCity: cityData,
+        })
+      }
+    }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0)
+  componentDidUpdate(prevProps, prevState, snapshot) {}
+
+  handleClickSeeMore = () => {
+    this.setState({
+      isSeemore: !this.state.isSeemore,
+    })
+  }
+
+  handleCity = (event) => {
+    // filter arrDoctor with selected city
+    let arrDoctor = this.state.arrDoctor
+    let cityKeymap = event.target.value
+    console.log(cityKeymap)
+    console.log(arrDoctor)
+
+    if (cityKeymap === 'CT0') {
+      this.setState({
+        filteredArrDoctor: this.state.arrDoctor,
+      })
+    } else {
+      let filteredArrDoctor = arrDoctor.filter(
+        (doctor) => doctor.cityData.keyMap === cityKeymap
+      )
+
+      this.setState({
+        filteredArrDoctor: filteredArrDoctor,
+      })
     }
   }
 
   render() {
-    let arrDoctorId = this.state.arrDoctorId
+    let filteredArrDoctor = this.state.filteredArrDoctor
+    let arrCity = this.state.arrCity
+    let language = this.props.language
+    let currentSpecialist = this.state.currentSpecialist
+    let specialistDetailHTML = this.state.currentSpecialist.descriptionHTML
+
     return (
       <div className="container-specialist">
         <HeaderHomePage />
-        <div className="specialist-top">
-          <div className="specialist-detail wrapper"></div>
+        <div
+          className="specialist-top"
+          style={{
+            backgroundImage: `url(${currentSpecialist.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            width: '100%',
+          }}
+        >
+          <div className="specialist-detail-transparent ">
+            <div className="specialist-detail-wrapper wrapper">
+              <div
+                className={
+                  this.state.isSeemore
+                    ? 'specialist-detail see-more'
+                    : 'specialist-detail '
+                }
+                dangerouslySetInnerHTML={{ __html: specialistDetailHTML }}
+              ></div>
+              <span onClick={() => this.handleClickSeeMore()}>
+                {this.state.isSeemore ? 'See less' : 'See more'}
+              </span>
+            </div>
+          </div>
         </div>
         <div className="specialist-bottom">
           <div className="specialist-content-wrapper wrapper">
-            {arrDoctorId &&
-              arrDoctorId.length > 0 &&
-              arrDoctorId.map((doctorId, index) => {
+            <select
+              className="doctor-city"
+              defaultValue="CT0"
+              onChange={(event) => this.handleCity(event)}
+            >
+              {arrCity &&
+                arrCity.length > 0 &&
+                arrCity.map((city, index) => {
+                  return (
+                    <option value={city.keyMap} key={index}>
+                      {language === LANGUAGES.EN
+                        ? city.valueEN
+                        : language === LANGUAGES.VI
+                        ? city.valueVI
+                        : city.valueES}
+                    </option>
+                  )
+                })}
+            </select>
+            {filteredArrDoctor &&
+              filteredArrDoctor.length > 0 &&
+              filteredArrDoctor.map((doctor, index) => {
                 return (
                   <div className="specialist-content">
                     <div className="specialist-content-left">
                       <ProfileDoctor
-                        doctorId={doctorId}
+                        doctorId={doctor.doctorId}
+                        cityData={doctor.cityData}
                         key={index}
                         specialist={true}
                       />
                     </div>
                     <div className="specialist-content-right">
                       <div className="doctor-schedule">
-                        <DoctorSchedule doctorId={doctorId} key={index} />
+                        <DoctorSchedule
+                          doctorId={doctor.doctorId}
+                          key={index}
+                        />
                       </div>
-                      <DoctorClinicInfo doctorId={doctorId} specialist={true} />
+                      <DoctorClinicInfo
+                        doctorId={doctor.doctorId}
+                        specialist={true}
+                      />
                     </div>
                   </div>
                 )
               })}
           </div>
         </div>
+
         <HomeFooter />
       </div>
     )

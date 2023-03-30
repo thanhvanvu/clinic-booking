@@ -100,7 +100,8 @@ class ProfileDoctor extends Component {
   }
 
   render() {
-    let { isShowTimeBooking, selectedScheduleHour, specialist } = this.props
+    let { isShowTimeBooking, selectedScheduleHour, specialist, cityData } =
+      this.props
     let doctor = this.state.doctorProfile
     let language = this.props.language
     let title
@@ -170,6 +171,19 @@ class ProfileDoctor extends Component {
                   doctor.Markdown.description &&
                   doctor.Markdown.description}
               </div>
+
+              {specialist ? (
+                <div className="doctoc-city">
+                  <i class="fas fa-map-marker-alt"></i>{' '}
+                  {language === LANGUAGES.VI
+                    ? cityData.valueVI
+                    : language === LANGUAGES.EN
+                    ? cityData.valueEN
+                    : cityData.valueES}
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </>
         )}

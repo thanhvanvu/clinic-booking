@@ -65,10 +65,24 @@ const handleDeleteSpecialistById = async (specialistId) => {
     console.log(error)
   }
 }
+
+const handleGetDoctorInSpecialist = async (specialistId) => {
+  try {
+    const options = {
+      method: 'get',
+      url: `/api/get-doctor-specialist?id=${specialistId}`,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   handleCreateSpecialist,
   handleGetAllSpecialist,
   handleGetSpecialistById,
   handleUpdateSpecialistById,
   handleDeleteSpecialistById,
+  handleGetDoctorInSpecialist,
 }

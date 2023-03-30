@@ -69,6 +69,9 @@ let initWebRoutes = (app) => {
   Router.route('/api/delete-specialist-by-id').delete(
     specialistController.deleteSpecialistById
   )
+  Router.route('/api/get-doctor-specialist').get(
+    specialistController.getDoctorInSpecialist
+  )
 
   return app.use('/', Router)
 }

@@ -146,10 +146,38 @@ const deleteSpecialistById = async (req, res) => {
     })
   }
 }
+
+const getDoctorInSpecialist = async (req, res) => {
+  try {
+    let specialistId = req.query.id
+
+    if (!specialistId) {
+      return res.status(200).json({
+        errCode: 1,
+        status: 'Fail',
+        message: 'Missing parameter',
+      })
+    }
+
+    let response = await specialistService.handleGetDoctorInSpecialist(
+      specialistId
+    )
+
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+      data: response.data,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   createSpecialist,
   getAllSpecialist,
   getSpecialistById,
   updateSpecialistById,
   deleteSpecialistById,
+  getDoctorInSpecialist,
 }

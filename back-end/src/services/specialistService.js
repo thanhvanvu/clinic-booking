@@ -121,10 +121,49 @@ const handleDeleteSpecialistById = async (specialistId) => {
     console.log(error)
   }
 }
+
+const handleGetDoctorInSpecialist = async (specialistId) => {
+  try {
+    let doctors = await db.DoctorInfo.findAll({
+      where: {
+        specialistId: specialistId,
+      },
+      raw: true,
+      attributes: ['doctorId'],
+
+      include: [
+        {
+          model: db.Allcode,
+          as: 'cityData',
+        },
+      ],
+
+      nest: true,
+    })
+
+    if (doctors) {
+      return {
+        errCode: 0,
+        status: 'Success',
+        message: 'Ok!',
+        data: doctors,
+      }
+    } else {
+      return {
+        errCode: 2,
+        status: 'Success',
+        message: 'Doctors not found!',
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   handleCreateSpecialist,
   handleGetAllSpecialist,
   handleGetSpecialistById,
   handleUpdateSpecialistById,
   handleDeleteSpecialistById,
+  handleGetDoctorInSpecialist,
 }

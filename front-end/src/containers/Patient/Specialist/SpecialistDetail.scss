@@ -1,18 +1,50 @@
 .container-specialist {
   .specialist-top {
+    .specialist-detail-transparent {
+      background-image: linear-gradient(
+        rgba(255, 255, 255, 0.8),
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 1)
+      );
+
+      .specialist-detail-wrapper {
+        margin: 0 auto;
+        padding: 30px 0;
+
+        span {
+          cursor: pointer;
+          color: #45c3d2;
+        }
+      }
+    }
     .specialist-detail {
-      margin: 0 auto;
-      height: 300px;
-      border: 1px solid red;
+      max-height: 200px;
+      overflow: hidden;
+
+      &.see-more {
+        max-height: 100%;
+      }
+      h2 {
+        font-weight: bold;
+      }
     }
   }
 
   .specialist-bottom {
     background-color: #eeeeee;
-    padding: 30px 0;
-    height: 100%;
+    padding: 20px 0;
+
     .specialist-content-wrapper {
       margin: 0 auto;
+
+      .doctor-city {
+        margin-bottom: 20px;
+        outline: none;
+        height: 30px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding-left: 10px;
+      }
 
       .specialist-content {
         background-color: white;
