@@ -11,15 +11,22 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       address: {
-        type: Sequelize.STRING,
-      },
-      description: {
         type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      descriptionMarkdown: {
+        type: Sequelize.TEXT('long'),
+        allowNull: false,
+      },
+      descriptionHTML: {
+        type: Sequelize.TEXT('long'),
+        allowNull: false,
       },
       image: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB('long'),
       },
       createdAt: {
         allowNull: false,

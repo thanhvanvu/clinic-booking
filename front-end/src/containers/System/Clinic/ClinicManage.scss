@@ -1,0 +1,90 @@
+.clinic-manage-container {
+  padding: 10px;
+  margin: 0 auto;
+  .clinic-manage {
+    &.title {
+      margin-bottom: 10px;
+    }
+  }
+
+  .select-create-update {
+    margin: 10px 0;
+    input {
+      margin-right: 10px;
+    }
+  }
+
+  .clinic-manage-content {
+    margin-top: 20px;
+    display: flex;
+    gap: 30px;
+    .clinic-content-left {
+      width: 47%;
+    }
+
+    .clinic-content-right {
+      width: 50%;
+      // height: 300px;
+      border-left: 1px solid #ccc;
+      padding-left: 30px;
+
+      .clinic-image {
+        label.image-upload {
+          margin: 0 !important;
+          padding: 4px 15px;
+          border: 1px solid #0071ba;
+          border-radius: 5px;
+          color: white;
+          background-color: #0071ba;
+          cursor: pointer;
+
+          i {
+            margin-right: 5px;
+          }
+        }
+
+        .image-clinic {
+          margin-top: 10px;
+          img {
+            display: block;
+            margin: 0 auto;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .clinic-address {
+    margin-bottom: 20px;
+  }
+
+  .create-save-delete-btn {
+    display: flex;
+    gap: 30px;
+    .clinic-manage-save {
+      margin: 30px auto;
+      display: inline-block;
+      width: 100%;
+      height: 40px;
+      background-color: #0071ba;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      border: none;
+      border-radius: 50px;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: #015b97;
+        transform: translateY(3px);
+      }
+
+      &.delete {
+        background-color: #dc1111;
+      }
+    }
+  }
+}

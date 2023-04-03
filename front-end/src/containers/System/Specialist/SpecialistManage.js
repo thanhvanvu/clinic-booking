@@ -97,7 +97,6 @@ class SpecialistManage extends Component {
   }
 
   handleOnchangeImage = async (event) => {
-    console.log(event)
     let file = event.target.files[0]
     let fileType = file.type.slice(0, 5)
     if (file && fileType === 'image') {
@@ -357,7 +356,6 @@ class SpecialistManage extends Component {
                           ? this.state.specialistPreviewImg
                           : ''
                       }
-                      onClick={() => this.openPreviewImg()}
                     ></img>
                   </div>
                 )}
