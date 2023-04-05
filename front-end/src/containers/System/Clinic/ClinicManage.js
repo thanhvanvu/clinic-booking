@@ -4,8 +4,12 @@ import { connect } from 'react-redux'
 import './ClinicManage.scss'
 import { CommonUtils } from '../../../utils'
 import { LANGUAGES } from '../../../utils'
-import { handleCreateClinic } from '../../../services/clinicService'
+import {
+  handleCreateClinic,
+  handleGetAllClinic,
+} from '../../../services/clinicService'
 import { toast } from 'react-toastify'
+import Select from 'react-select'
 
 // import markdownit
 import MarkdownIt from 'markdown-it'
@@ -29,12 +33,17 @@ class ClinicManage extends Component {
 
       cityArr: [],
 
+      allclinicArr: [],
+      selectedClinic: {},
+
       inputValidation: [],
+
+      isUpdateClinic: false,
     }
   }
 
   async componentDidMount() {
-    // get all City
+    //#region  Get All City data
     let response = await handleGetAllCode('CITY')
     if (response && response.errCode === 0) {
       let cityArr = response.type
@@ -45,6 +54,26 @@ class ClinicManage extends Component {
       this.setState({
         cityArr: filteredCityArr,
       })
+    }
+    //#endregion
+
+    let responseClinic = await handleGetAllClinic()
+    if (responseClinic && responseClinic.errCode === 0) {
+      // build array data for React Select
+      let clinicData = responseClinic.data
+      let builtClinicData = []
+      clinicData.map((clinic, index) => {
+        let object = {}
+        object.label = clinic.name
+        object.value = clinic.id
+        builtClinicData.push(object)
+        return clinicData
+      })
+
+      this.setState({
+        allclinicArr: builtClinicData,
+      })
+      console.log(builtClinicData)
     }
   }
 
@@ -71,6 +100,24 @@ class ClinicManage extends Component {
     copiedState.inputValidation.descriptionMarkdown = true
 
     this.setState(copiedState)
+  }
+
+  handleRadioChange = (status) => {
+    if (status === 'update') {
+      this.setState({
+        isUpdateClinic: true,
+      })
+    } else {
+      this.setState({
+        isUpdateClinic: false,
+      })
+    }
+  }
+
+  handleSelectclinic = (selectedClinic) => {
+    this.setState({
+      selectedClinic: selectedClinic,
+    })
   }
 
   handleCreateClinicManage = async () => {
@@ -115,6 +162,7 @@ class ClinicManage extends Component {
     let cityArr = this.state.cityArr
     let inputValidation = this.state.inputValidation
     let language = this.props.language
+    let isUpdateClinic = this.state.isUpdateClinic
     return (
       <>
         <div className="clinic-manage-container wrapper">
@@ -131,7 +179,7 @@ class ClinicManage extends Component {
               />
               <label htmlFor="clinic-create-new">Create new</label>
             </div>
-            {/* <div>
+            <div>
               <input
                 type="radio"
                 name="clinic"
@@ -140,15 +188,16 @@ class ClinicManage extends Component {
                 onClick={() => this.handleRadioChange('update')}
               />
               <label htmlFor="clinic-update">Update </label>
-            </div> */}
+            </div>
           </div>
-          {/* {isUpdateclinic && (
-        <Select
-          value={this.state.selectedclinic}
-          options={this.state.allclinicArr}
-          onChange={(event) => this.handleSelectclinic(event)}
-        />
-      )} */}
+          {isUpdateClinic && (
+            <Select
+              placeholder="Select Clinic"
+              value={this.state.selectedclinic}
+              options={this.state.allclinicArr}
+              onChange={(event) => this.handleSelectclinic(event)}
+            />
+          )}
 
           <div className="clinic-manage-content">
             <div className="clinic-content-left form-group">
@@ -275,19 +324,19 @@ class ClinicManage extends Component {
             />
           </div>
           <div className="create-save-delete-btn">
-            {this.state.isUpdateSpecialist === true ? (
+            {isUpdateClinic === true ? (
               <>
                 <button
                   className="clinic-manage-save"
                   onClick={() => this.handleUpdateSpecialistManage()}
                 >
-                  Update Phòng khám
+                  Update Clinic
                 </button>
                 <button
                   className="clinic-manage-save delete"
                   onClick={() => this.handleDeleteSpecialistManage()}
                 >
-                  Delete Chuyen khoa
+                  Delete Clinic
                 </button>
               </>
             ) : (

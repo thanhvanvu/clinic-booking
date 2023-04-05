@@ -3,6 +3,25 @@ import express from 'express'
 import db from '../models/index'
 import clinicService from '../services/clinicService'
 
+const getAllClinic = async (req, res) => {
+  try {
+    let response = await clinicService.handleGetAllClinic()
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+      data: response.data,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
+
 const createClinic = async (req, res) => {
   try {
     let clinicData = req.body
@@ -36,4 +55,5 @@ const createClinic = async (req, res) => {
 }
 module.exports = {
   createClinic,
+  getAllClinic,
 }

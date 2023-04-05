@@ -1,5 +1,18 @@
 import axios from '../axios'
 
+const handleGetAllClinic = async () => {
+  try {
+    const options = {
+      method: 'get',
+      url: '/api/get-all-clinic',
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const handleCreateClinic = async (clinicData) => {
   try {
     const options = {
@@ -79,4 +92,4 @@ const handleCreateClinic = async (clinicData) => {
 //     console.log(error)
 //   }
 // }
-export { handleCreateClinic }
+export { handleCreateClinic, handleGetAllClinic }
