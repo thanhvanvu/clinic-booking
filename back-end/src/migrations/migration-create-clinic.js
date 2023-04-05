@@ -17,6 +17,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      city: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       descriptionMarkdown: {
         type: Sequelize.TEXT('long'),
         allowNull: false,

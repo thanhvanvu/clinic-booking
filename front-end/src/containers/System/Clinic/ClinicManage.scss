@@ -57,8 +57,18 @@
     }
   }
 
-  .clinic-address {
+  .clinic-address-city {
     margin-bottom: 20px;
+    display: flex;
+    gap: 70px;
+
+    .address {
+      width: 50%;
+    }
+
+    .city {
+      width: 50%;
+    }
   }
 
   .create-save-delete-btn {

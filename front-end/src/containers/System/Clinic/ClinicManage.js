@@ -3,10 +3,15 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './ClinicManage.scss'
 import { CommonUtils } from '../../../utils'
+import { LANGUAGES } from '../../../utils'
+import { handleCreateClinic } from '../../../services/clinicService'
+import { toast } from 'react-toastify'
+
 // import markdownit
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 import 'react-markdown-editor-lite/lib/index.css'
+import { handleGetAllCode } from '../../../services/userService'
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */)
 
@@ -16,16 +21,32 @@ class ClinicManage extends Component {
     this.state = {
       clinicName: '',
       clinicAddress: '',
+      clinicCity: '',
       clinicContentHTML: '',
       clinicContentMarkdown: '',
       clinicImage: '',
       clinicPreviewImg: '',
 
+      cityArr: [],
+
       inputValidation: [],
     }
   }
 
-  componentDidMount() {}
+  async componentDidMount() {
+    // get all City
+    let response = await handleGetAllCode('CITY')
+    if (response && response.errCode === 0) {
+      let cityArr = response.type
+
+      // remove statewise city out of the array
+      let filteredCityArr = cityArr.filter((city) => city.keyMap !== 'CT0')
+
+      this.setState({
+        cityArr: filteredCityArr,
+      })
+    }
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {}
 
@@ -52,17 +73,37 @@ class ClinicManage extends Component {
     this.setState(copiedState)
   }
 
-  handleCreateClinicManage = () => {
-    console.log('abc')
+  handleCreateClinicManage = async () => {
     if (window.confirm('Are you sure to create this clinic information ?')) {
       let input = {
         name: this.state.clinicName,
         address: this.state.clinicAddress,
+        city: this.state.clinicCity,
         descriptionHTML: this.state.clinicContentHTML,
         descriptionMarkdown: this.state.clinicContentMarkdown,
       }
 
       let isValidInput = CommonUtils.checkValidateInput(input)
+
+      if (isValidInput[1] === true) {
+        let response = await handleCreateClinic(input)
+        if (response && response.errCode === 0) {
+          toast.success('Create Clinic Successfully!')
+
+          // reset input
+          this.setState({
+            clinicName: '',
+            clinicAddress: '',
+            clinicCity: '',
+            clinicContentHTML: '',
+            clinicContentMarkdown: '',
+            clinicImage: '',
+            clinicPreviewImg: '',
+
+            inputValidation: [],
+          })
+        }
+      }
       this.setState({
         inputValidation: isValidInput[0],
       })
@@ -71,7 +112,9 @@ class ClinicManage extends Component {
 
   render() {
     console.log(this.state)
+    let cityArr = this.state.cityArr
     let inputValidation = this.state.inputValidation
+    let language = this.props.language
     return (
       <>
         <div className="clinic-manage-container wrapper">
@@ -160,26 +203,60 @@ class ClinicManage extends Component {
             </div>
           </div>
 
-          <div className="clinic-address">
-            <label className="content-label">Clinic Address</label>
-            <input
-              type="text"
-              className={
-                inputValidation.address === false
-                  ? 'form-control invalid'
-                  : 'form-control'
-              }
-              value={this.state.clinicAddress}
-              onChange={(event) => {
-                this.setState({
-                  inputValidation: {
-                    ...this.state.inputValidation,
-                    address: true,
-                  },
-                  clinicAddress: event.target.value,
-                })
-              }}
-            />
+          <div className="clinic-address-city">
+            <div className="address">
+              <label className="content-label">Clinic Address</label>
+              <input
+                type="text"
+                className={
+                  inputValidation.address === false
+                    ? 'form-control invalid'
+                    : 'form-control'
+                }
+                value={this.state.clinicAddress}
+                onChange={(event) => {
+                  this.setState({
+                    inputValidation: {
+                      ...this.state.inputValidation,
+                      address: true,
+                    },
+                    clinicAddress: event.target.value,
+                  })
+                }}
+              />
+            </div>
+
+            <div className="city">
+              <label className="content-label">City</label>
+              <select
+                className={
+                  inputValidation.city === false
+                    ? 'form-control invalid'
+                    : 'form-control'
+                }
+                value={this.state.clinicCity}
+                onChange={(event) => {
+                  this.setState({ clinicCity: event.target.value })
+                }}
+              >
+                {this.state.clinicCity === '' && (
+                  <option value="">---Select a city---</option>
+                )}
+                {cityArr &&
+                  cityArr.length > 0 &&
+                  cityArr.map((city, index) => {
+                    return (
+                      <option value={city.keyMap}>
+                        {LANGUAGES.EN === language
+                          ? city.valueEN
+                          : LANGUAGES.VI
+                          ? city.valueVI
+                          : city.valueES}
+                      </option>
+                    )
+                  })}
+              </select>
+            </div>
           </div>
 
           <div
