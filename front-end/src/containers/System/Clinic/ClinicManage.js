@@ -6,7 +6,9 @@ import { CommonUtils } from '../../../utils'
 import { LANGUAGES } from '../../../utils'
 import {
   handleCreateClinic,
+  handleDeleteClinic,
   handleGetAllClinic,
+  handleUpdateClinic,
 } from '../../../services/clinicService'
 import { toast } from 'react-toastify'
 import Select from 'react-select'
@@ -23,6 +25,7 @@ class ClinicManage extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      clinicId: '',
       clinicName: '',
       clinicAddress: '',
       clinicCity: '',
@@ -33,7 +36,8 @@ class ClinicManage extends Component {
 
       cityArr: [],
 
-      allclinicArr: [],
+      allClinic: [],
+      builtAllclinicArr: [],
       selectedClinic: {},
 
       inputValidation: [],
@@ -56,11 +60,11 @@ class ClinicManage extends Component {
       })
     }
     //#endregion
+  }
 
-    let responseClinic = await handleGetAllClinic()
-    if (responseClinic && responseClinic.errCode === 0) {
-      // build array data for React Select
-      let clinicData = responseClinic.data
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.allClinic !== this.state.allClinic) {
+      let clinicData = this.state.allClinic
       let builtClinicData = []
       clinicData.map((clinic, index) => {
         let object = {}
@@ -71,13 +75,10 @@ class ClinicManage extends Component {
       })
 
       this.setState({
-        allclinicArr: builtClinicData,
+        builtAllclinicArr: builtClinicData,
       })
-      console.log(builtClinicData)
     }
   }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {}
 
   handleOnchangeImage = async (event) => {
     let file = event.target.files[0]
@@ -93,7 +94,7 @@ class ClinicManage extends Component {
     }
   }
 
-  handleSpecialistEditorChange = ({ html, text }) => {
+  handleClinicEditorChange = ({ html, text }) => {
     let copiedState = { ...this.state }
     copiedState.clinicContentHTML = html
     copiedState.clinicContentMarkdown = text
@@ -102,20 +103,68 @@ class ClinicManage extends Component {
     this.setState(copiedState)
   }
 
-  handleRadioChange = (status) => {
+  handleRadioChange = async (status) => {
     if (status === 'update') {
-      this.setState({
-        isUpdateClinic: true,
-      })
+      let responseClinic = await handleGetAllClinic()
+      if (responseClinic && responseClinic.errCode === 0) {
+        // build array data for React Select
+        let clinicData = responseClinic.data
+        let builtClinicData = []
+        clinicData.map((clinic, index) => {
+          let object = {}
+          object.label = clinic.name
+          object.value = clinic.id
+          builtClinicData.push(object)
+          return clinicData
+        })
+
+        this.setState({
+          allClinic: clinicData,
+          builtAllclinicArr: builtClinicData,
+          isUpdateClinic: true,
+        })
+      }
     } else {
+      // reset input
       this.setState({
+        clinicName: '',
+        clinicAddress: '',
+        clinicCity: '',
+        clinicContentHTML: '',
+        clinicContentMarkdown: '',
+        clinicImage: '',
+        clinicPreviewImg: '',
+
+        inputValidation: [],
+
         isUpdateClinic: false,
       })
     }
   }
 
   handleSelectclinic = (selectedClinic) => {
+    let allClinic = this.state.allClinic
+
+    // compare selectedClinic with array of all Clinic
+    let selectedClinicData = allClinic.find(
+      (clinic) => clinic.id === selectedClinic.value
+    )
+
+    let previewImg
+    if (selectedClinicData && selectedClinicData.image) {
+      previewImg = CommonUtils.convertBufferToBase64(selectedClinicData.image)
+    }
+
     this.setState({
+      clinicId: selectedClinicData.id,
+      clinicName: selectedClinicData.name,
+      clinicAddress: selectedClinicData.address,
+      clinicCity: selectedClinicData.city,
+      clinicContentMarkdown: selectedClinicData.descriptionMarkdown,
+      clinicContentHTML: selectedClinicData.descriptionHTML,
+      clinicImage: selectedClinicData.image,
+      clinicPreviewImg: previewImg,
+
       selectedClinic: selectedClinic,
     })
   }
@@ -128,9 +177,13 @@ class ClinicManage extends Component {
         city: this.state.clinicCity,
         descriptionHTML: this.state.clinicContentHTML,
         descriptionMarkdown: this.state.clinicContentMarkdown,
+        image: this.state.clinicImage,
       }
 
       let isValidInput = CommonUtils.checkValidateInput(input)
+      this.setState({
+        inputValidation: isValidInput[0],
+      })
 
       if (isValidInput[1] === true) {
         let response = await handleCreateClinic(input)
@@ -151,9 +204,88 @@ class ClinicManage extends Component {
           })
         }
       }
+    }
+  }
+
+  handleUpdateClinicManage = async () => {
+    if (window.confirm('Are you sure to update this clinic information ?')) {
+      let input = {
+        id: this.state.clinicId,
+        name: this.state.clinicName,
+        address: this.state.clinicAddress,
+        city: this.state.clinicCity,
+        descriptionHTML: this.state.clinicContentHTML,
+        descriptionMarkdown: this.state.clinicContentMarkdown,
+        image: this.state.clinicImage,
+      }
+
+      let isValidInput = CommonUtils.checkValidateInput(input)
       this.setState({
         inputValidation: isValidInput[0],
       })
+
+      // call API
+      let response = await handleUpdateClinic(input)
+      if (response && response.errCode === 0) {
+        toast.success('Updated Clinic successfully!')
+
+        // reset input
+        this.setState({
+          clinicName: '',
+          clinicAddress: '',
+          clinicCity: '',
+          clinicContentHTML: '',
+          clinicContentMarkdown: '',
+          clinicImage: '',
+          clinicPreviewImg: '',
+
+          allClinic: [],
+          builtAllclinicArr: [],
+          selectedClinic: {},
+        })
+
+        // refresh clinic array
+        let responseClinic = await handleGetAllClinic()
+        if (responseClinic && responseClinic.errCode === 0) {
+          this.setState({
+            allClinic: responseClinic.data,
+          })
+        }
+      }
+    }
+  }
+
+  handleDeleteSpecialistManage = async () => {
+    let clinicId = this.state.clinicId
+
+    if (window.confirm('Are you sure to delete this clinic?')) {
+      let response = await handleDeleteClinic(clinicId)
+      if (response && response.errCode === 0) {
+        toast.error('Deleted Clinic Succesfully!')
+
+        // reset input
+        this.setState({
+          clinicName: '',
+          clinicAddress: '',
+          clinicCity: '',
+          clinicContentHTML: '',
+          clinicContentMarkdown: '',
+          clinicImage: '',
+          clinicPreviewImg: '',
+
+          allClinic: [],
+          builtAllclinicArr: [],
+          selectedClinic: {},
+        })
+
+        // refresh clinic array
+        let responseClinic = await handleGetAllClinic()
+        if (responseClinic && responseClinic.errCode === 0) {
+          this.setState({
+            allClinic: responseClinic.data,
+          })
+        }
+      }
     }
   }
 
@@ -192,9 +324,8 @@ class ClinicManage extends Component {
           </div>
           {isUpdateClinic && (
             <Select
-              placeholder="Select Clinic"
-              value={this.state.selectedclinic}
-              options={this.state.allclinicArr}
+              value={this.state.selectedClinic}
+              options={this.state.builtAllclinicArr}
               onChange={(event) => this.handleSelectclinic(event)}
             />
           )}
@@ -285,7 +416,13 @@ class ClinicManage extends Component {
                 }
                 value={this.state.clinicCity}
                 onChange={(event) => {
-                  this.setState({ clinicCity: event.target.value })
+                  this.setState({
+                    clinicCity: event.target.value,
+                    inputValidation: {
+                      ...this.state.inputValidation,
+                      city: true,
+                    },
+                  })
                 }}
               >
                 {this.state.clinicCity === '' && (
@@ -318,7 +455,7 @@ class ClinicManage extends Component {
             <MdEditor
               style={{ height: '500px' }}
               renderHTML={(text) => mdParser.render(text)}
-              onChange={this.handleSpecialistEditorChange}
+              onChange={this.handleClinicEditorChange}
               value={this.state.clinicContentMarkdown}
               required
             />
@@ -328,7 +465,7 @@ class ClinicManage extends Component {
               <>
                 <button
                   className="clinic-manage-save"
-                  onClick={() => this.handleUpdateSpecialistManage()}
+                  onClick={() => this.handleUpdateClinicManage()}
                 >
                   Update Clinic
                 </button>

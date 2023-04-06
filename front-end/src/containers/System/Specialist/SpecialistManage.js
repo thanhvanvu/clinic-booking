@@ -272,9 +272,9 @@ class SpecialistManage extends Component {
   }
 
   render() {
-    console.log(this.state)
     let isUpdateSpecialist = this.state.isUpdateSpecialist
     let inputValidation = this.state.inputValidation
+    console.log(this.state)
     return (
       <>
         <div className="specialist-manage-container wrapper">

@@ -76,8 +76,10 @@ let initWebRoutes = (app) => {
 
   //Clinic
   Router.route('/api/get-all-clinic').get(clinicController.getAllClinic)
-  return app.use('/', Router)
   Router.route('/api/create-clinic').post(clinicController.createClinic)
+  Router.route('/api/update-clinic').put(clinicController.updateClinic)
+  Router.route('/api/delete-clinic').delete(clinicController.deleteClinic)
+
   return app.use('/', Router)
 }
 

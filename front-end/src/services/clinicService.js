@@ -27,6 +27,32 @@ const handleCreateClinic = async (clinicData) => {
   }
 }
 
+const handleUpdateClinic = async (clinicData) => {
+  try {
+    const options = {
+      method: 'put',
+      url: '/api/update-clinic',
+      data: clinicData,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleDeleteClinic = async (clinicId) => {
+  try {
+    const options = {
+      method: 'delete',
+      url: `/api/delete-clinic?id=${clinicId}`,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
 // const handleGetAllSpecialist = async () => {
 //   try {
 //     const options = {
@@ -92,4 +118,9 @@ const handleCreateClinic = async (clinicData) => {
 //     console.log(error)
 //   }
 // }
-export { handleCreateClinic, handleGetAllClinic }
+export {
+  handleCreateClinic,
+  handleGetAllClinic,
+  handleUpdateClinic,
+  handleDeleteClinic,
+}
