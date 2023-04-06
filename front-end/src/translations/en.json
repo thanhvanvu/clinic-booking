@@ -105,6 +105,39 @@
     "cancel": "Cancel"
   },
 
+  "manage-schedule": {
+    "title": "Doctor Schedule Management",
+    "select-doctor": "Select doctor",
+    "select-date": "Select date",
+    "create": "Save Schedule"
+  },
+
+  "manage-clinic": {
+    "tittle": "Clinic Management",
+    "create-new": "Create a new clinic",
+    "update": "Update or Delete a clinic",
+    "clinic-name": "Clinic name",
+    "clinic-address": "Clinic address",
+    "clinic-background": "Clinic background photo",
+    "clinic-upload": "Upload photo",
+    "clinic-city": "Clinic City",
+    "clinic-create": "Create a new clinic",
+    "clinic-update": "Update clinic",
+    "clinic-delete": "Delete clinic"
+  },
+
+  "manage-specialist": {
+    "tittle": "Specialist Management",
+    "create-new": "Create a new specialist",
+    "update": "Update or Delete a specialist",
+    "specialist-title": "Specialist title",
+    "specialist-background": "Specialist background photo",
+    "specialist-upload": "Upload photo",
+    "specialist-create": "Create a new specialist",
+    "specialist-update": "Update specialist",
+    "specialist-delete": "Delete specialist"
+  },
+
   "homepage": {
     "read-more": "READ MORE",
 
@@ -125,12 +158,5 @@
       "show-detail": "show detail",
       "hide-detail": "hide detail"
     }
-  },
-
-  "manage-schedule": {
-    "title": "Doctor Schedule Management",
-    "select-doctor": "Select doctor",
-    "select-date": "Select date",
-    "create": "Save Schedule"
   }
 }

@@ -84,6 +84,39 @@
     }
   },
 
+  "manage-schedule": {
+    "title": "Gestión De Horarios Médicos",
+    "select-doctor": "Seleccionar médico",
+    "select-date": "Seleccione fecha",
+    "create": "Guardar programa"
+  },
+
+  "manage-clinic": {
+    "tittle": "Gestión de clínicas",
+    "create-new": "Crear una nueva clínica",
+    "update": "Actualizar o Eliminar una clínica",
+    "clinic-name": "Nombre de la clínica",
+    "clinic-background": "Antecedentes de la clínica",
+    "clinic-upload": "Subir foto",
+    "clinic-address": "Dirección de la clínica",
+    "clinic-city": "Ciudad Clínica",
+    "clinic-create": "Crear una nueva clínica",
+    "clinic-update": "Actualizar clínica",
+    "clinic-delete": "Eliminar clínica"
+  },
+
+  "manage-specialist": {
+    "tittle": "Administración de especialistas",
+    "create-new": "Crear un nuevo especialista",
+    "update": "Actualizar o eliminar un especialista",
+    "specialist-title": "Título de especialista",
+    "specialist-background": "Foto de fondo del especialista",
+    "specialist-upload": "Subir foto",
+    "specialist-create": "Crear un nuevo especialista",
+    "specialist-update": "Actualizar especialista",
+    "specialist-delete": "Eliminar especialista"
+  },
+
   "doctor-profile": {
     "booking-title": "reserva de examen",
     "booking-free": "Reserva gratis con HealthCare Consultancy",
@@ -125,12 +158,5 @@
       "show-detail": "mostrar detalle",
       "hide-detail": "ocultar detalle"
     }
-  },
-
-  "manage-schedule": {
-    "title": "Gestión De Horarios Médicos",
-    "select-doctor": "Seleccionar médico",
-    "select-date": "Seleccione fecha",
-    "create": "Guardar programa"
   }
 }

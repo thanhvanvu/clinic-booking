@@ -298,7 +298,9 @@ class ClinicManage extends Component {
     return (
       <>
         <div className="clinic-manage-container wrapper">
-          <div className="clinic-manage title">Tạo Clinic</div>
+          <div className="clinic-manage title">
+            <FormattedMessage id="manage-clinic.tittle" />
+          </div>
           <div className="select-create-update">
             <div>
               <input
@@ -309,7 +311,9 @@ class ClinicManage extends Component {
                 defaultChecked
                 onClick={() => this.handleRadioChange('create')}
               />
-              <label htmlFor="clinic-create-new">Create new</label>
+              <label htmlFor="clinic-create-new">
+                <FormattedMessage id="manage-clinic.create-new" />
+              </label>
             </div>
             <div>
               <input
@@ -319,7 +323,9 @@ class ClinicManage extends Component {
                 value="update"
                 onClick={() => this.handleRadioChange('update')}
               />
-              <label htmlFor="clinic-update">Update </label>
+              <label htmlFor="clinic-update">
+                <FormattedMessage id="manage-clinic.update" />{' '}
+              </label>
             </div>
           </div>
           {isUpdateClinic && (
@@ -332,7 +338,9 @@ class ClinicManage extends Component {
 
           <div className="clinic-manage-content">
             <div className="clinic-content-left form-group">
-              <label className="content-label">Tên Clinic</label>
+              <label className="content-label">
+                <FormattedMessage id="manage-clinic.clinic-name" />
+              </label>
               <input
                 type="text"
                 className={
@@ -354,7 +362,9 @@ class ClinicManage extends Component {
               />
             </div>
             <div className="clinic-content-right form-group">
-              <label className="content-label">Ảnh bìa phòng khám</label>
+              <label className="content-label">
+                <FormattedMessage id="manage-clinic.clinic-background" />
+              </label>
               <div className="clinic-image">
                 <input
                   type="file"
@@ -365,7 +375,8 @@ class ClinicManage extends Component {
                   }}
                 />
                 <label htmlFor="image-upload" className="image-upload">
-                  <i class="fas fa-upload img-upload"></i>Tải ảnh
+                  <i class="fas fa-upload img-upload"></i>
+                  <FormattedMessage id="manage-clinic.clinic-upload" />
                 </label>
                 {this.state.clinicPreviewImg && (
                   <div className="image-clinic">
@@ -385,7 +396,9 @@ class ClinicManage extends Component {
 
           <div className="clinic-address-city">
             <div className="address">
-              <label className="content-label">Clinic Address</label>
+              <label className="content-label">
+                <FormattedMessage id="manage-clinic.clinic-address" />
+              </label>
               <input
                 type="text"
                 className={
@@ -407,7 +420,9 @@ class ClinicManage extends Component {
             </div>
 
             <div className="city">
-              <label className="content-label">City</label>
+              <label className="content-label">
+                <FormattedMessage id="manage-clinic.clinic-city" />
+              </label>
               <select
                 className={
                   inputValidation.city === false
@@ -467,13 +482,13 @@ class ClinicManage extends Component {
                   className="clinic-manage-save"
                   onClick={() => this.handleUpdateClinicManage()}
                 >
-                  Update Clinic
+                  <FormattedMessage id="manage-clinic.clinic-update" />
                 </button>
                 <button
                   className="clinic-manage-save delete"
                   onClick={() => this.handleDeleteSpecialistManage()}
                 >
-                  Delete Clinic
+                  <FormattedMessage id="manage-clinic.clinic-delete" />
                 </button>
               </>
             ) : (
@@ -481,7 +496,7 @@ class ClinicManage extends Component {
                 className="clinic-manage-save"
                 onClick={() => this.handleCreateClinicManage()}
               >
-                Tao chuyen khoa
+                <FormattedMessage id="manage-clinic.clinic-create" />
               </button>
             )}
           </div>

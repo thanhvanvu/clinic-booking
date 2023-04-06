@@ -84,6 +84,39 @@
     }
   },
 
+  "manage-schedule": {
+    "title": "Quản Lý Kế Hoạch Khám Bệnh Của Bác Sĩ",
+    "select-doctor": "Chọn bác sĩ",
+    "select-date": "Chọn ngày",
+    "create": "Lưu lịch khám bệnh"
+  },
+
+  "manage-clinic": {
+    "tittle": "Quản lý phòng khám",
+    "create-new": "Tạo phòng khám mới",
+    "update": "Cập nhật hoặc xóa phòng khám",
+    "clinic-name": "Tên phòng khám",
+    "clinic-background": "Ảnh bìa phòng khám",
+    "clinic-upload": "Tải ảnh",
+    "clinic-address": "Địa chỉ phòng khám",
+    "clinic-city": "Thành phố",
+    "clinic-create": "Tạo phòng khám",
+    "clinic-update": "Cập nhật phòng khám",
+    "clinic-delete": "Xóa phòng khám"
+  },
+
+  "manage-specialist": {
+    "tittle": "Quản lý chuyên khoa",
+    "create-new": "Tạo chuyên khoa mới",
+    "update": "Cập nhật hoặc xóa chuyên khoa",
+    "specialist-title": "Tên chuyên khoa",
+    "specialist-background": "Ảnh bìa chuyên khoa",
+    "specialist-upload": "Tải ảnh",
+    "specialist-create": "Tạo chuyên khoa",
+    "specialist-update": "Cập nhật chuyên khoa",
+    "specialist-delete": "Xóa chuyên khoa"
+  },
+
   "doctor-profile": {
     "booking-title": "đặt lịch khám",
     "booking-free": "Miễn phí đặt lịch với HealthCare Consultancy",
@@ -126,12 +159,5 @@
       "show-detail": "xem chi tiết",
       "hide-detail": "ẩn bảng giá"
     }
-  },
-
-  "manage-schedule": {
-    "title": "Quản Lý Kế Hoạch Khám Bệnh Của Bác Sĩ",
-    "select-doctor": "Chọn bác sĩ",
-    "select-date": "Chọn ngày",
-    "create": "Lưu lịch khám bệnh"
   }
 }

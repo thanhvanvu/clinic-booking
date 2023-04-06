@@ -274,11 +274,13 @@ class SpecialistManage extends Component {
   render() {
     let isUpdateSpecialist = this.state.isUpdateSpecialist
     let inputValidation = this.state.inputValidation
-    console.log(this.state)
+
     return (
       <>
         <div className="specialist-manage-container wrapper">
-          <div className="specialist-manage title">Tạo chuyên khoa</div>
+          <div className="specialist-manage title">
+            <FormattedMessage id="manage-specialist.tittle" />
+          </div>
           <div className="select-create-update">
             <div>
               <input
@@ -289,7 +291,9 @@ class SpecialistManage extends Component {
                 defaultChecked
                 onClick={() => this.handleRadioChange('create')}
               />
-              <label htmlFor="specialist-create-new">Create new</label>
+              <label htmlFor="specialist-create-new">
+                <FormattedMessage id="manage-specialist.create-new" />
+              </label>
             </div>
             <div>
               <input
@@ -299,7 +303,9 @@ class SpecialistManage extends Component {
                 value="update"
                 onClick={() => this.handleRadioChange('update')}
               />
-              <label htmlFor="specialist-update">Update </label>
+              <label htmlFor="specialist-update">
+                <FormattedMessage id="manage-specialist.update" />{' '}
+              </label>
             </div>
           </div>
           {isUpdateSpecialist && (
@@ -312,7 +318,9 @@ class SpecialistManage extends Component {
 
           <div className="specialist-manage-content">
             <div className="specialist-content-left form-group">
-              <label className="content-label">Tên chuyên khoa</label>
+              <label className="content-label">
+                <FormattedMessage id="manage-specialist.specialist-title" />
+              </label>
               <input
                 type="text"
                 className={
@@ -334,7 +342,9 @@ class SpecialistManage extends Component {
               />
             </div>
             <div className="specialist-content-right form-group">
-              <label className="content-label">Ảnh chuyên khoa</label>
+              <label className="content-label">
+                <FormattedMessage id="manage-specialist.specialist-background" />
+              </label>
               <div className="specialist-image">
                 <input
                   type="file"
@@ -345,7 +355,8 @@ class SpecialistManage extends Component {
                   }}
                 />
                 <label htmlFor="image-upload" className="image-upload">
-                  <i class="fas fa-upload img-upload"></i>Tải ảnh
+                  <i class="fas fa-upload img-upload"></i>
+                  <FormattedMessage id="manage-specialist.specialist-upload" />
                 </label>
                 {this.state.specialistPreviewImg && (
                   <div className="image-specialist">
@@ -385,13 +396,13 @@ class SpecialistManage extends Component {
                   className="specialist-manage-save"
                   onClick={() => this.handleUpdateSpecialistManage()}
                 >
-                  Update Chuyen Khoa
+                  <FormattedMessage id="manage-specialist.specialist-update" />
                 </button>
                 <button
                   className="specialist-manage-save delete"
                   onClick={() => this.handleDeleteSpecialistManage()}
                 >
-                  Delete Chuyen khoa
+                  <FormattedMessage id="manage-specialist.specialist-delete" />
                 </button>
               </>
             ) : (
@@ -399,7 +410,7 @@ class SpecialistManage extends Component {
                 className="specialist-manage-save"
                 onClick={() => this.handleCreateSpecialistManage()}
               >
-                Tao chuyen khoa
+                <FormattedMessage id="manage-specialist.specialist-create" />
               </button>
             )}
           </div>
