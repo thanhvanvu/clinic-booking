@@ -49,7 +49,6 @@ class SpecialistDetail extends Component {
       }
 
       let doctorResponse = await handleGetDoctorInSpecialist(specialistId)
-      console.log(doctorResponse)
       if (doctorResponse && doctorResponse.errCode === 0) {
         let dataDoctor = doctorResponse.data
 
@@ -62,7 +61,6 @@ class SpecialistDetail extends Component {
     //#endregion
 
     let cityResponse = await handleGetAllCode('CITY')
-    console.log(cityResponse)
     if (cityResponse && cityResponse.errCode === 0) {
       let cityData = cityResponse.type
 
@@ -109,7 +107,6 @@ class SpecialistDetail extends Component {
   render() {
     let filteredArrDoctor = this.state.filteredArrDoctor
     let arrCity = this.state.arrCity
-    console.log(filteredArrDoctor)
     let language = this.props.language
     let currentSpecialist = this.state.currentSpecialist
     let specialistDetailHTML = this.state.currentSpecialist.descriptionHTML

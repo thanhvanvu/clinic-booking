@@ -158,6 +158,10 @@
       "payment": "Hình thức thanh toán: ",
       "show-detail": "xem chi tiết",
       "hide-detail": "ẩn bảng giá"
+    },
+
+    "clinic": {
+      "homepage-title": "Cơ sở ý tế nổi bật"
     }
   }
 }

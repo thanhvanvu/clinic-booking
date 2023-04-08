@@ -3,49 +3,63 @@ import { connect } from 'react-redux'
 import './MedicalFacility.scss'
 import '../HomePage.scss'
 import Slider from 'react-slick'
+import { handleGetAllClinic } from '../../../services/clinicService'
+import { CommonUtils } from '../../../utils'
+import { FormattedMessage } from 'react-intl'
 
 class MedicalFacility extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      allClinicArr: [],
+    }
+  }
+
+  async componentDidMount() {
+    // call API to get all clinic
+    let response = await handleGetAllClinic()
+    if (response && response.errCode === 0) {
+      let allClinicData = response.data
+
+      // convert buffet image to base 64
+      allClinicData.map((clinic, index) => {
+        clinic.image = CommonUtils.convertBufferToBase64(clinic.image)
+        return clinic
+      })
+
+      this.setState({
+        allClinicArr: allClinicData,
+      })
+    }
+  }
   render() {
     let settings = this.props.settings
+    let allClinicArr = this.state.allClinicArr
+
     return (
       <div className="section-share section-medical-facility">
         <div className="section-content">
           <div className="section-header">
-            <span className="header-text">Cơ sở y tế nổi bật</span>
-            <button className="btn-more">XEM THÊM</button>
+            <span className="header-text">
+              <FormattedMessage id="homepage.clinic.homepage-title" />
+            </span>
+            <button className="btn-more">
+              {' '}
+              <FormattedMessage id="homepage.read-more" />
+            </button>
           </div>
           <div className="section-body">
             <Slider {...settings}>
-              <div className="image-custom">
-                <div className="bg-img medical-facility"></div>
-
-                <div className="img-text">Bệnh Viện Chợ Rẫy 1</div>
-              </div>
-              <div className="image-custom">
-                <div className="bg-img medical-facility"></div>
-
-                <div className="img-text">Bệnh Viện Chợ Rẫy 1</div>
-              </div>
-              <div className="image-custom">
-                <div className="bg-img medical-facility"></div>
-
-                <div className="img-text">Bệnh Viện Chợ Rẫy 1</div>
-              </div>
-              <div className="image-custom">
-                <div className="bg-img medical-facility"></div>
-
-                <div className="img-text">Bệnh Viện Chợ Rẫy 1</div>
-              </div>
-              <div className="image-custom">
-                <div className="bg-img medical-facility"></div>
-
-                <div className="img-text">Bệnh Viện Chợ Rẫy 1</div>
-              </div>
-              <div className="image-custom">
-                <div className="bg-img medical-facility"></div>
-
-                <div className="img-text">Bệnh Viện Chợ Rẫy 1</div>
-              </div>
+              {allClinicArr &&
+                allClinicArr.length > 0 &&
+                allClinicArr.map((clinic, index) => {
+                  return (
+                    <div className="image-custom" key={index}>
+                      <img src={clinic.image} alt="" width="280" height="180" />
+                      <div className="img-text">{clinic.name}</div>
+                    </div>
+                  )
+                })}
             </Slider>
           </div>
         </div>

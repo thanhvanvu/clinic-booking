@@ -56,7 +56,6 @@ class BookingModal extends Component {
     if (prevProps.doctorId !== this.props.doctorId) {
       let doctorId = this.props.doctorId
       let response = await handleGetDoctorClinicInfo(doctorId)
-      console.log(response)
       if (response && response.errCode === 0) {
         let currentDoctor = response.data
         let doctorClinicPrice = currentDoctor.priceData
@@ -150,7 +149,6 @@ class BookingModal extends Component {
     let doctorClinicPrice = this.state.doctorClinicPrice
     let isValid = this.state.isValidInput
 
-    console.log(this.state.clinicInfo)
     return (
       <Modal
         isOpen={isModalBooking}

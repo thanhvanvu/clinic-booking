@@ -157,6 +157,10 @@
       "payment": "Pagos: ",
       "show-detail": "mostrar detalle",
       "hide-detail": "ocultar detalle"
+    },
+
+    "clinic": {
+      "homepage-title": "Facilidad médica excepcional"
     }
   }
 }

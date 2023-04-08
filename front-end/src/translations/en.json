@@ -157,6 +157,10 @@
       "payment": "Payment: ",
       "show-detail": "show detail",
       "hide-detail": "hide detail"
+    },
+
+    "clinic": {
+      "homepage-title": "Outstanding medical facility"
     }
   }
 }
