@@ -13,14 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // the foreign key being defined in the source model Markdown
       DoctorInfo.belongsTo(models.User, {
         foreignKey: 'doctorId',
-      })
-
-      // 1 row doctorInfo has ONLY 1 city
-      // Foreinkey is defined in the source model Schedule
-      DoctorInfo.belongsTo(models.Allcode, {
-        foreignKey: 'cityId',
-        targetKey: 'keyMap',
-        as: 'cityData',
+        as: 'doctorData',
       })
 
       // 1 row doctorInfo has ONLY 1 price
@@ -43,17 +36,23 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'specialistId',
         as: 'specialistData',
       })
+
+      DoctorInfo.belongsTo(models.Clinic, {
+        foreignKey: 'clinicId',
+        as: 'clinicData',
+      })
     }
   }
   DoctorInfo.init(
     {
       doctorId: DataTypes.INTEGER,
+      description: DataTypes.TEXT('long'),
+      contentHTML: DataTypes.TEXT('long'),
+      contentMarkdown: DataTypes.TEXT('long'),
       specialistId: DataTypes.INTEGER,
+      clinicId: DataTypes.INTEGER,
       priceId: DataTypes.STRING,
-      cityId: DataTypes.STRING,
       paymentId: DataTypes.STRING,
-      addressClinic: DataTypes.STRING,
-      nameClinic: DataTypes.STRING,
       note: DataTypes.STRING,
       count: DataTypes.INTEGER,
     },

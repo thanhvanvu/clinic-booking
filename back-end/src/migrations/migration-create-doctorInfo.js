@@ -13,23 +13,28 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      contentHTML: {
+        type: Sequelize.TEXT('long'),
+      },
+      contentMarkdown: {
+        type: Sequelize.TEXT('long'),
+      },
+      description: {
+        type: Sequelize.TEXT('long'),
+      },
+      specialistId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      clinicId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       priceId: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      cityId: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       paymentId: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      addressClinic: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      nameClinic: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -41,7 +46,6 @@ module.exports = {
         allowNull: false,
         defaultValue: 0,
       },
-
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

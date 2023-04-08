@@ -166,10 +166,7 @@ class ProfileDoctor extends Component {
                 {title}
               </div>
               <div className="doctor-summary-content">
-                {doctor &&
-                  doctor.Markdown &&
-                  doctor.Markdown.description &&
-                  doctor.Markdown.description}
+                {doctor && doctor.DoctorInfo && doctor.DoctorInfo.description}
               </div>
 
               {specialist ? (

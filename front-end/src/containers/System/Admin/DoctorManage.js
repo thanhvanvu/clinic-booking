@@ -8,6 +8,7 @@ import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 import 'react-markdown-editor-lite/lib/index.css'
 import Select from 'react-select'
+import isEmpty from 'lodash/isEmpty'
 
 import {
   getDetailDoctorById,
@@ -22,6 +23,7 @@ import { handleGetAllSpecialist } from '../../../services/specialistService'
 import { toast } from 'react-toastify'
 
 import { LANGUAGES } from '../../../utils/constant'
+import { handleGetAllClinic } from '../../../services/clinicService'
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */)
 
@@ -29,52 +31,205 @@ class DoctorManage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // save to markdowns table
-      previewImg: '',
-      markdown: {
-        contentMarkdown: '',
-        contentHTML: '',
-        description: '',
-      },
       selectedDoctor: '',
       doctorArray: [],
-      inputValidMarkdown: '',
-      hasOldDataMarkdow: false,
+      doctorId: '',
+      previewImg: '',
 
-      // save to doctor_info table
-      cityArr: [],
-      paymentArr: [],
+      contentMarkdown: '',
+      contentHTML: '',
+      description: '',
+
       priceArr: [],
-      inputValidDoctorInfo: '',
-      hasOldClinicInfo: false,
-      doctorClinicInfo: {
-        selectedCity: '',
-        selectedPrice: '',
-        clinicName: '',
-        clinicAddress: '',
-        note: '',
-        selectedPayment: '',
-        specialist: {},
-        specialistId: '',
-      },
+      selectedPrice: '',
+
+      paymentArr: [],
+      selectedPayment: '',
+
+      note: '',
+
+      allClinicArr: [],
+      allClinicOption: [],
+      selectedClinic: {},
+      clinic: {},
+      clinicId: '',
 
       allSpecialistArr: [],
+      specialist: {},
+      specialistId: '',
+
+      inputValidDoctorInfo: '',
+      hasOldData: false,
     }
   }
+
+  // handleDoctorManage = async () => {
+  //   this.handleCreateUpdateMarkdown()
+  //   this.handleCreateUpdateClinic()
+  // }
+
+  // handleCreateUpdateMarkdown = async () => {
+  //   if (this.state.hasOldDataMarkdow === false) {
+  //     // check validate
+  //     let markdownIsvalid = this.checkValidateInput(this.state.markdown)
+  //     if (markdownIsvalid[1] === true && this.state.selectedDoctor.value) {
+  //       // create information
+  //       this.props.createDoctorInfo({
+  //         contentMarkdown: this.state.markdown.contentMarkdown,
+  //         contentHTML: this.state.markdown.contentHTML,
+  //         description: this.state.markdown.description,
+  //         doctorId: this.state.selectedDoctor.value,
+  //       })
+  //     } else {
+  //       this.setState({
+  //         inputValidMarkdown: markdownIsvalid[0],
+  //       })
+  //     }
+  //     // reset state
+  //     if (this.props.isSuccess === true) {
+  //       this.setState({
+  //         previewImg: '',
+  //         selectedDoctor: '',
+  //         hasOldDataMarkdow: false,
+  //         markdown: {
+  //           contentMarkdown: '',
+  //           contentHTML: '',
+  //           description: '',
+  //         },
+  //       })
+  //     }
+  //   } else {
+  //     // update information
+  //     let response = await handleUpdateInfoDoctorById({
+  //       contentMarkdown: this.state.markdown.contentMarkdown,
+  //       contentHTML: this.state.markdown.contentHTML,
+  //       description: this.state.markdown.description,
+  //       doctorId: this.state.selectedDoctor.value,
+  //     })
+  //     if (response && response.errCode === 0) {
+  //       toast.success('Update a doctor information successfully!')
+  //       // reset input
+  //       this.setState({
+  //         markdown: {
+  //           contentMarkdown: '',
+  //           contentHTML: '',
+  //           description: '',
+  //         },
+  //         previewImg: '',
+  //         selectedDoctor: '',
+  //         hasOldDataMarkdow: false,
+  //       })
+  //     }
+  //   }
+  // }
+
+  // handleCreateUpdateClinic = async () => {
+  //   // handle create/update doctorInfo table
+  //   if (this.state.hasOldClinicInfo === false) {
+  //     // check validate
+  //     let isValid = this.checkValidateInput(this.state.doctorClinicInfo)
+
+  //     // create clinic info
+  //     if (isValid[1] === true && this.state.selectedDoctor.value) {
+  //       let doctorClinicInfo = this.state.doctorClinicInfo
+  //       let response = await handleCreateDoctorClinicInfo({
+  //         doctorId: this.state.selectedDoctor.value,
+  //         specialistId: doctorClinicInfo.specialistId,
+  //         clinicId: doctorClinicInfo.clinicId,
+  //         priceId: doctorClinicInfo.selectedPrice,
+  //         paymentId: doctorClinicInfo.selectedPayment,
+  //         note: doctorClinicInfo.note,
+  //       })
+
+  //       if (response && response.errCode === 0) {
+  //         toast.success('Create a doctor information successfully!')
+  //         // reset input
+  //         this.setState({
+  //           markdown: {
+  //             contentMarkdown: '',
+  //             contentHTML: '',
+  //             description: '',
+  //           },
+  //           doctorClinicInfo: {
+  //             selectedPrice: '',
+  //             note: '',
+  //             selectedPayment: '',
+  //             specialist: {},
+  //             specialistId: '',
+  //             clinic: {},
+  //             clinicId: '',
+  //           },
+  //           previewImg: '',
+  //           selectedDoctor: '',
+  //           hasOldDataMarkdow: false,
+  //           hasOldClinicInfo: false,
+  //         })
+  //       }
+  //     } else {
+  //       this.setState({
+  //         inputValidDoctorInfo: isValid[0],
+  //       })
+  //     }
+  //   } else if (this.state.hasOldClinicInfo === true) {
+  //     // check validate
+  //     let isValid = this.checkValidateInput(this.state.doctorClinicInfo)
+
+  //     // UPDATE clinic info
+  //     if (isValid[1] === true && this.state.selectedDoctor.value) {
+  //       let doctorClinicInfo = this.state.doctorClinicInfo
+  //       let response = await handleUpdateDoctorClinicInfo({
+  //         doctorId: this.state.selectedDoctor.value,
+  //         specialistId: doctorClinicInfo.specialistId,
+  //         priceId: doctorClinicInfo.selectedPrice,
+  //         cityId: doctorClinicInfo.selectedCity,
+  //         paymentId: doctorClinicInfo.selectedPayment,
+  //         addressClinic: doctorClinicInfo.clinicAddress,
+  //         nameClinic: doctorClinicInfo.clinicName,
+  //       })
+
+  //       if (response && response.errCode === 0) {
+  //         toast.success('Update a doctor information successfully!')
+
+  //         // reset input
+  //         this.setState({
+  //           markdown: {
+  //             contentMarkdown: '',
+  //             contentHTML: '',
+  //             description: '',
+  //           },
+  //           doctorClinicInfo: {
+  //             selectedCity: '',
+  //             selectedPrice: '',
+  //             clinicName: '',
+  //             clinicAddress: '',
+  //             note: '',
+  //             selectedPayment: '',
+  //             specialist: {},
+  //             specialistId: '',
+  //           },
+  //           previewImg: '',
+  //           selectedDoctor: '',
+  //           hasOldDataMarkdow: false,
+  //           hasOldClinicInfo: false,
+  //         })
+  //       }
+  //     } else {
+  //       this.setState({
+  //         inputValidDoctorInfo: isValid[0],
+  //       })
+  //     }
+  //   }
+  // }
 
   async componentDidMount() {
     this.props.getAllDoctors()
 
     //#region  get city code
-    let codeArr = ['CITY', 'PAYMENT', 'PRICE']
+    let codeArr = ['PAYMENT', 'PRICE']
     codeArr.forEach(async (code) => {
       let response = await handleGetAllCode(code)
       if (response && response.errCode === 0) {
-        if (code === 'CITY') {
-          this.setState({
-            cityArr: response.type,
-          })
-        } else if (code === 'PAYMENT') {
+        if (code === 'PAYMENT') {
           this.setState({
             paymentArr: response.type,
           })
@@ -87,12 +242,24 @@ class DoctorManage extends Component {
     })
     //#endregion
 
+    // get all specialist
     let response = await handleGetAllSpecialist()
     if (response && response.errCode === 0) {
       let specialistData = response.data
       let specialistSelectData = this.buildSpecialistDataSelect(specialistData)
       this.setState({
         allSpecialistArr: specialistSelectData,
+      })
+    }
+
+    // get all clinic information
+    let responseClinic = await handleGetAllClinic()
+    if (responseClinic && responseClinic.errCode === 0) {
+      let clinicData = responseClinic.data
+      let clinicSelectData = this.buildClinicDataSelect(clinicData)
+      this.setState({
+        allClinicArr: clinicData,
+        allClinicOption: clinicSelectData,
       })
     }
   }
@@ -105,13 +272,26 @@ class DoctorManage extends Component {
         doctorArray: builtData,
       })
     }
+  }
 
-    if (prevState.selectedDoctor !== this.state.selectedDoctor) {
-      // reset valid input
-      this.setState({
-        inputValidMarkdown: '',
-        inputValidDoctorInfo: '',
-      })
+  checkValidateInput = (inputData) => {
+    let returnObj = {}
+    let isValid = true
+    Object.entries(inputData).forEach(([key, value]) => {
+      if (key === 'note') {
+        returnObj[key] = true
+      } else if (value === '') {
+        isValid = false
+        returnObj[key] = false
+      } else {
+        returnObj[key] = true
+      }
+    })
+
+    if (isValid === true) {
+      return [returnObj, true]
+    } else {
+      return [returnObj, false]
     }
   }
 
@@ -146,327 +326,253 @@ class DoctorManage extends Component {
     return result
   }
 
-  checkValidateInput = (inputData) => {
-    let returnObj = {}
-    let isValid = true
-    Object.entries(inputData).forEach(([key, value]) => {
-      if (key === 'note') {
-        returnObj[key] = true
-      } else if (value === '') {
-        isValid = false
-        returnObj[key] = false
-      } else {
-        returnObj[key] = true
-      }
-    })
-
-    if (isValid === true) {
-      return [returnObj, true]
-    } else {
-      return [returnObj, false]
+  buildClinicDataSelect = (clinicData) => {
+    let result = []
+    if (clinicData && clinicData.length > 0) {
+      clinicData.map((clinic, index) => {
+        let object = {}
+        object.label = clinic.name
+        object.value = clinic.id
+        result.push(object)
+        return result
+      })
     }
+    return result
   }
 
-  handleSelectedDoctor = async (selectedDoctor) => {
-    let doctorId = selectedDoctor.value
-    let response = await getDetailDoctorById(doctorId)
-    if (
-      response &&
-      response.errCode === 0 &&
-      response.data &&
-      response.data.Markdown
-    ) {
-      let markdown = response.data.Markdown
-      this.setState({
-        hasOldDataMarkdow: true,
-        markdown: {
-          contentMarkdown: markdown.contentMarkdown,
-          contentHTML: markdown.contentHTML,
-          description: markdown.description,
-        },
-      })
-    } else {
-      this.setState({
-        hasOldDataMarkdow: false,
-        markdown: {
-          contentMarkdown: '',
-          contentHTML: '',
-          description: '',
-        },
-      })
-    }
-
+  handleEditorChange = ({ html, text }) => {
     this.setState({
-      previewImg: selectedDoctor.image,
-      selectedDoctor: selectedDoctor,
+      // inputValidMarkdown: {
+      //   ...this.state.inputValidMarkdown,
+      //   contentHTML: true,
+      //   contentMarkdown: true,
+      // },
+      contentMarkdown: text,
+      contentHTML: html,
     })
-
-    // call API to get information in doctorInfo table
-    let resDoctorInfo = await handleGetDoctorClinicInfo(doctorId)
-
-    if (resDoctorInfo && resDoctorInfo.errCode === 0 && resDoctorInfo.data) {
-      let data = resDoctorInfo.data
-      // fix data for Select (react Select)
-      let specialistData = data.specialistData
-      let buildSpecialistData = {}
-      if (specialistData) {
-        buildSpecialistData.value = specialistData.id
-        buildSpecialistData.label = specialistData.tittle
-      }
-      this.setState({
-        ...this.state,
-        hasOldClinicInfo: true,
-        doctorClinicInfo: {
-          selectedCity: data.cityId,
-          selectedPrice: data.priceId,
-          clinicName: data.nameClinic,
-          clinicAddress: data.addressClinic,
-          note: data.note,
-          selectedPayment: data.paymentId,
-          specialist: buildSpecialistData,
-        },
-      })
-    } else {
-      this.setState({
-        ...this.state,
-        hasOldClinicInfo: false,
-        doctorClinicInfo: {
-          selectedCity: '',
-          selectedPrice: '',
-          clinicName: '',
-          clinicAddress: '',
-          note: '',
-          selectedPayment: '',
-        },
-      })
-    }
   }
 
   handleOnchangeDescription = (event) => {
     this.setState({
-      ...this.state,
-      inputValidMarkdown: {
-        ...this.state.inputValidMarkdown,
-        [event.target.name]: true,
-      },
-      markdown: {
-        ...this.state.markdown,
-        [event.target.name]: event.target.value,
-      },
+      // inputValidMarkdown: {
+      //   ...this.state.inputValidMarkdown,
+      //   [event.target.name]: true,
+      // },
+      [event.target.name]: event.target.value,
     })
   }
 
   handleOnchangeDoctorInfo = (event) => {
     this.setState({
-      ...this.state,
-      inputValidDoctorInfo: {
-        ...this.state.inputValidDoctorInfo,
-        [event.target.name]: true,
-      },
-      doctorClinicInfo: {
-        ...this.state.doctorClinicInfo,
-        [event.target.name]: event.target.value,
-      },
+      // inputValidDoctorInfo: {
+      //   ...this.state.inputValidDoctorInfo,
+      //   [event.target.name]: true,
+      // },
+      [event.target.name]: event.target.value,
     })
   }
 
-  handleEditorChange = ({ html, text }) => {
-    this.setState({
-      inputValidMarkdown: {
-        ...this.state.inputValidMarkdown,
-        contentHTML: true,
-        contentMarkdown: true,
-      },
-      markdown: {
-        ...this.state.markdown,
-        contentMarkdown: text,
-        contentHTML: html,
-      },
-    })
+  handleSelectClinic = (clinicInfo) => {
+    let allClinic = this.state.allClinicArr
+    let selectedClinic = allClinic.find(
+      (clinic) => clinic.id === clinicInfo.value
+    )
+    if (clinicInfo) {
+      this.setState({
+        // inputValidDoctorInfo: {
+        //   ...this.state.inputValidDoctorInfo,
+        //   specialistId: true,
+        // },
+        clinicId: clinicInfo.value,
+        clinic: clinicInfo,
+        selectedClinic: selectedClinic,
+      })
+    }
   }
 
   handleSelectSpecialist = (specialist) => {
     if (specialist) {
       this.setState({
-        inputValidDoctorInfo: {
-          ...this.state.inputValidDoctorInfo,
-          specialistId: true,
-        },
-        doctorClinicInfo: {
-          ...this.state.doctorClinicInfo,
-          specialistId: specialist.value,
-          specialist: specialist,
-        },
+        // inputValidDoctorInfo: {
+        //   ...this.state.inputValidDoctorInfo,
+        //   specialistId: true,
+        // },
+        specialistId: specialist.value,
+        specialist: specialist,
       })
     }
   }
 
-  handleDoctorManage = async () => {
-    this.handleCreateUpdateMarkdown()
-    this.handleCreateUpdateClinic()
-  }
+  handleSelectedDoctor = async (selectedDoctor) => {
+    let doctorId = selectedDoctor.value
+    console.log(doctorId)
+    this.setState({
+      previewImg: selectedDoctor.image,
+      selectedDoctor: selectedDoctor,
+      doctorId: doctorId,
+    })
 
-  handleCreateUpdateMarkdown = async () => {
-    if (this.state.hasOldDataMarkdow === false) {
-      // check validate
-      let markdownIsvalid = this.checkValidateInput(this.state.markdown)
-      if (markdownIsvalid[1] === true && this.state.selectedDoctor.value) {
-        // create information
-        this.props.createDoctorInfo({
-          contentMarkdown: this.state.markdown.contentMarkdown,
-          contentHTML: this.state.markdown.contentHTML,
-          description: this.state.markdown.description,
-          doctorId: this.state.selectedDoctor.value,
-        })
-      } else {
-        this.setState({
-          inputValidMarkdown: markdownIsvalid[0],
-        })
-      }
-      // reset state
-      if (this.props.isSuccess === true) {
-        this.setState({
-          previewImg: '',
-          selectedDoctor: '',
-          hasOldDataMarkdow: false,
-          markdown: {
-            contentMarkdown: '',
-            contentHTML: '',
-            description: '',
-          },
-        })
-      }
-    } else {
-      // update information
-      let response = await handleUpdateInfoDoctorById({
-        contentMarkdown: this.state.markdown.contentMarkdown,
-        contentHTML: this.state.markdown.contentHTML,
-        description: this.state.markdown.description,
-        doctorId: this.state.selectedDoctor.value,
-      })
-      if (response && response.errCode === 0) {
-        toast.success('Update a doctor information successfully!')
+    let response = await handleGetDoctorClinicInfo(doctorId)
+    if (response && response.errCode === 0) {
+      let doctorClinicInfo = response.data
+
+      if (isEmpty(doctorClinicInfo)) {
         // reset input
         this.setState({
-          markdown: {
-            contentMarkdown: '',
-            contentHTML: '',
-            description: '',
+          contentMarkdown: '',
+          contentHTML: '',
+          description: '',
+
+          selectedPrice: '',
+
+          selectedPayment: '',
+
+          note: '',
+
+          selectedClinic: '',
+          clinic: '',
+          clinicId: '',
+
+          specialist: '',
+          specialistId: '',
+
+          hasOldData: false,
+        })
+      } else {
+        this.setState({
+          doctorId: doctorClinicInfo.doctorId,
+          contentHTML: doctorClinicInfo.contentHTML,
+          contentMarkdown: doctorClinicInfo.contentMarkdown,
+          description: doctorClinicInfo.description,
+          clinicId: doctorClinicInfo.clinicId,
+          clinic: {
+            label: doctorClinicInfo.clinicData.name,
           },
-          previewImg: '',
-          selectedDoctor: '',
-          hasOldDataMarkdow: false,
+          selectedClinic: doctorClinicInfo.clinicData,
+          specialistId: doctorClinicInfo.specialistId,
+          specialist: {
+            label: doctorClinicInfo.specialistData.tittle,
+          },
+          selectedPayment: doctorClinicInfo.paymentId,
+          selectedPrice: doctorClinicInfo.priceId,
+          note: doctorClinicInfo.note,
+
+          hasOldData: true,
         })
       }
     }
   }
 
-  handleCreateUpdateClinic = async () => {
-    // handle create/update doctorInfo table
-    if (this.state.hasOldClinicInfo === false) {
-      // check validate
-      let isValid = this.checkValidateInput(this.state.doctorClinicInfo)
+  createDoctorInfo = async () => {
+    let input = {
+      doctorId: this.state.doctorId,
+      contentHTML: this.state.contentHTML,
+      contentMarkdown: this.state.contentMarkdown,
+      description: this.state.description,
+      specialistId: this.state.specialistId,
+      clinicId: this.state.clinicId,
+      priceId: this.state.selectedPrice,
+      paymentId: this.state.selectedPayment,
+      note: this.state.note,
+    }
 
-      // create clinic info
-      if (isValid[1] === true && this.state.selectedDoctor.value) {
-        let doctorClinicInfo = this.state.doctorClinicInfo
-        let response = await handleCreateDoctorClinicInfo({
-          doctorId: this.state.selectedDoctor.value,
-          specialistId: doctorClinicInfo.specialistId,
-          priceId: doctorClinicInfo.selectedPrice,
-          cityId: doctorClinicInfo.selectedCity,
-          paymentId: doctorClinicInfo.selectedPayment,
-          addressClinic: doctorClinicInfo.clinicAddress,
-          nameClinic: doctorClinicInfo.clinicName,
-        })
+    let isValid = this.checkValidateInput(input)
 
-        if (response && response.errCode === 0) {
-          toast.success('Create a doctor information successfully!')
-          // reset input
-          this.setState({
-            markdown: {
-              contentMarkdown: '',
-              contentHTML: '',
-              description: '',
-            },
-            doctorClinicInfo: {
-              selectedCity: '',
-              selectedPrice: '',
-              clinicName: '',
-              clinicAddress: '',
-              note: '',
-              selectedPayment: '',
-              specialistId: '',
-              specialist: {},
-            },
-            previewImg: '',
-            selectedDoctor: '',
-            hasOldDataMarkdow: false,
-            hasOldClinicInfo: false,
-          })
-        }
-      } else {
+    this.setState({
+      inputValidDoctorInfo: isValid[0],
+    })
+
+    if (isValid[1] === true) {
+      let response = await handleCreateDoctorClinicInfo(input)
+      if (response && response.errCode === 0) {
+        toast.success('Created doctor clinic information successfully!')
+
+        // reset input
         this.setState({
-          inputValidDoctorInfo: isValid[0],
+          selectedDoctor: '',
+
+          doctorId: '',
+          previewImg: '',
+
+          contentMarkdown: '',
+          contentHTML: '',
+          description: '',
+
+          selectedPrice: '',
+
+          selectedPayment: '',
+
+          note: '',
+
+          selectedClinic: '',
+          clinic: '',
+          clinicId: '',
+
+          specialist: {},
+          specialistId: '',
         })
       }
-    } else if (this.state.hasOldClinicInfo === true) {
-      // check validate
-      let isValid = this.checkValidateInput(this.state.doctorClinicInfo)
+    }
+  }
 
-      // UPDATE clinic info
-      if (isValid[1] === true && this.state.selectedDoctor.value) {
-        let doctorClinicInfo = this.state.doctorClinicInfo
-        let response = await handleUpdateDoctorClinicInfo({
-          doctorId: this.state.selectedDoctor.value,
-          specialistId: doctorClinicInfo.specialistId,
-          priceId: doctorClinicInfo.selectedPrice,
-          cityId: doctorClinicInfo.selectedCity,
-          paymentId: doctorClinicInfo.selectedPayment,
-          addressClinic: doctorClinicInfo.clinicAddress,
-          nameClinic: doctorClinicInfo.clinicName,
-        })
+  updateDoctorInfo = async () => {
+    let input = {
+      doctorId: this.state.doctorId,
+      contentHTML: this.state.contentHTML,
+      contentMarkdown: this.state.contentMarkdown,
+      description: this.state.description,
+      specialistId: this.state.specialistId,
+      clinicId: this.state.clinicId,
+      priceId: this.state.selectedPrice,
+      paymentId: this.state.selectedPayment,
+      note: this.state.note,
+    }
 
-        if (response && response.errCode === 0) {
-          toast.success('Update a doctor information successfully!')
+    let isValid = this.checkValidateInput(input)
 
-          // reset input
-          this.setState({
-            markdown: {
-              contentMarkdown: '',
-              contentHTML: '',
-              description: '',
-            },
-            doctorClinicInfo: {
-              selectedCity: '',
-              selectedPrice: '',
-              clinicName: '',
-              clinicAddress: '',
-              note: '',
-              selectedPayment: '',
-              specialist: {},
-              specialistId: '',
-            },
-            previewImg: '',
-            selectedDoctor: '',
-            hasOldDataMarkdow: false,
-            hasOldClinicInfo: false,
-          })
-        }
-      } else {
+    this.setState({
+      inputValidDoctorInfo: isValid[0],
+    })
+
+    if (isValid[1] === true) {
+      let response = await handleUpdateDoctorClinicInfo(input)
+      if (response && response.errCode === 0) {
+        toast.success('Updated Doctor successfully!')
+
+        // reset input
         this.setState({
-          inputValidDoctorInfo: isValid[0],
+          selectedDoctor: '',
+          previewImg: '',
+          contentMarkdown: '',
+          contentHTML: '',
+          description: '',
+
+          selectedPrice: '',
+
+          selectedPayment: '',
+
+          note: '',
+
+          selectedClinic: '',
+          clinic: '',
+          clinicId: '',
+
+          specialist: '',
+          specialistId: '',
+
+          hasOldData: false,
         })
       }
     }
   }
 
   render() {
-    console.log(this.state)
-    let cityArr = this.state.cityArr
+    //
     let paymentArr = this.state.paymentArr
     let priceArr = this.state.priceArr
     let currentLanguage = this.props.language
+    let selectedClinic = this.state.selectedClinic
+
     return (
       <div className="doctor-manage-container wrapper">
         <div className="doctor-manage title">
@@ -479,15 +585,15 @@ class DoctorManage extends Component {
             </label>
             <textarea
               className={
-                this.state.inputValidMarkdown.description === false
+                this.state.inputValidDoctorInfo.description === false
                   ? 'form-control invalid'
                   : 'form-control'
               }
               cols="20"
               rows="8"
               name="description"
-              value={this.state.markdown.description}
-              onChange={(event) => this.handleOnchangeDescription(event)}
+              value={this.state.description}
+              onChange={(event) => this.handleOnchangeDoctorInfo(event)}
             ></textarea>
           </div>
           <div className="content-right">
@@ -512,37 +618,23 @@ class DoctorManage extends Component {
         </div>
 
         <div className="clinic-info row wrapper">
-          <div className="col-4 form-group">
-            <label className="content-label">
-              <FormattedMessage id="manage-user-redux.doctor-manage.clinic-name" />
-            </label>
-            <input
+          <div className="col-6 form-group">
+            <label className="content-label">Clinic</label>
+            <div
               className={
-                this.state.inputValidDoctorInfo.clinicName === false
-                  ? 'form-control invalid'
-                  : 'form-control'
+                this.state.inputValidDoctorInfo.clinicId === false
+                  ? 'invalid'
+                  : ''
               }
-              name="clinicName"
-              value={this.state.doctorClinicInfo.clinicName}
-              onChange={(event) => this.handleOnchangeDoctorInfo(event)}
-            />
+            >
+              <Select
+                value={this.state.clinic}
+                options={this.state.allClinicOption}
+                onChange={(event) => this.handleSelectClinic(event)}
+              />
+            </div>
           </div>
-          <div className="col-4 form-group">
-            <label className="content-label">
-              <FormattedMessage id="manage-user-redux.doctor-manage.clinic-address" />
-            </label>
-            <input
-              className={
-                this.state.inputValidDoctorInfo.clinicAddress === false
-                  ? 'form-control invalid'
-                  : 'form-control'
-              }
-              name="clinicAddress"
-              value={this.state.doctorClinicInfo.clinicAddress}
-              onChange={(event) => this.handleOnchangeDoctorInfo(event)}
-            />
-          </div>
-          <div className="col-4 form-group">
+          <div className="col-6 form-group">
             <label className="content-label">
               <FormattedMessage id="manage-user-redux.doctor-manage.specialist" />
             </label>
@@ -554,59 +646,50 @@ class DoctorManage extends Component {
               }
             >
               <Select
-                value={this.state.doctorClinicInfo.specialist}
+                value={this.state.specialist}
                 options={this.state.allSpecialistArr}
                 onChange={(event) => this.handleSelectSpecialist(event)}
               />
             </div>
           </div>
-          <div className="col-4 form-group">
+          <div className="col-3 form-group">
             <label className="content-label">
-              <FormattedMessage id="manage-user-redux.doctor-manage.city" />
+              <FormattedMessage id="manage-user-redux.doctor-manage.clinic-name" />
             </label>
-            <select
-              className={
-                this.state.inputValidDoctorInfo.selectedCity === false
-                  ? 'form-control invalid'
-                  : 'form-control'
-              }
-              name="selectedCity"
-              value={this.state.doctorClinicInfo.selectedCity}
-              onChange={(event) => this.handleOnchangeDoctorInfo(event)}
-            >
-              {this.state.doctorClinicInfo.selectedCity === '' && (
-                <option value="">---Select a city---</option>
-              )}
-              {cityArr &&
-                cityArr.length > 0 &&
-                cityArr.map((city, index) => {
-                  return (
-                    <option key={index} value={city.keyMap}>
-                      {currentLanguage === LANGUAGES.VI
-                        ? city.valueVI
-                        : currentLanguage === LANGUAGES.EN
-                        ? city.valueEN
-                        : city.valueES}
-                    </option>
-                  )
-                })}
-            </select>
+            <input
+              className="form-control"
+              name="clinicName"
+              disabled
+              value={selectedClinic ? selectedClinic.name : ''}
+            />
           </div>
-          <div className="col-4 form-group">
+          <div className="col-3 form-group">
+            <label className="content-label">
+              <FormattedMessage id="manage-user-redux.doctor-manage.clinic-address" />
+            </label>
+            <input
+              className="form-control"
+              name="clinicAddress"
+              disabled
+              value={selectedClinic ? selectedClinic.address : ''}
+            />
+          </div>
+
+          <div className="col-3 form-group">
             <label className="content-label">
               <FormattedMessage id="manage-user-redux.doctor-manage.price" />
             </label>
             <select
               className={
-                this.state.inputValidDoctorInfo.selectedPrice === false
+                this.state.inputValidDoctorInfo.priceId === false
                   ? 'form-control invalid'
                   : 'form-control'
               }
               name="selectedPrice"
-              value={this.state.doctorClinicInfo.selectedPrice}
+              value={this.state.selectedPrice}
               onChange={(event) => this.handleOnchangeDoctorInfo(event)}
             >
-              {this.state.doctorClinicInfo.selectedPrice === '' && (
+              {this.state.selectedPrice === '' && (
                 <option value="">---Select a price---</option>
               )}
               {priceArr &&
@@ -624,21 +707,21 @@ class DoctorManage extends Component {
                 })}
             </select>
           </div>
-          <div className="col-4 form-group">
+          <div className="col-3 form-group">
             <label className="content-label">
               <FormattedMessage id="manage-user-redux.doctor-manage.referral-payment" />
             </label>
             <select
               className={
-                this.state.inputValidDoctorInfo.selectedPayment === false
+                this.state.inputValidDoctorInfo.paymentId === false
                   ? 'form-control invalid'
                   : 'form-control'
               }
               name="selectedPayment"
-              value={this.state.doctorClinicInfo.selectedPayment}
+              value={this.state.selectedPayment}
               onChange={(event) => this.handleOnchangeDoctorInfo(event)}
             >
-              {this.state.doctorClinicInfo.selectedPayment === '' && (
+              {this.state.selectedPayment === '' && (
                 <option value="">---Select a payment---</option>
               )}
               {paymentArr &&
@@ -663,14 +746,14 @@ class DoctorManage extends Component {
             <input
               className="form-control"
               name="note"
-              value={this.state.doctorClinicInfo.note}
+              value={this.state.note}
               onChange={(event) => this.handleOnchangeDoctorInfo(event)}
             />
           </div>
         </div>
         <div
           className={
-            this.state.inputValidMarkdown.contentMarkdown === false
+            this.state.inputValidDoctorInfo.contentMarkdown === false
               ? 'doctor-manage-editor invalid'
               : 'doctor-manage-editor'
           }
@@ -679,23 +762,26 @@ class DoctorManage extends Component {
             style={{ height: '500px' }}
             renderHTML={(text) => mdParser.render(text)}
             onChange={this.handleEditorChange}
-            value={this.state.markdown.contentMarkdown}
+            value={this.state.contentMarkdown}
             required
           />
         </div>
-        <button
-          className="doctor-manage-save"
-          onClick={() => this.handleDoctorManage()}
-        >
-          <FormattedMessage
-            id={
-              this.state.hasOldDataMarkdow === false ||
-              this.state.hasOldClinicInfo === false
-                ? 'manage-user-redux.doctor-manage.create'
-                : 'manage-user-redux.doctor-manage.update'
-            }
-          />
-        </button>
+
+        {this.state.hasOldData === false ? (
+          <button
+            className="doctor-manage-save"
+            onClick={() => this.createDoctorInfo()}
+          >
+            <FormattedMessage id="manage-user-redux.doctor-manage.create" />
+          </button>
+        ) : (
+          <button
+            className="doctor-manage-save"
+            onClick={() => this.updateDoctorInfo()}
+          >
+            <FormattedMessage id="manage-user-redux.doctor-manage.update" />
+          </button>
+        )}
       </div>
     )
   }

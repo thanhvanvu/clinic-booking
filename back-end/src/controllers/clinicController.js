@@ -91,7 +91,6 @@ const updateClinic = async (req, res) => {
 const deleteClinic = async (req, res) => {
   try {
     let clinicId = req.query.id
-    console.log(clinicId)
     if (!clinicId) {
       return res.status(200).json({
         errCode: 1,

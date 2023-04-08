@@ -7,9 +7,9 @@ import { v4 as uuidv4 } from 'uuid'
 require('dotenv').config()
 
 const buildUrlEmail = (doctorId) => {
-  let id = uuidv4()
-  let urlResult = `${process.env.REACT_APP_FRONTEND_URL}/verify-booking?token=${id}&doctorId=${doctorId}`
-  return { urlConfirm: urlResult, token: id }
+  let token = uuidv4()
+  let urlResult = `${process.env.REACT_APP_FRONTEND_URL}/verify-booking?token=${token}&doctorId=${doctorId}`
+  return { urlConfirm: urlResult, token: token }
 }
 
 const createDoctorAppointment = async (req, res) => {

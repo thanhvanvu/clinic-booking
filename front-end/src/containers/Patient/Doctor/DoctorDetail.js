@@ -63,10 +63,12 @@ class DoctorDetail extends Component {
           </div>
         </div>
         <div className="doctor-information">
-          {doctor && doctor.Markdown && doctor.Markdown.contentHTML && (
+          {doctor && doctor.DoctorInfo && (
             <div
               className="doctor-information-content wrapper"
-              dangerouslySetInnerHTML={{ __html: doctor.Markdown.contentHTML }}
+              dangerouslySetInnerHTML={{
+                __html: doctor.DoctorInfo.contentHTML,
+              }}
             ></div>
           )}
         </div>

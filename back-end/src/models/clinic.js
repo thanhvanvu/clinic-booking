@@ -9,6 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Clinic.hasMany(models.DoctorInfo, {
+        foreignKey: 'clinicId',
+        as: 'clinicData',
+      })
+
+      Clinic.belongsTo(models.Allcode, {
+        foreignKey: 'city',
+        targetKey: 'keyMap',
+        as: 'cityData',
+      })
     }
   }
   Clinic.init(

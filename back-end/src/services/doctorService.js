@@ -135,10 +135,6 @@ const handleGetDetailDoctorById = async (doctorId) => {
           },
 
           {
-            model: db.Markdown,
-          },
-
-          {
             model: db.DoctorInfo,
             include: [
               {
@@ -148,13 +144,13 @@ const handleGetDetailDoctorById = async (doctorId) => {
               },
               {
                 model: db.Allcode,
-                as: 'cityData',
-                attributes: ['valueEN', 'valueES', 'valueVI'],
-              },
-              {
-                model: db.Allcode,
                 as: 'priceData',
                 attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+
+              {
+                model: db.Clinic,
+                as: 'clinicData',
               },
             ],
           },
@@ -352,16 +348,43 @@ const handleGetDoctorClinicInfoById = async (doctorId) => {
           as: 'specialistData',
           attributes: ['id', 'tittle'],
         },
+        {
+          model: db.Clinic,
+          as: 'clinicData',
+          attributes: ['id', 'name', 'address'],
+        },
+        {
+          model: db.Allcode,
+          as: 'priceData',
+        },
+        {
+          model: db.Allcode,
+          as: 'paymentData',
+        },
+
+        {
+          model: db.User,
+          as: 'doctorData',
+        },
       ],
       raw: false,
       nest: true,
     })
 
-    return {
-      status: 'Success',
-      errCode: 0,
-      message: 'OK',
-      data: doctor_clinic_info,
+    if (doctor_clinic_info) {
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'OK',
+        data: doctor_clinic_info,
+      }
+    } else {
+      return {
+        status: 'Success',
+        errCode: 0,
+        message: 'OK',
+        data: {},
+      }
     }
   } catch (error) {
     console.log(error)
@@ -388,15 +411,7 @@ const handleUpdateDoctorClinicInfo = async (doctorClinicInfo) => {
     })
 
     if (clinicInfo) {
-      await clinicInfo.set({
-        doctorId: doctorClinicInfo.doctorId,
-        specialistId: doctorClinicInfo.specialistId,
-        priceId: doctorClinicInfo.priceId,
-        cityId: doctorClinicInfo.cityId,
-        paymentId: doctorClinicInfo.paymentId,
-        addressClinic: doctorClinicInfo.addressClinic,
-        nameClinic: doctorClinicInfo.nameClinic,
-      })
+      await clinicInfo.set(doctorClinicInfo)
 
       await clinicInfo.save()
 
@@ -446,10 +461,7 @@ const handleGetProfileDoctorById = async (doctorId) => {
             as: 'positionData',
             attributes: ['valueEN', 'valueES', 'valueVI'],
           },
-          {
-            model: db.Markdown,
-            attributes: ['description'],
-          },
+
           {
             model: db.DoctorInfo,
             include: [
@@ -458,15 +470,16 @@ const handleGetProfileDoctorById = async (doctorId) => {
                 as: 'paymentData',
                 attributes: ['valueEN', 'valueES', 'valueVI'],
               },
-              {
-                model: db.Allcode,
-                as: 'cityData',
-                attributes: ['valueEN', 'valueES', 'valueVI'],
-              },
+
               {
                 model: db.Allcode,
                 as: 'priceData',
                 attributes: ['valueEN', 'valueES', 'valueVI'],
+              },
+
+              {
+                model: db.Clinic,
+                as: 'clinicData',
               },
             ],
           },

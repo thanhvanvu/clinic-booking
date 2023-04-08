@@ -133,8 +133,15 @@ const handleGetDoctorInSpecialist = async (specialistId) => {
 
       include: [
         {
-          model: db.Allcode,
-          as: 'cityData',
+          model: db.Clinic,
+          as: 'clinicData',
+          attributes: ['city'],
+          include: [
+            {
+              model: db.Allcode,
+              as: 'cityData',
+            },
+          ],
         },
       ],
 

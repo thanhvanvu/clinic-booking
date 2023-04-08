@@ -222,7 +222,7 @@ const createDoctorClinicInfo = async (req, res) => {
 const updateDoctorClinicInfo = async (req, res) => {
   try {
     let doctorClinicInfo = req.body
-    console.log(doctorClinicInfo)
+
     if (!doctorClinicInfo) {
       return res.status(200).json({
         status: 'Fail',

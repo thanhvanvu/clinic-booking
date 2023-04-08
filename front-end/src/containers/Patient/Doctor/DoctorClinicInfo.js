@@ -3,11 +3,15 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './DoctorClinicInfo.scss'
 import { LANGUAGES } from '../../../utils'
-import { getDetailDoctorById } from '../../../services/userService'
+import {
+  getDetailDoctorById,
+  handleGetDoctorClinicInfo,
+} from '../../../services/userService'
 class DoctorClinicInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      doctorInfo: '',
       doctorClinicInfo: '',
       isShowPriceInfo: false,
     }
@@ -16,12 +20,13 @@ class DoctorClinicInfo extends Component {
   async componentDidMount() {
     if (this.props.doctorId) {
       let doctorId = this.props.doctorId
-      let response = await getDetailDoctorById(doctorId)
+      let response = await handleGetDoctorClinicInfo(doctorId)
       if (response && response.errCode === 0) {
         let doctorData = response.data
-        if (doctorData && doctorData.DoctorInfo) {
-          let clinicInfo = doctorData.DoctorInfo
+        if (doctorData && doctorData.clinicData) {
+          let clinicInfo = doctorData.clinicData
           this.setState({
+            doctorData: doctorData,
             doctorClinicInfo: clinicInfo,
           })
         }
@@ -32,12 +37,13 @@ class DoctorClinicInfo extends Component {
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.doctorId !== this.props.doctorId) {
       let doctorId = this.props.doctorId
-      let response = await getDetailDoctorById(doctorId)
+      let response = await handleGetDoctorClinicInfo(doctorId)
       if (response && response.errCode === 0) {
         let doctorData = response.data
-        if (doctorData && doctorData.DoctorInfo) {
-          let clinicInfo = doctorData.DoctorInfo
+        if (doctorData && doctorData.clinicData) {
+          let clinicInfo = doctorData.clinicData
           this.setState({
+            doctorData: doctorData,
             doctorClinicInfo: clinicInfo,
           })
         }
@@ -59,20 +65,21 @@ class DoctorClinicInfo extends Component {
 
   render() {
     let clinincInfo = this.state.doctorClinicInfo
+    let doctorData = this.state.doctorData
     let language = this.props.language
     let specialist = this.props.specialist
     let price = ''
     let payment = ''
-    if (clinincInfo && clinincInfo.priceData) {
+    if (doctorData && doctorData.priceData) {
       if (language === LANGUAGES.VI) {
-        price = clinincInfo.priceData.valueVI
-        payment = clinincInfo.paymentData.valueVI
+        price = doctorData.priceData.valueVI
+        payment = doctorData.paymentData.valueVI
       } else if (language === LANGUAGES.EN) {
-        price = clinincInfo.priceData.valueEN
-        payment = clinincInfo.paymentData.valueEN
+        price = doctorData.priceData.valueEN
+        payment = doctorData.paymentData.valueEN
       } else {
-        price = clinincInfo.priceData.valueES
-        payment = clinincInfo.paymentData.valueES
+        price = doctorData.priceData.valueES
+        payment = doctorData.paymentData.valueES
       }
     }
     return (
@@ -85,11 +92,9 @@ class DoctorClinicInfo extends Component {
           <div className="address-label">
             <FormattedMessage id="homepage.outstanding-doctor.address-label" />
           </div>
-          <div className="clinic-name">
-            {clinincInfo && clinincInfo.nameClinic}
-          </div>
+          <div className="clinic-name">{clinincInfo && clinincInfo.name}</div>
           <div className="clinic-address">
-            {clinincInfo && clinincInfo.addressClinic}
+            {clinincInfo && clinincInfo.address}
           </div>
         </div>
 

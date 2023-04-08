@@ -2,7 +2,7 @@ import { raw } from 'body-parser'
 import e from 'express'
 import db from '../models/index'
 
-const handleBookingDoctorAppointment = async (appointmentData, urlConfirm) => {
+const handleBookingDoctorAppointment = async (appointmentData, token) => {
   try {
     // find user, if not create the account
     let patientUser = await db.User.findOrCreate({
@@ -32,7 +32,7 @@ const handleBookingDoctorAppointment = async (appointmentData, urlConfirm) => {
           patientId: patientUser[0].id,
           date: appointmentData.date,
           timeType: appointmentData.timeType,
-          token: urlConfirm,
+          token: token,
         },
       })
       return {
@@ -57,7 +57,6 @@ const handleVerifyBookingAppointment = async (token, doctorId) => {
       },
     })
 
-    console.log(appointment)
     if (!appointment) {
       return {
         errCode: 1,

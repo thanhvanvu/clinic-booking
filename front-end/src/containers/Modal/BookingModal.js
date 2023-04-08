@@ -10,6 +10,7 @@ import * as actions from '../../store/actions'
 import {
   handleCreateBookingAppointment,
   getDetailDoctorById,
+  handleGetDoctorClinicInfo,
 } from '../../services/userService'
 import { toast } from 'react-toastify'
 
@@ -46,7 +47,6 @@ class BookingModal extends Component {
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.selectedScheduleHour !== this.props.selectedScheduleHour) {
-      console.log(this.props.selectedScheduleHour)
       this.setState({
         selectedScheduleHour: this.props.selectedScheduleHour,
         timeType: this.props.selectedScheduleHour.timeType,
@@ -55,15 +55,16 @@ class BookingModal extends Component {
 
     if (prevProps.doctorId !== this.props.doctorId) {
       let doctorId = this.props.doctorId
-      let response = await getDetailDoctorById(doctorId)
+      let response = await handleGetDoctorClinicInfo(doctorId)
+      console.log(response)
       if (response && response.errCode === 0) {
         let currentDoctor = response.data
-        let doctorClinicPrice = currentDoctor.DoctorInfo.priceData
+        let doctorClinicPrice = currentDoctor.priceData
         this.setState({
           currentDoctor: currentDoctor,
           doctorId: currentDoctor.id,
           doctorClinicPrice: doctorClinicPrice,
-          clinicInfo: currentDoctor.DoctorInfo,
+          clinicInfo: currentDoctor.clinicData,
         })
       }
     }
@@ -83,12 +84,12 @@ class BookingModal extends Component {
       if (isValid && isValid[1]) {
         //create booking appointment
         let response = await handleCreateBookingAppointment({
-          doctorAppointment: this.state.currentDoctor.firstName,
-          addressAppointment: this.state.clinicInfo.addressClinic,
-          nameClinicAppointment: this.state.clinicInfo.nameClinic,
+          doctorAppointment: this.state.currentDoctor.doctorData.firstName,
+          addressAppointment: this.state.clinicInfo.address,
+          nameClinicAppointment: this.state.clinicInfo.name,
           dateAppointment: this.state.selectedScheduleHour.date,
           timeAppointment: this.state.selectedScheduleHour.timeTypeData.valueEN,
-          priceAppointment: this.state.clinicInfo.priceData.valueEN,
+          priceAppointment: this.state.currentDoctor.priceData.valueEN,
           doctorId: this.state.doctorId,
           email: this.state.email,
           firstName: this.state.firstName,
@@ -147,8 +148,9 @@ class BookingModal extends Component {
     }
 
     let doctorClinicPrice = this.state.doctorClinicPrice
-
     let isValid = this.state.isValidInput
+
+    console.log(this.state.clinicInfo)
     return (
       <Modal
         isOpen={isModalBooking}
@@ -171,11 +173,18 @@ class BookingModal extends Component {
                   <FormattedMessage id="booking.price" />
                 </span>
                 <span className="price">
-                  {language === LANGUAGES.EN
+                  {/* {language === LANGUAGES.EN
                     ? doctorClinicPrice.valueEN
                     : language === LANGUAGES.VI
                     ? doctorClinicPrice.valueVI
-                    : doctorClinicPrice.valueES}
+                    : doctorClinicPrice.valueES} */}
+                  {doctorClinicPrice
+                    ? language === LANGUAGES.EN
+                      ? doctorClinicPrice.valueEN
+                      : LANGUAGES.VI
+                      ? doctorClinicPrice.valueVI
+                      : doctorClinicPrice.valueES
+                    : ''}
                 </span>
               </div>
               <div
@@ -323,13 +332,13 @@ class BookingModal extends Component {
                   <span>
                     <FormattedMessage id="booking.price" />
                   </span>
-                  <span>
-                    {language === LANGUAGES.EN
+                  {doctorClinicPrice
+                    ? language === LANGUAGES.EN
                       ? doctorClinicPrice.valueEN
-                      : language === LANGUAGES.VI
+                      : LANGUAGES.VI
                       ? doctorClinicPrice.valueVI
-                      : doctorClinicPrice.valueES}
-                  </span>
+                      : doctorClinicPrice.valueES
+                    : ''}
                 </div>
                 <div className="booking-fee">
                   <span>
@@ -343,13 +352,13 @@ class BookingModal extends Component {
                   <span>
                     <FormattedMessage id="booking.total-fee" />
                   </span>
-                  <span>
-                    {language === LANGUAGES.EN
+                  {doctorClinicPrice
+                    ? language === LANGUAGES.EN
                       ? doctorClinicPrice.valueEN
-                      : language === LANGUAGES.VI
+                      : LANGUAGES.VI
                       ? doctorClinicPrice.valueVI
-                      : doctorClinicPrice.valueES}
-                  </span>
+                      : doctorClinicPrice.valueES
+                    : ''}
                 </div>
               </div>
             </div>
