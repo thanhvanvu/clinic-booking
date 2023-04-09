@@ -6,6 +6,7 @@ import Slider from 'react-slick'
 import { handleGetAllClinic } from '../../../services/clinicService'
 import { CommonUtils } from '../../../utils'
 import { FormattedMessage } from 'react-intl'
+import { withRouter } from 'react-router-dom'
 
 class MedicalFacility extends Component {
   constructor(props) {
@@ -32,6 +33,11 @@ class MedicalFacility extends Component {
       })
     }
   }
+
+  handleViewClinicDetail = (id) => {
+    this.props.history.push(`/detail-clinic/${id}`)
+  }
+
   render() {
     let settings = this.props.settings
     let allClinicArr = this.state.allClinicArr
@@ -54,7 +60,11 @@ class MedicalFacility extends Component {
                 allClinicArr.length > 0 &&
                 allClinicArr.map((clinic, index) => {
                   return (
-                    <div className="image-custom" key={index}>
+                    <div
+                      className="image-custom"
+                      key={index}
+                      onClick={() => this.handleViewClinicDetail(clinic.id)}
+                    >
                       <img src={clinic.image} alt="" width="280" height="180" />
                       <div className="img-text">{clinic.name}</div>
                     </div>
@@ -78,4 +88,6 @@ const mapDispatchToProps = (dispatch) => {
   return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MedicalFacility)
+)

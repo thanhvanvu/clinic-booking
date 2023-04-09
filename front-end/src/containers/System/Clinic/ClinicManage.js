@@ -31,6 +31,9 @@ class ClinicManage extends Component {
       clinicCity: '',
       clinicContentHTML: '',
       clinicContentMarkdown: '',
+
+      clinicLogoImage: '',
+      clinicLogoPreviewImg: '',
       clinicImage: '',
       clinicPreviewImg: '',
 
@@ -94,6 +97,20 @@ class ClinicManage extends Component {
     }
   }
 
+  handleOnchangeImageLogo = async (event) => {
+    let file = event.target.files[0]
+    let fileType = file.type.slice(0, 5)
+    if (file && fileType === 'image') {
+      let base64 = await CommonUtils.getBase64(file)
+      let objectUrl = URL.createObjectURL(file)
+
+      this.setState({
+        clinicLogoImage: base64,
+        clinicLogoPreviewImg: objectUrl,
+      })
+    }
+  }
+
   handleClinicEditorChange = ({ html, text }) => {
     let copiedState = { ...this.state }
     copiedState.clinicContentHTML = html
@@ -132,6 +149,9 @@ class ClinicManage extends Component {
         clinicCity: '',
         clinicContentHTML: '',
         clinicContentMarkdown: '',
+
+        clinicLogoImage: '',
+        clinicLogoPreviewImg: '',
         clinicImage: '',
         clinicPreviewImg: '',
 
@@ -155,6 +175,13 @@ class ClinicManage extends Component {
       previewImg = CommonUtils.convertBufferToBase64(selectedClinicData.image)
     }
 
+    let previewLogoImg
+    if (selectedClinicData && selectedClinicData.logo) {
+      previewLogoImg = CommonUtils.convertBufferToBase64(
+        selectedClinicData.logo
+      )
+    }
+
     this.setState({
       clinicId: selectedClinicData.id,
       clinicName: selectedClinicData.name,
@@ -164,6 +191,9 @@ class ClinicManage extends Component {
       clinicContentHTML: selectedClinicData.descriptionHTML,
       clinicImage: selectedClinicData.image,
       clinicPreviewImg: previewImg,
+
+      clinicLogoImage: selectedClinicData.logo,
+      clinicLogoPreviewImg: previewLogoImg,
 
       selectedClinic: selectedClinic,
     })
@@ -178,6 +208,7 @@ class ClinicManage extends Component {
         descriptionHTML: this.state.clinicContentHTML,
         descriptionMarkdown: this.state.clinicContentMarkdown,
         image: this.state.clinicImage,
+        logo: this.state.clinicLogoImage,
       }
 
       let isValidInput = CommonUtils.checkValidateInput(input)
@@ -197,6 +228,9 @@ class ClinicManage extends Component {
             clinicCity: '',
             clinicContentHTML: '',
             clinicContentMarkdown: '',
+
+            clinicLogoImage: '',
+            clinicLogoPreviewImg: '',
             clinicImage: '',
             clinicPreviewImg: '',
 
@@ -217,6 +251,7 @@ class ClinicManage extends Component {
         descriptionHTML: this.state.clinicContentHTML,
         descriptionMarkdown: this.state.clinicContentMarkdown,
         image: this.state.clinicImage,
+        logo: this.state.clinicLogoImage,
       }
 
       let isValidInput = CommonUtils.checkValidateInput(input)
@@ -236,6 +271,9 @@ class ClinicManage extends Component {
           clinicCity: '',
           clinicContentHTML: '',
           clinicContentMarkdown: '',
+
+          clinicLogoImage: '',
+          clinicLogoPreviewImg: '',
           clinicImage: '',
           clinicPreviewImg: '',
 
@@ -362,34 +400,68 @@ class ClinicManage extends Component {
               />
             </div>
             <div className="clinic-content-right form-group">
-              <label className="content-label">
-                <FormattedMessage id="manage-clinic.clinic-background" />
-              </label>
-              <div className="clinic-image">
-                <input
-                  type="file"
-                  id="image-upload"
-                  hidden
-                  onChange={(event) => {
-                    this.handleOnchangeImage(event)
-                  }}
-                />
-                <label htmlFor="image-upload" className="image-upload">
-                  <i class="fas fa-upload img-upload"></i>
-                  <FormattedMessage id="manage-clinic.clinic-upload" />
+              <div className="img-background">
+                <label className="content-label">
+                  <FormattedMessage id="manage-clinic.clinic-background" />
                 </label>
-                {this.state.clinicPreviewImg && (
-                  <div className="image-clinic">
-                    <img
-                      alt=""
-                      src={
-                        this.state.clinicPreviewImg
-                          ? this.state.clinicPreviewImg
-                          : ''
-                      }
-                    ></img>
-                  </div>
-                )}
+                <div className="clinic-image">
+                  <input
+                    type="file"
+                    id="image-upload"
+                    hidden
+                    onChange={(event) => {
+                      this.handleOnchangeImage(event)
+                    }}
+                  />
+                  <label htmlFor="image-upload" className="image-upload">
+                    <i className="fas fa-upload img-upload"></i>
+                    <FormattedMessage id="manage-clinic.clinic-upload" />
+                  </label>
+                  {this.state.clinicPreviewImg && (
+                    <div className="image-clinic">
+                      <img
+                        alt=""
+                        src={
+                          this.state.clinicPreviewImg
+                            ? this.state.clinicPreviewImg
+                            : ''
+                        }
+                      ></img>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="img-logo">
+                <label className="content-label">
+                  <FormattedMessage id="manage-clinic.clinic-background" />
+                </label>
+                <div className="clinic-image">
+                  <input
+                    type="file"
+                    id="image-upload-logo"
+                    hidden
+                    onChange={(event) => {
+                      this.handleOnchangeImageLogo(event)
+                    }}
+                  />
+                  <label htmlFor="image-upload-logo" className="image-upload">
+                    <i className="fas fa-upload img-upload"></i>
+                    <FormattedMessage id="manage-clinic.clinic-upload" />
+                  </label>
+                  {this.state.clinicLogoPreviewImg && (
+                    <div className="image-clinic">
+                      <img
+                        alt=""
+                        src={
+                          this.state.clinicLogoPreviewImg
+                            ? this.state.clinicLogoPreviewImg
+                            : ''
+                        }
+                      ></img>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -447,7 +519,7 @@ class ClinicManage extends Component {
                   cityArr.length > 0 &&
                   cityArr.map((city, index) => {
                     return (
-                      <option value={city.keyMap}>
+                      <option value={city.keyMap} key={index}>
                         {LANGUAGES.EN === language
                           ? city.valueEN
                           : LANGUAGES.VI

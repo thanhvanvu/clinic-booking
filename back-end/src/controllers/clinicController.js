@@ -25,6 +25,8 @@ const getAllClinic = async (req, res) => {
 const createClinic = async (req, res) => {
   try {
     let clinicData = req.body
+    console.log(clinicData)
+
     if (
       !clinicData.name ||
       !clinicData.address ||

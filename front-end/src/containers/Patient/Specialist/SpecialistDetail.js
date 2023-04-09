@@ -15,6 +15,7 @@ import { handleGetAllCode } from '../../../services/userService'
 import { CommonUtils } from '../../../utils'
 import { LANGUAGES } from '../../../utils'
 import '../Doctor/DoctorSchedule.scss'
+import DoctorScheduleClinicInfo from '../../../components/DoctorScheduleClinicInfo'
 class SpecialistDetail extends Component {
   constructor(props) {
     super(props)
@@ -164,7 +165,7 @@ class SpecialistDetail extends Component {
               filteredArrDoctor.length > 0 &&
               filteredArrDoctor.map((doctor, index) => {
                 return (
-                  <div className="specialist-content">
+                  /* <div className="specialist-content">
                     <div className="specialist-content-left">
                       <ProfileDoctor
                         doctorId={doctor.doctorId}
@@ -185,7 +186,9 @@ class SpecialistDetail extends Component {
                         specialist={true}
                       />
                     </div>
-                  </div>
+                  </div> */
+
+                  <DoctorScheduleClinicInfo doctor={doctor} key={index} />
                 )
               })}
           </div>

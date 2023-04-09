@@ -405,7 +405,7 @@ class DoctorManage extends Component {
 
   handleSelectedDoctor = async (selectedDoctor) => {
     let doctorId = selectedDoctor.value
-    console.log(doctorId)
+
     this.setState({
       previewImg: selectedDoctor.image,
       selectedDoctor: selectedDoctor,
@@ -445,18 +445,17 @@ class DoctorManage extends Component {
           contentMarkdown: doctorClinicInfo.contentMarkdown,
           description: doctorClinicInfo.description,
           clinicId: doctorClinicInfo.clinicId,
-          clinic: {
-            label: doctorClinicInfo.clinicData.name,
-          },
+          clinic: doctorClinicInfo.clinicData
+            ? { label: doctorClinicInfo.clinicData.name }
+            : null,
           selectedClinic: doctorClinicInfo.clinicData,
           specialistId: doctorClinicInfo.specialistId,
-          specialist: {
-            label: doctorClinicInfo.specialistData.tittle,
-          },
+          specialist: doctorClinicInfo.specialistData
+            ? { label: doctorClinicInfo.specialistData.tittle }
+            : null,
           selectedPayment: doctorClinicInfo.paymentId,
           selectedPrice: doctorClinicInfo.priceId,
           note: doctorClinicInfo.note,
-
           hasOldData: true,
         })
       }

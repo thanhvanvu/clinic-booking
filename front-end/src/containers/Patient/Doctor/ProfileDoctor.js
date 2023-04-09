@@ -100,7 +100,7 @@ class ProfileDoctor extends Component {
   }
 
   render() {
-    let { isShowTimeBooking, selectedScheduleHour, specialist, cityData } =
+    let { isShowTimeBooking, selectedScheduleHour, doctorSCSS, cityData } =
       this.props
     let doctor = this.state.doctorProfile
     let language = this.props.language
@@ -133,11 +133,11 @@ class ProfileDoctor extends Component {
       <div className="doctor-detail-summary">
         <div
           className={
-            specialist === true ? 'doctor-image specialist' : 'doctor-image'
+            doctorSCSS === true ? 'doctor-image doctorSCSS' : 'doctor-image'
           }
         >
           <img src={doctor.image} alt="" />
-          {specialist ? (
+          {doctorSCSS ? (
             <span onClick={() => this.handleViewDoctorDetail()}>
               <FormattedMessage id="doctor-profile.see-more" />
             </span>
@@ -158,8 +158,8 @@ class ProfileDoctor extends Component {
             <div className="doctor-summary">
               <div
                 className={
-                  specialist
-                    ? 'doctor-summary-title specialist'
+                  doctorSCSS
+                    ? 'doctor-summary-title doctorSCSS'
                     : 'doctor-summary-title'
                 }
               >
@@ -169,7 +169,7 @@ class ProfileDoctor extends Component {
                 {doctor && doctor.DoctorInfo && doctor.DoctorInfo.description}
               </div>
 
-              {specialist ? (
+              {doctorSCSS ? (
                 <div className="doctoc-city">
                   <i class="fas fa-map-marker-alt"></i>{' '}
                   {language === LANGUAGES.VI

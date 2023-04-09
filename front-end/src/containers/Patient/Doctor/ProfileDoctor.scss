@@ -9,8 +9,8 @@
       height: 120px;
     }
 
-    // css for specialist component
-    &.specialist {
+    // css for doctorSCSS component
+    &.doctorSCSS {
       img {
         border-radius: 50%;
         width: 100px;
@@ -34,7 +34,7 @@
       font-size: 20px;
       font-weight: bold;
 
-      &.specialist {
+      &.doctorSCSS {
         color: #45c3d2;
       }
     }

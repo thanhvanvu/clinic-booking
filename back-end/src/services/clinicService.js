@@ -20,6 +20,7 @@ const handleGetAllClinic = async () => {
 }
 
 const handleCreateClinic = async (clinicData) => {
+  console.log(clinicData)
   try {
     await db.Clinic.create({
       name: clinicData.name,
@@ -28,6 +29,7 @@ const handleCreateClinic = async (clinicData) => {
       descriptionHTML: clinicData.descriptionHTML,
       descriptionMarkdown: clinicData.descriptionMarkdown,
       image: clinicData.image,
+      logo: clinicData.logo,
     })
 
     return {
@@ -42,6 +44,8 @@ const handleCreateClinic = async (clinicData) => {
 
 const handleUpdateClinic = async (clinicData) => {
   try {
+    console.log(clinicData)
+
     let clinic = await db.Clinic.findOne({
       where: {
         id: clinicData.id,
@@ -56,6 +60,7 @@ const handleUpdateClinic = async (clinicData) => {
         descriptionHTML: clinicData.descriptionHTML,
         descriptionMarkdown: clinicData.descriptionMarkdown,
         image: clinicData.image,
+        logo: clinicData.logo,
       })
 
       await clinic.save()

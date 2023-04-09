@@ -67,7 +67,7 @@ class DoctorClinicInfo extends Component {
     let clinincInfo = this.state.doctorClinicInfo
     let doctorData = this.state.doctorData
     let language = this.props.language
-    let specialist = this.props.specialist
+    let clinicSCSS = this.props.clinicSCSS
     let price = ''
     let payment = ''
     if (doctorData && doctorData.priceData) {
@@ -86,7 +86,7 @@ class DoctorClinicInfo extends Component {
       <>
         <div
           className={
-            specialist ? 'clinic-information specialist' : 'clinic-information'
+            clinicSCSS ? 'clinic-information clinicSCSS' : 'clinic-information'
           }
         >
           <div className="address-label">
