@@ -22,10 +22,68 @@ const getAllClinic = async (req, res) => {
   }
 }
 
+const getClinicById = async (req, res) => {
+  try {
+    let clinicId = req.query.id
+    if (!clinicId) {
+      return res.status(200).json({
+        errCode: 1,
+        status: 'Fail',
+        message: 'Missing parameter',
+      })
+    }
+
+    let response = await clinicService.handleGetClinicById(clinicId)
+
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+      data: response.data,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
+
+const getDoctorByClinicId = async (req, res) => {
+  try {
+    let clinicId = req.query.id
+
+    if (!clinicId) {
+      return res.status(200).json({
+        errCode: 1,
+        status: 'Fail',
+        message: 'Missing parameter',
+      })
+    }
+
+    let response = await clinicService.handleGetDoctorByClinicId(clinicId)
+
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+      data: response.data,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
+
 const createClinic = async (req, res) => {
   try {
     let clinicData = req.body
-    console.log(clinicData)
 
     if (
       !clinicData.name ||
@@ -121,4 +179,6 @@ module.exports = {
   getAllClinic,
   updateClinic,
   deleteClinic,
+  getDoctorByClinicId,
+  getClinicById,
 }

@@ -19,8 +19,71 @@ const handleGetAllClinic = async () => {
   }
 }
 
+const handleGetClinicById = async (clinicId) => {
+  try {
+    let clinic = await db.Clinic.findOne({
+      where: {
+        id: clinicId,
+      },
+      raw: true,
+    })
+
+    if (clinic) {
+      return {
+        errCode: 0,
+        status: 'Success',
+        message: 'OK!',
+        data: clinic,
+      }
+    } else {
+      return {
+        errCode: 0,
+        status: 'Success',
+        message: 'OK!',
+        data: [],
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleGetDoctorByClinicId = async (clinicId) => {
+  try {
+    let doctors = await db.DoctorInfo.findAll({
+      where: {
+        clinicId: clinicId,
+      },
+      nest: true,
+      raw: true,
+      attributes: ['doctorId'],
+      include: [
+        {
+          model: db.Clinic,
+          as: 'clinicData',
+
+          include: [
+            {
+              model: db.Allcode,
+              as: 'cityData',
+            },
+          ],
+        },
+      ],
+    })
+
+    return {
+      errCode: 0,
+      status: 'Success',
+      message: 'OK!',
+      data: doctors,
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const handleCreateClinic = async (clinicData) => {
-  console.log(clinicData)
   try {
     await db.Clinic.create({
       name: clinicData.name,
@@ -44,8 +107,6 @@ const handleCreateClinic = async (clinicData) => {
 
 const handleUpdateClinic = async (clinicData) => {
   try {
-    console.log(clinicData)
-
     let clinic = await db.Clinic.findOne({
       where: {
         id: clinicData.id,
@@ -102,4 +163,6 @@ module.exports = {
   handleGetAllClinic,
   handleUpdateClinic,
   handleDeleteClinic,
+  handleGetDoctorByClinicId,
+  handleGetClinicById,
 }

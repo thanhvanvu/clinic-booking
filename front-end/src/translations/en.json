@@ -160,7 +160,21 @@
     },
 
     "clinic": {
-      "homepage-title": "Outstanding medical facility"
+      "homepage-title": "Outstanding medical facility",
+      "intro1": "HealthCare Consultancy is Houston's leading comprehensive healthcare platform connecting users with over 200 prestigious hospitals - clinics, more than 1,500 good specialists and thousands of quality medical products and good services",
+      "intro2": {
+        "title": "From now on, patients can book a clinic at the University Hospital of Medicine and Pharmacy 1 through the HealthCare Consultancy booking system.",
+        "list1": "Be selected to examine with experienced specialists",
+        "list2": "Support to book online before going to the doctor (free of charge)",
+        "list3": "Reduce waiting time in line for medical check-in",
+        "list4": "Receive detailed examination instructions after booking"
+      },
+      "introduction": "introduction",
+      "doctor": "doctor"
+    },
+
+    "about": {
+      "homepage-title": "What does media say about HealthCare Consultancy ?"
     }
   }
 }

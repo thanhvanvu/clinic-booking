@@ -161,7 +161,21 @@
     },
 
     "clinic": {
-      "homepage-title": "Cơ sở ý tế nổi bật"
+      "homepage-title": "Cơ sở ý tế nổi bật",
+      "intro1": "HealthCare Consultant là nền tảng chăm sóc sức khỏe toàn diện hàng đầu tại Houston kết nối người dùng với hơn 200 bệnh viện - phòng khám uy tín, hơn 1.500 bác sĩ chuyên khoa giỏi cùng hàng nghìn sản phẩm y tế chất lượng và dịch vụ tốt",
+      "intro2": {
+        "title": "Từ nay bệnh nhân có thể đặt lịch khám tại Bệnh viện Đại học Y Dược cơ sở 1 thông qua hệ thống đặt lịch HealthCare Consultant.",
+        "list1": "Được chọn khám với các bác sĩ chuyên khoa giàu kinh nghiệm",
+        "list2": "Hỗ trợ đặt lịch trực tuyến trước khi đi khám (miễn phí)",
+        "list3": "Giảm thời gian xếp hàng chờ khám bệnh",
+        "list4": "Nhận hướng dẫn kiểm tra chi tiết sau khi đăng ký"
+      },
+      "introduction": "giới thiệu",
+      "doctor": "bác sĩ"
+    },
+
+    "about": {
+      "homepage-title": "Truyền thông nói gì về HealthCare Consultancy ?"
     }
   }
 }

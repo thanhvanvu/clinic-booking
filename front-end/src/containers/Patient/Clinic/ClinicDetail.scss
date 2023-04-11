@@ -9,6 +9,7 @@
 
   .clinic-wrapper {
     margin: 0px auto;
+
     .clinic-content {
       position: sticky;
 
@@ -21,12 +22,15 @@
 
       .clinic-header {
         box-shadow: 0 0 10px;
+
         .clinic-information {
           display: flex;
           gap: 30px;
           padding: 30px;
+
           .clinic-information-left {
             img {
+              object-fit: fill;
               height: 100px;
               width: 100px;
             }
@@ -51,9 +55,14 @@
       position: sticky;
       top: 60px;
       margin-bottom: 20px;
+      z-index: 999;
 
       div {
         cursor: pointer;
+        text-transform: uppercase;
+        &:focus {
+          color: red;
+        }
       }
     }
 
@@ -72,15 +81,26 @@
     }
 
     .clinic-doctor-list {
-      height: 300px;
-      border: 1px solid red;
-      margin-top: 30px;
+      margin: 10px 0;
+
+      .clinic-doctor-list-title {
+        margin-bottom: 10px;
+      }
     }
 
     .clinic-introduction {
-      height: 300px;
-      border: 1px solid green;
-      margin-top: 30px;
+      margin-top: 10px;
+
+      .clinic-data {
+        padding: 10px 10px;
+        text-align: justify;
+        h3 {
+          font-size: 16px;
+        }
+        table {
+          margin-bottom: 10px;
+        }
+      }
     }
   }
 }
@@ -90,4 +110,10 @@
   font-size: 24px;
   border-bottom: 1px solid #ccc;
   padding: 10px;
+  text-transform: capitalize;
+}
+
+.focus {
+  color: orange;
+  text-decoration: underline;
 }

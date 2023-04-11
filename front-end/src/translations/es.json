@@ -160,7 +160,21 @@
     },
 
     "clinic": {
-      "homepage-title": "Facilidad médica excepcional"
+      "homepage-title": "Facilidad médica excepcional",
+      "intro1": "HealthCare Consultancy es la principal plataforma integral de atención médica de Houston que conecta a los usuarios con más de 200 hospitales prestigiosos: clínicas, más de 1500 buenos especialistas y miles de productos médicos de calidad y buenos servicios",
+      "intro2": {
+        "title": "A partir de ahora, los pacientes pueden reservar una clínica en el Hospital Universitario de Medicina y Farmacia 1 a través del sistema de reservas HealthCare Consultancy.",
+        "list1": "Ser seleccionado para examinar con especialistas experimentados",
+        "list2": "Soporte para reservar en línea antes de ir al médico (gratis)",
+        "list3": "Reducir el tiempo de espera en la fila para el chequeo médico",
+        "list4": "Recibir instrucciones detalladas del examen después de la reserva"
+      },
+      "introduction": "introducción",
+      "doctor": "médico"
+    },
+
+    "about": {
+      "homepage-title": "¿Qué dicen los medios sobre HealthCare Consultancy ?"
     }
   }
 }
