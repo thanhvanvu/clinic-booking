@@ -38,7 +38,7 @@ class RemedyModal extends Component {
   render() {
     let { isOpen, handleCloseRemedyModal } = this.props
     return (
-      <Modal className="remedy-modal" centered isOpen={isOpen}>
+      <Modal className="remedy-modal" centered isOpen={isOpen} size="lg">
         <div className="remedy-modal-wrapper">
           <div className="remedy-modal-header col-12">
             Gửi hóa đơn khám bệnh

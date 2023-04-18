@@ -49,7 +49,11 @@
     "doctor": {
       "manage-schedule": "Schedule management",
       "patient-menu": "Patient",
-      "manage-patient": "Patient management"
+      "manage-patient": "Patient management",
+      "manage-patient-title": "Patient management",
+      "manage-patient-confirm": "Confirm",
+      "manage-patient-cancel": "Cancel",
+      "manage-patient-send-remedy": "Send remedy"
     }
   },
 

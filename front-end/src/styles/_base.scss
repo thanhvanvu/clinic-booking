@@ -105,3 +105,11 @@ html {
     }
   }
 }
+
+._loading_overlay_wrapper {
+  position: unset !important;
+}
+
+._loading_overlay_overlay {
+  z-index: 999999999 !important;
+}

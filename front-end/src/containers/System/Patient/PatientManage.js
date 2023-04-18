@@ -12,6 +12,8 @@ import {
 import { toast } from 'react-toastify'
 import RemedyModal from '../../Modal/RemedyModal'
 import { getDetailDoctorById } from '../../../services/userService'
+import LoadingOverlay from 'react-loading-overlay-ts'
+
 class PatientManage extends Component {
   constructor(props) {
     super(props)
@@ -27,6 +29,8 @@ class PatientManage extends Component {
       doctorClinicData: '',
 
       isRemedyModalOpen: false,
+
+      isLoading: false,
     }
   }
 
@@ -144,7 +148,6 @@ class PatientManage extends Component {
   }
 
   handleSendRemedy = async (remedyDataFromChild) => {
-    console.log(remedyDataFromChild)
     let patientInformation = this.state.patientInformation
     let doctorInformation = this.state.doctorInformation
     let doctorClinicData = this.state.doctorClinicData
@@ -160,8 +163,20 @@ class PatientManage extends Component {
       doctorClinicName: doctorClinicData.name,
       doctorClinicAddress: doctorClinicData.address,
     }
+
+    //set loading = true
+    this.setState({
+      isLoading: true,
+    })
+
     let response = await handleSendRemedyResult(inputData)
-    console.log(response)
+    if (response && response.errCode === 0) {
+      toast.success('Send Remedy successfully!')
+      this.setState({
+        isLoading: false,
+        isRemedyModalOpen: false,
+      })
+    }
   }
 
   render() {
@@ -170,101 +185,109 @@ class PatientManage extends Component {
     console.log(this.state)
     return (
       <>
-        <div className="manage-patient-container">
-          <div className="title">Quản lý bệnh nhân khám bệnh</div>
-          <div className="date-booking form-control col-4">
-            <input
-              type="date"
-              name="dateBooking"
-              value={this.state.dateBooking}
-              onChange={(event) =>
-                this.setState({
-                  [event.target.name]: event.target.value,
-                })
-              }
-            />
-          </div>
-          <div className="patient-table-list">
-            <table id="customers">
-              <tbody>
-                <tr>
-                  <th>Id</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Gender</th>
-                  <th>Time</th>
-                  <th>Phone Number</th>
-                  <th>Action</th>
-                </tr>
-                {bookingArr && bookingArr.length > 0 ? (
-                  bookingArr.map((booking, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{booking.firstName}</td>
-                        <td>{booking.lastName}</td>
-                        <td>
-                          {language === LANGUAGES.VI
-                            ? booking.genderData.valueVI
-                            : language === LANGUAGES.EN
-                            ? booking.genderData.valueEN
-                            : booking.genderData.valueES}
-                        </td>
-                        <td>
-                          {language === LANGUAGES.VI
-                            ? booking.timeData.valueVI
-                            : language === LANGUAGES.EN
-                            ? booking.timeData.valueEN
-                            : booking.timeData.valueES}
-                        </td>
-                        <td>{booking.phoneNumber}</td>
-                        <td>
-                          <button
-                            className="btn-edit"
-                            type="button"
-                            onClick={() =>
-                              this.handleConfirmBooking(booking.id)
-                            }
-                          >
-                            Confirm
-                          </button>
-
-                          <button
-                            className="btn-delete"
-                            type="button"
-                            onClick={() => this.handleCancelBooking(booking.id)}
-                          >
-                            Cancel
-                          </button>
-
-                          <button
-                            className="btn-delete"
-                            style={{ backgroundColor: '#0071BA' }}
-                            type="button"
-                            onClick={() => this.handleOpenRemedyModal(booking)}
-                          >
-                            Send remedy
-                          </button>
-                        </td>
-                      </tr>
-                    )
+        <LoadingOverlay active={this.state.isLoading} spinner text="Loading">
+          <div className="manage-patient-container">
+            <div className="title">
+              <FormattedMessage id="menu.doctor.manage-patient-title" />
+            </div>
+            <div className="date-booking form-control col-4">
+              <input
+                type="date"
+                name="dateBooking"
+                value={this.state.dateBooking}
+                onChange={(event) =>
+                  this.setState({
+                    [event.target.name]: event.target.value,
                   })
-                ) : (
-                  <td className="no-booking" colSpan={99}>
-                    No data
-                  </td>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                }
+              />
+            </div>
+            <div className="patient-table-list">
+              <table id="customers">
+                <tbody>
+                  <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                    <th>Time</th>
+                    <th>Phone Number</th>
+                    <th>Action</th>
+                  </tr>
+                  {bookingArr && bookingArr.length > 0 ? (
+                    bookingArr.map((booking, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{booking.firstName}</td>
+                          <td>{booking.lastName}</td>
+                          <td>
+                            {language === LANGUAGES.VI
+                              ? booking.genderData.valueVI
+                              : language === LANGUAGES.EN
+                              ? booking.genderData.valueEN
+                              : booking.genderData.valueES}
+                          </td>
+                          <td>
+                            {language === LANGUAGES.VI
+                              ? booking.timeData.valueVI
+                              : language === LANGUAGES.EN
+                              ? booking.timeData.valueEN
+                              : booking.timeData.valueES}
+                          </td>
+                          <td>{booking.phoneNumber}</td>
+                          <td>
+                            <button
+                              className="btn-edit"
+                              type="button"
+                              onClick={() =>
+                                this.handleConfirmBooking(booking.id)
+                              }
+                            >
+                              <FormattedMessage id="menu.doctor.manage-patient-confirm" />
+                            </button>
 
-        <RemedyModal
-          isOpen={this.state.isRemedyModalOpen}
-          handleCloseRemedyModal={this.handleCloseRemedyModal}
-          patientEmail={this.state.patientEmail}
-          handleSendRemedy={this.handleSendRemedy}
-        />
+                            <button
+                              className="btn-delete"
+                              type="button"
+                              onClick={() =>
+                                this.handleCancelBooking(booking.id)
+                              }
+                            >
+                              <FormattedMessage id="menu.doctor.manage-patient-cancel" />
+                            </button>
+
+                            <button
+                              className="btn-delete"
+                              style={{ backgroundColor: '#0071BA' }}
+                              type="button"
+                              onClick={() =>
+                                this.handleOpenRemedyModal(booking)
+                              }
+                            >
+                              <FormattedMessage id="menu.doctor.manage-patient-send-remedy" />
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    })
+                  ) : (
+                    <td className="no-booking" colSpan={99}>
+                      No data
+                    </td>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <RemedyModal
+            isOpen={this.state.isRemedyModalOpen}
+            handleCloseRemedyModal={this.handleCloseRemedyModal}
+            patientEmail={this.state.patientEmail}
+            handleSendRemedy={this.handleSendRemedy}
+          />
+        </LoadingOverlay>
       </>
     )
   }
