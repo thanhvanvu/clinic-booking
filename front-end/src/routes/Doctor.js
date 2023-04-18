@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import Header from '../containers/Header/Header'
 import DoctorScheduleManage from '../containers/Doctor/DoctorScheduleManage'
+import PatientManage from '../containers/System/Patient/PatientManage'
 class Doctor extends Component {
   render() {
     // get value from redux
@@ -18,6 +19,7 @@ class Doctor extends Component {
                 path="/doctor/schedule-manage"
                 component={DoctorScheduleManage}
               />
+              <Route path="/doctor/patient-manage" component={PatientManage} />
             </Switch>
           </div>
         </div>

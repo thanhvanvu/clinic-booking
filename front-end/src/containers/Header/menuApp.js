@@ -50,17 +50,6 @@ export const adminMenu = [
       },
     ],
   },
-
-  // handbook menu
-  {
-    name: 'menu.admin.handbook-menu',
-    menus: [
-      {
-        name: 'menu.admin.manage-handbook',
-        link: '/system/handbook-manage',
-      },
-    ],
-  },
 ]
 
 // role doctor will have these menus available
@@ -76,4 +65,23 @@ export const doctorMenu = [
       },
     ],
   },
+
+  {
+    // 1st menu
+    name: 'menu.doctor.patient-menu',
+    menus: [
+      // one object is a submenu
+      {
+        name: 'menu.doctor.manage-patient',
+        link: '/doctor/patient-manage',
+      },
+    ],
+  },
 ]
+
+// export const doctorMenu = [
+//   {
+//     name: 'menu.doctor.manage-schedule',
+//     link: '/doctor/schedule-manage',
+//   },
+// ]

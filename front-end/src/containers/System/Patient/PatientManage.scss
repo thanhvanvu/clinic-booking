@@ -1,0 +1,23 @@
+.manage-patient-container {
+  width: 1170px;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+
+  .date-booking {
+    margin-top: 10px;
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+    }
+  }
+
+  .patient-table-list {
+    margin-top: 10px;
+  }
+
+  .no-booking {
+    margin-top: 10px;
+  }
+}

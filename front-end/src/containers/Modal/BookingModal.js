@@ -9,7 +9,6 @@ import ProfileDoctor from '../Patient/Doctor/ProfileDoctor'
 import * as actions from '../../store/actions'
 import {
   handleCreateBookingAppointment,
-  getDetailDoctorById,
   handleGetDoctorClinicInfo,
 } from '../../services/userService'
 import { toast } from 'react-toastify'
@@ -38,6 +37,8 @@ class BookingModal extends Component {
       address: '',
       examNote: '',
       isValidInput: {},
+
+      isLoading: false,
     }
   }
 
@@ -61,7 +62,7 @@ class BookingModal extends Component {
         let doctorClinicPrice = currentDoctor.priceData
         this.setState({
           currentDoctor: currentDoctor,
-          doctorId: currentDoctor.id,
+          doctorId: currentDoctor.doctorId,
           doctorClinicPrice: doctorClinicPrice,
           clinicInfo: currentDoctor.clinicData,
         })
@@ -81,6 +82,9 @@ class BookingModal extends Component {
       })
 
       if (isValid && isValid[1]) {
+        this.setState({
+          isLoading: true,
+        })
         //create booking appointment
         let response = await handleCreateBookingAppointment({
           doctorAppointment: this.state.currentDoctor.doctorData.firstName,
@@ -103,6 +107,9 @@ class BookingModal extends Component {
 
         if (response && response.errCode === 0) {
           toast.success('Booked a new appointment successfully!')
+          this.setState({
+            isLoading: false,
+          })
 
           // close the modal
           this.props.closeBookingModal()
@@ -171,11 +178,6 @@ class BookingModal extends Component {
                   <FormattedMessage id="booking.price" />
                 </span>
                 <span className="price">
-                  {/* {language === LANGUAGES.EN
-                    ? doctorClinicPrice.valueEN
-                    : language === LANGUAGES.VI
-                    ? doctorClinicPrice.valueVI
-                    : doctorClinicPrice.valueES} */}
                   {doctorClinicPrice
                     ? language === LANGUAGES.EN
                       ? doctorClinicPrice.valueEN
@@ -372,6 +374,8 @@ class BookingModal extends Component {
               <FormattedMessage id="booking.cancel" />
             </button>
           </div>
+
+          {this.state.isLoading === true ? <div class="loader"></div> : ''}
         </div>
       </Modal>
     )

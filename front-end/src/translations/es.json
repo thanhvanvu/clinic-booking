@@ -47,7 +47,9 @@
     },
 
     "doctor": {
-      "manage-schedule": "Gestión de horarios"
+      "manage-schedule": "Gestión de horarios",
+      "patient-menu": "Paciente",
+      "manage-patient": "Gestión de pacientes"
     }
   },
 

@@ -1,0 +1,49 @@
+.remedy-modal {
+  width: 700px;
+  .remedy-modal-wrapper {
+    .remedy-modal-header {
+      background-color: #128cdd;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px;
+      color: white;
+    }
+
+    .remedy-modal-body {
+      padding: 10px;
+
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .remedy-modal-footer {
+      display: flex;
+      justify-content: end;
+      padding: 10px 10px;
+      border-top: 1px solid #ccc;
+      margin-top: 10px;
+
+      .footer-button {
+        gap: 10px;
+        display: flex;
+        button {
+          width: 100px;
+          outline: none;
+          border: none;
+          border-radius: 5px;
+          padding: 5px 0;
+          font-weight: bold;
+          font-size: 15px;
+
+          &.remedy-send {
+            background-color: #ffb11f;
+          }
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+}

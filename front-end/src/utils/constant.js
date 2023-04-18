@@ -24,6 +24,11 @@ export const CRUD_ACTIONS = {
   DELETE: 'DELETE',
 }
 
+export const BOOKING_ACTIONS = {
+  CONFIRM: 'CONFIRM',
+  CANCEL: 'CANCEL',
+}
+
 export const dateFormat = {
   SEND_TO_SERVER: 'DD/MM/YYYY',
 }

@@ -23,15 +23,24 @@ const handleBookingDoctorAppointment = async (appointmentData, token) => {
       await db.Booking.findOrCreate({
         where: {
           timeType: appointmentData.timeType,
-          date: appointmentData.date,
+          dateBooking: appointmentData.dateAppointment,
+          firstName: appointmentData.firstName,
+          lastName: appointmentData.lastName,
           patientId: patientUser[0].id,
         },
         defaults: {
           statusId: 'S1',
           doctorId: appointmentData.doctorId,
           patientId: patientUser[0].id,
-          date: appointmentData.date,
+          firstName: appointmentData.firstName,
+          lastName: appointmentData.lastName,
+          phoneNumber: appointmentData.phoneNumber,
+          address: appointmentData.address,
+          dateOfBirth: appointmentData.date,
+          dateBooking: appointmentData.dateAppointment,
+          gender: appointmentData.gender,
           timeType: appointmentData.timeType,
+          note: appointmentData.examNote,
           token: token,
         },
       })

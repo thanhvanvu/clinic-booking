@@ -18,11 +18,32 @@ module.exports = {
       patientId: {
         type: Sequelize.INTEGER,
       },
-      date: {
+      firstName: {
+        type: Sequelize.STRING,
+      },
+      lastName: {
+        type: Sequelize.STRING,
+      },
+      phoneNumber: {
+        type: Sequelize.STRING,
+      },
+      address: {
+        type: Sequelize.TEXT,
+      },
+      dateOfBirth: {
         type: Sequelize.DATEONLY,
+      },
+      dateBooking: {
+        type: Sequelize.DATEONLY,
+      },
+      gender: {
+        type: Sequelize.STRING,
       },
       timeType: {
         type: Sequelize.STRING,
+      },
+      note: {
+        type: Sequelize.TEXT,
       },
       token: {
         type: Sequelize.STRING,

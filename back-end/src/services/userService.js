@@ -5,6 +5,25 @@ const bcrypt = require('bcryptjs')
 
 const salt = bcrypt.genSaltSync(10)
 
+const checkUserEmail = async (userEmail) => {
+  try {
+    // 5. fine 1 user in database
+    const user = await db.User.findOne({
+      where: {
+        email: userEmail,
+      },
+    })
+
+    if (user) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const handleUserLogin = async (email, password) => {
   try {
     const userData = {}
@@ -15,7 +34,14 @@ const handleUserLogin = async (email, password) => {
     if (isUserExist) {
       // 6. find 1 user in database
       let user = await db.User.findOne({
-        attributes: ['email', 'firstName', 'lastName', 'roleId', 'password'],
+        attributes: [
+          'id',
+          'email',
+          'firstName',
+          'lastName',
+          'roleId',
+          'password',
+        ],
         where: { email: email },
         raw: true, // nice data
       })
@@ -50,25 +76,6 @@ const handleUserLogin = async (email, password) => {
     }
 
     return userData
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-const checkUserEmail = async (userEmail) => {
-  try {
-    // 5. fine 1 user in database
-    const user = await db.User.findOne({
-      where: {
-        email: userEmail,
-      },
-    })
-
-    if (user) {
-      return true
-    } else {
-      return false
-    }
   } catch (error) {
     console.log(error)
   }

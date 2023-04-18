@@ -42,10 +42,8 @@ class Login extends Component {
       if (response.errCode !== 0) {
         this.setState({ errorMessage: response.message })
       } else {
-        console.log(response.user)
         this.props.userLoginSuccess(response.user)
         // save user infomation into redux
-        console.log('login successully')
       }
     } catch (error) {
       console.log(error)

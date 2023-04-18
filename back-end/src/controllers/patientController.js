@@ -39,13 +39,18 @@ const createDoctorAppointment = async (req, res) => {
     // { urlConfirm: urlResult, token: id }
     let urlAndToken = buildUrlEmail(appointmentData.doctorId)
 
-    // send email to patient before creating the appointment
-    await emailService.sendSimpleEmail(appointmentData, urlAndToken.urlConfirm)
-
     let response = await patientService.handleBookingDoctorAppointment(
       appointmentData,
       urlAndToken.token
     )
+
+    if (response && response.errCode === 0) {
+      // send email to patient before creating the appointment
+      await emailService.sendSimpleEmail(
+        appointmentData,
+        urlAndToken.urlConfirm
+      )
+    }
 
     return res.status(200).json({
       errCode: response.errCode,
