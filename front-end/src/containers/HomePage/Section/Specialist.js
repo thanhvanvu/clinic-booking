@@ -30,6 +30,11 @@ class Specialist extends Component {
     history.push(`/detail-specialist/${specialist.id}`)
   }
 
+  handleListViewSpecialist = () => {
+    const { history } = this.props
+    history.push(`/list-specialist`)
+  }
+
   render() {
     let specialistArr = this.state.specialistArr
     let settings = this.props.settings
@@ -40,7 +45,10 @@ class Specialist extends Component {
             <span className="header-text">
               <FormattedMessage id="homepage.specialist.homepage-tittle" />
             </span>
-            <button className="btn-more">
+            <button
+              className="btn-more"
+              onClick={() => this.handleListViewSpecialist()}
+            >
               <FormattedMessage id="homepage.read-more" />
             </button>
           </div>

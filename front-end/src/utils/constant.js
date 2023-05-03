@@ -5,9 +5,16 @@ export const path = {
   LOG_OUT: '/logout',
   SYSTEM: '/system',
   DOCTOR: '/doctor',
+
   DETAIL_DOCTOR: '/detail-doctor/:id',
+  LIST_VIEW_DOCTOR: '/list-doctor',
+
   DETAIL_SPECIALIST: '/detail-specialist/:id',
+  LIST_VIEW_SPECIALIST: '/list-specialist',
+
   DETAIL_CLINIC: '/detail-clinic/:id',
+  LIST_VIEW_CLINIC: '/list-clinic',
+
   VERIFY_EMAIL_BOOKING: '/verify-booking',
 }
 

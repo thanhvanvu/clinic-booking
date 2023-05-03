@@ -355,7 +355,7 @@ class SpecialistManage extends Component {
                   }}
                 />
                 <label htmlFor="image-upload" className="image-upload">
-                  <i class="fas fa-upload img-upload"></i>
+                  <i className="fas fa-upload img-upload"></i>
                   <FormattedMessage id="manage-specialist.specialist-upload" />
                 </label>
                 {this.state.specialistPreviewImg && (

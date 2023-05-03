@@ -196,7 +196,7 @@ class BookingModal extends Component {
                       : 'col-11 booking-body-content'
                   }
                 >
-                  <i class="fas fa-envelope"></i>
+                  <i className="fas fa-envelope"></i>
                   <input
                     type="email"
                     name="email"

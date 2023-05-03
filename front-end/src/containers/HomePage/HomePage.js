@@ -8,7 +8,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import OutstandingDoctor from './Section/OutstandingDoctor'
 import About from './Section/About'
-import HomeFooter from './HomeFooter'
+import FooterHomePage from './FooterHomePage'
 
 class HomePage extends Component {
   render() {
@@ -27,7 +27,7 @@ class HomePage extends Component {
         <MedicalFacility settings={settings} />
         <OutstandingDoctor settings={settings} />
         <About />
-        <HomeFooter />
+        <FooterHomePage />
       </div>
     )
   }

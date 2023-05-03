@@ -42,7 +42,7 @@ class VerifyEmail extends Component {
         <HeaderHomePage />
         <div className="confirmation-page">
           {this.state.isConfirmed === false ? (
-            <div class="loader"></div>
+            <div className="loader"></div>
           ) : (
             <div className="confirm-content">
               {this.state.errCode === 0 ? (

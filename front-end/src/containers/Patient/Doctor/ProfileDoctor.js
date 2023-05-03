@@ -171,7 +171,7 @@ class ProfileDoctor extends Component {
 
               {doctorSCSS ? (
                 <div className="doctoc-city">
-                  <i class="fas fa-map-marker-alt"></i>{' '}
+                  <i className="fas fa-map-marker-alt"></i>{' '}
                   {language === LANGUAGES.VI
                     ? cityData.valueVI
                     : language === LANGUAGES.EN

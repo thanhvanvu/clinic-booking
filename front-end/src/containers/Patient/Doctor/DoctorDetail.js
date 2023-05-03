@@ -7,7 +7,7 @@ import DoctorSchedule from './DoctorSchedule'
 import DoctorClinicInfo from './DoctorClinicInfo'
 import ProfileDoctor from './ProfileDoctor'
 import * as actions from '../../../store/actions'
-import HomeFooter from '../../HomePage/HomeFooter'
+import FooterHomePage from '../../HomePage/FooterHomePage'
 import { LANGUAGES } from '../../../utils'
 
 class DoctorDetail extends Component {
@@ -73,7 +73,7 @@ class DoctorDetail extends Component {
           )}
         </div>
         <div className="doctor-feedback"></div>
-        <HomeFooter />
+        <FooterHomePage />
       </>
     )
   }

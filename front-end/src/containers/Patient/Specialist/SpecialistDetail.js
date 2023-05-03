@@ -3,10 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import './SpecialistDetail.scss'
 import HeaderHomePage from '../../HomePage/HeaderHomePage'
-import DoctorSchedule from '../Doctor/DoctorSchedule'
-import ProfileDoctor from '../Doctor/ProfileDoctor'
-import HomeFooter from '../../HomePage/HomeFooter'
-import DoctorClinicInfo from '../Doctor/DoctorClinicInfo'
+import FooterHomePage from '../../HomePage/FooterHomePage'
 import {
   handleGetSpecialistById,
   handleGetDoctorInSpecialist,
@@ -194,7 +191,7 @@ class SpecialistDetail extends Component {
           </div>
         </div>
 
-        <HomeFooter />
+        <FooterHomePage />
       </div>
     )
   }

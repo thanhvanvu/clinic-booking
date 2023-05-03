@@ -5,7 +5,7 @@ import './ClinicDetail.scss'
 import DoctorScheduleClinicInfo from '../../../components/DoctorScheduleClinicInfo'
 import HeaderHomePage from '../../HomePage/HeaderHomePage'
 import img from '../../../assets/clinic/2019_Homepage_Featured.jpg'
-import HomeFooter from '../../HomePage/HomeFooter'
+import FooterHomePage from '../../HomePage/FooterHomePage'
 import {
   handleGetClinicById,
   handleGetDoctorByClinicId,
@@ -171,7 +171,7 @@ class ClinicDetail extends Component {
             </div>
           </div>
         </div>
-        <HomeFooter />
+        <FooterHomePage />
       </>
     )
   }

@@ -1,0 +1,20 @@
+.container-list-view-specialist {
+  height: 100vh;
+  margin: 0 auto;
+
+  .specialist-detail {
+    display: flex;
+    gap: 10px;
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+    .specialist-image {
+      width: 100px;
+      height: 65px;
+      cursor: pointer;
+    }
+    p {
+      font-size: 15px;
+      cursor: pointer;
+    }
+  }
+}
