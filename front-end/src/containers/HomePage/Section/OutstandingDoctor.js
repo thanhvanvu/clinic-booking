@@ -29,6 +29,12 @@ class OutstandingDoctor extends Component {
 
     history.push(`/detail-doctor/${doctor.id}`)
   }
+
+  handleListViewDoctor = () => {
+    const { history } = this.props
+    history.push(`/list-doctor`)
+  }
+
   render() {
     let settings = this.props.settings
     let topDoctorArr = this.state.topDoctorArr
@@ -40,7 +46,10 @@ class OutstandingDoctor extends Component {
             <span className="header-text">
               <FormattedMessage id="homepage.outstanding-doctor.homepage-title" />
             </span>
-            <button className="btn-more">
+            <button
+              className="btn-more"
+              onClick={() => this.handleListViewDoctor()}
+            >
               <FormattedMessage id="homepage.read-more" />
             </button>
           </div>

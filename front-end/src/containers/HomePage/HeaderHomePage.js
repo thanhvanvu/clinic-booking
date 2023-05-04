@@ -19,6 +19,11 @@ class HeaderHomePage extends Component {
     const { history } = this.props
     history.push(`/list-specialist`)
   }
+
+  handleListViewDoctor = () => {
+    const { history } = this.props
+    history.push(`/list-doctor`)
+  }
   render() {
     // get language from redux
     let language = this.props.language
@@ -58,7 +63,10 @@ class HeaderHomePage extends Component {
                   <FormattedMessage id="home-header.select-hospital" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleListViewDoctor()}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.doctor" />
@@ -122,7 +130,7 @@ class HeaderHomePage extends Component {
               </div>
               <div className="search">
                 <i className="fas fa-search search-icon"></i>
-                <input type="text" placeholder="Tìm kiếm" />
+                <input type="text" placeholder="Search" />
                 <i className="fas fa-times delete-icon"></i>
               </div>
               <div className="option"></div>

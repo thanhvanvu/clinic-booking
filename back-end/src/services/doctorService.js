@@ -73,6 +73,50 @@ const handleGetAllDoctors = async () => {
   }
 }
 
+const handleGetAllDoctorsDetail = async () => {
+  try {
+    const doctors = await db.DoctorInfo.findAll({
+      raw: false,
+      attributes: ['doctorId'],
+      include: [
+        {
+          model: db.User,
+          as: 'doctorData',
+          attributes: ['firstName', 'lastName', 'image'],
+          include: [
+            {
+              model: db.Allcode,
+              as: 'positionData',
+              attributes: ['valueEN', 'valueES', 'valueVI'],
+            },
+          ],
+        },
+
+        {
+          model: db.Clinic,
+          as: 'clinicData',
+          attributes: ['name'],
+        },
+
+        {
+          model: db.Specialist,
+          as: 'specialistData',
+          attributes: ['tittle'],
+        },
+      ],
+    })
+
+    return {
+      status: 'Success',
+      errCode: 0,
+      message: 'OK',
+      data: doctors,
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const handleCreateInfoDoctor = async (doctorInfo) => {
   try {
     if (
@@ -503,9 +547,11 @@ const handleGetProfileDoctorById = async (doctorId) => {
     console.log(error)
   }
 }
+
 module.exports = {
   handleGetTopDoctor: handleGetTopDoctor,
   handleGetAllDoctors: handleGetAllDoctors,
+  handleGetAllDoctorsDetail: handleGetAllDoctorsDetail,
   handleCreateInfoDoctor: handleCreateInfoDoctor,
   handleGetDetailDoctorById: handleGetDetailDoctorById,
   updateInfoDoctorById: updateInfoDoctorById,

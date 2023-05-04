@@ -38,6 +38,11 @@ class MedicalFacility extends Component {
     this.props.history.push(`/detail-clinic/${id}`)
   }
 
+  handleListViewClinic = () => {
+    const { history } = this.props
+    history.push(`/list-clinic`)
+  }
+
   render() {
     let settings = this.props.settings
     let allClinicArr = this.state.allClinicArr
@@ -49,7 +54,10 @@ class MedicalFacility extends Component {
             <span className="header-text">
               <FormattedMessage id="homepage.clinic.homepage-title" />
             </span>
-            <button className="btn-more">
+            <button
+              className="btn-more"
+              onClick={() => this.handleListViewClinic()}
+            >
               {' '}
               <FormattedMessage id="homepage.read-more" />
             </button>

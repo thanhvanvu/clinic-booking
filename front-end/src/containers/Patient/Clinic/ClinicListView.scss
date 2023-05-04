@@ -1,19 +1,19 @@
-.container-list-view-specialist {
+.container-list-view-clinic {
   height: 100vh;
   margin: 0 auto;
 
-  .specialist-detail {
+  .clinic-detail {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     padding: 20px 0;
     border-bottom: 1px solid #ccc;
-    .specialist-image {
+    .clinic-image {
       width: 100px;
       height: 65px;
       cursor: pointer;
     }
     p {
-      font-size: 18px;
+      font-size: 15px;
       cursor: pointer;
     }
   }

@@ -126,6 +126,19 @@ const handleGetTopDoctors = async (limitRecord) => {
   }
 }
 
+const handleGetAllDoctorsDetail = async () => {
+  try {
+    const options = {
+      method: 'get',
+      url: `/api/get-all-doctors-detail`,
+    }
+
+    return await axios(options)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const handleCreateDoctorInfo = async (doctorInfo) => {
   try {
     const options = {
@@ -282,6 +295,7 @@ export {
   handleGetAllCode,
   handleGetTopDoctors,
   handleGetAllDoctors,
+  handleGetAllDoctorsDetail,
   handleCreateDoctorInfo,
   getDetailDoctorById,
   handleUpdateInfoDoctorById,

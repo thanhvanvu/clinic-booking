@@ -47,6 +47,26 @@ const getAllDoctors = async (req, res) => {
   }
 }
 
+const getAllDoctorsDetail = async (req, res) => {
+  try {
+    let response = await doctorService.handleGetAllDoctorsDetail()
+    return res.status(200).json({
+      errCode: response.errCode,
+      status: response.status,
+      message: response.message,
+      length: response.data.length,
+      data: response.data,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(200).json({
+      errCode: -1,
+      status: 'Fail',
+      message: 'Error from server',
+    })
+  }
+}
+
 const createInfoDoctor = async (req, res) => {
   try {
     let infoData = req.body
@@ -273,6 +293,7 @@ const getProfileDoctorById = async (req, res) => {
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
+  getAllDoctorsDetail: getAllDoctorsDetail,
   createInfoDoctor: createInfoDoctor,
   getDetailDoctorById: getDetailDoctorById,
   updateInfoDoctorById: updateInfoDoctorById,

@@ -1,0 +1,30 @@
+.container-list-view-doctor {
+  margin: 0 auto;
+
+  .doctor-detail {
+    display: flex;
+    gap: 15px;
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+
+    .doctor-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .doctor-info {
+      cursor: pointer;
+      .doctor-name {
+        font-size: 18px;
+      }
+      .doctor-specialist {
+        font-size: 14px;
+      }
+      .doctor-clinic {
+        font-size: 12px;
+      }
+    }
+  }
+}
