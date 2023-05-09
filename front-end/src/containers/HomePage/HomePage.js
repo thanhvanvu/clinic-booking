@@ -30,7 +30,6 @@ class HomePage extends Component {
 
   handleWindowSizeChange = () => {
     const screenWidth = window.innerWidth
-    console.log(screenWidth)
 
     if (screenWidth >= 1200) {
       this.setState({ slidesToShow: 4 })
@@ -54,7 +53,6 @@ class HomePage extends Component {
       slidesToScroll: 2,
     }
 
-    console.log(this.state.slidesToShow)
     return (
       <div>
         <HeaderHomePage isShowBanner={true} />

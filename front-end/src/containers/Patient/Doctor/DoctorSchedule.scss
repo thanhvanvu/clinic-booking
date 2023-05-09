@@ -33,7 +33,6 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 15px;
-      width: 500px;
 
       .grid-item {
         justify-content: center;
@@ -53,15 +52,72 @@
     }
 
     .book-free {
-      position: absolute;
-      bottom: -10px;
-      // grid-column: 1 / span 3; // start at column 1 and span 3 columns
+      margin-top: 10px;
     }
 
     .no-schedule {
       display: block !important;
       width: 500px;
       font-style: italic;
+    }
+  }
+}
+
+/* Extra large (xl) screen */
+@media only screen and (min-width: 1200px) {
+  /* CSS styles for extra large screens */
+  /* For example: */
+}
+
+/* Large (lg) screen */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* CSS styles for large screens */
+  .schedule-container {
+    .schedule-hour {
+      .hours {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+}
+
+/* Medium (md) screen */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* CSS styles for medium screens */
+  .schedule-container {
+    .schedule-hour {
+      .hours {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+/* Small (sm) screen */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* CSS styles for small screens */
+}
+
+/* Extra small (xs) screen */
+@media only screen and (min-width: 481px) and (max-width: 575px) {
+  /* CSS styles for extra small screens */
+  .schedule-container {
+    .schedule-hour {
+      .hours {
+        grid-template-columns: repeat(8, 1fr);
+        overflow: scroll;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+  .schedule-container {
+    .schedule-hour {
+      .hours {
+        grid-template-columns: repeat(8, 1fr);
+        overflow: scroll;
+      }
     }
   }
 }

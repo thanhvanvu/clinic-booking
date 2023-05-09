@@ -70,9 +70,118 @@
 
           .doctor-schedule {
             width: 50%;
-            height: 200px;
           }
         }
+      }
+    }
+  }
+}
+
+/* Extra large (xl) screen */
+@media only screen and (min-width: 1200px) {
+  /* CSS styles for extra large screens */
+  /* For example: */
+}
+
+/* Large (lg) screen */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* CSS styles for large screens */
+  .container-specialist {
+    .specialist-top {
+      .specialist-detail-transparent {
+        .specialist-detail-wrapper {
+          width: 970px;
+        }
+      }
+    }
+
+    .specialist-bottom {
+      .specialist-content-wrapper {
+        width: 970px;
+      }
+    }
+  }
+}
+
+/* Medium (md) screen */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* CSS styles for medium screens */
+  .container-specialist {
+    .specialist-top {
+      .specialist-detail-transparent {
+        .specialist-detail-wrapper {
+          width: 740px;
+        }
+      }
+    }
+
+    .specialist-bottom {
+      .specialist-content-wrapper {
+        width: 740px;
+      }
+    }
+  }
+}
+
+/* Small (sm) screen */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* CSS styles for small screens */
+  .container-specialist {
+    .specialist-top {
+      .specialist-detail-transparent {
+        .specialist-detail-wrapper {
+          width: 100%;
+          padding: 30px 10px;
+        }
+      }
+    }
+
+    .specialist-bottom {
+      .specialist-content-wrapper {
+        width: 100%;
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
+/* Extra small (xs) screen */
+@media only screen and (min-width: 481px) and (max-width: 575px) {
+  /* CSS styles for extra small screens */
+  .container-specialist {
+    .specialist-top {
+      .specialist-detail-transparent {
+        .specialist-detail-wrapper {
+          width: 100%;
+          padding: 30px 10px;
+        }
+      }
+    }
+
+    .specialist-bottom {
+      .specialist-content-wrapper {
+        width: 100%;
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+  .container-specialist {
+    .specialist-top {
+      .specialist-detail-transparent {
+        .specialist-detail-wrapper {
+          width: 100%;
+          padding: 30px 10px;
+        }
+      }
+    }
+
+    .specialist-bottom {
+      .specialist-content-wrapper {
+        width: 100%;
+        padding: 0 10px;
       }
     }
   }
