@@ -124,3 +124,176 @@
   color: orange;
   text-decoration: underline;
 }
+
+/* Extra large (xl) screen */
+@media only screen and (min-width: 1200px) {
+  /* CSS styles for extra large screens */
+  /* For example: */
+}
+
+/* Large (lg) screen */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* CSS styles for large screens */
+  .clinic-detail {
+    display: flex;
+    flex-direction: column;
+
+    .clinic-top-wrapper {
+      flex-grow: 1;
+
+      .clinic-wrapper {
+        width: 970px;
+
+        .clinic-content {
+          width: 970px;
+        }
+
+        .clinic-menu {
+          width: 970px;
+        }
+      }
+    }
+  }
+}
+
+/* Medium (md) screen */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* CSS styles for medium screens */
+  .clinic-detail {
+    display: flex;
+    flex-direction: column;
+
+    .clinic-top-wrapper {
+      flex-grow: 1;
+
+      .clinic-wrapper {
+        width: 740px;
+
+        .clinic-content {
+          width: 740px;
+        }
+
+        .clinic-menu {
+          width: 740px;
+        }
+      }
+    }
+  }
+}
+
+/* Small (sm) screen */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* CSS styles for small screens */
+  .clinic-detail {
+    display: flex;
+    flex-direction: column;
+
+    .clinic-top-wrapper {
+      flex-grow: 1;
+
+      .clinic-wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        .clinic-content {
+          width: 100%;
+
+          h1 {
+            font-size: 22px;
+          }
+
+          h4 {
+            font-size: 18px;
+          }
+        }
+
+        .clinic-menu {
+          width: 100%;
+
+          .clinic-menu-introduction {
+            font-size: 18px;
+          }
+          .clinic-menu-doctor {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Extra small (xs) screen */
+@media only screen and (min-width: 481px) and (max-width: 575px) {
+  /* CSS styles for extra small screens */
+  .clinic-detail {
+    display: flex;
+    flex-direction: column;
+
+    .clinic-top-wrapper {
+      flex-grow: 1;
+
+      .clinic-wrapper {
+        width: 100%;
+        padding: 0 15px;
+        .clinic-content {
+          width: 100%;
+
+          h1 {
+            font-size: 22px;
+          }
+
+          h4 {
+            font-size: 18px;
+          }
+        }
+
+        .clinic-menu {
+          width: 100%;
+          .clinic-menu-introduction {
+            font-size: 18px;
+          }
+          .clinic-menu-doctor {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+  .clinic-detail {
+    display: flex;
+    flex-direction: column;
+
+    .clinic-top-wrapper {
+      flex-grow: 1;
+
+      .clinic-wrapper {
+        width: 100%;
+        padding: 0 15px;
+        .clinic-content {
+          width: 100%;
+
+          h1 {
+            font-size: 22px;
+          }
+
+          h4 {
+            font-size: 18px;
+          }
+        }
+
+        .clinic-menu {
+          width: 100%;
+          .clinic-menu-introduction {
+            font-size: 18px;
+          }
+          .clinic-menu-doctor {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}

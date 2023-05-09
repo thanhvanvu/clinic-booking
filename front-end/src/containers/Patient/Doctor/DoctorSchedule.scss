@@ -106,6 +106,7 @@
       .hours {
         grid-template-columns: repeat(8, 1fr);
         overflow: scroll;
+        padding-bottom: 15px;
       }
     }
   }
@@ -117,6 +118,7 @@
       .hours {
         grid-template-columns: repeat(8, 1fr);
         overflow: scroll;
+        padding-bottom: 15px;
       }
     }
   }
