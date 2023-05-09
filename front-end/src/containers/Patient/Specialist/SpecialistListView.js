@@ -39,7 +39,7 @@ class SpecialistListView extends Component {
   render() {
     let specialistArr = this.state.specialistArr
     return (
-      <>
+      <div className="specialist-list-view">
         <HeaderHomePage />
         <div className="container-list-view-specialist wrapper">
           {specialistArr &&
@@ -59,7 +59,7 @@ class SpecialistListView extends Component {
             })}
         </div>
         <FooterHomePage />
-      </>
+      </div>
     )
   }
 }

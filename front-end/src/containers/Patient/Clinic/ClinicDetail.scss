@@ -1,104 +1,111 @@
-.clinic-top-wrapper {
-  .img-background {
-    background-image: cover;
-    img {
-      width: 100%;
-      height: 500px;
+.clinic-detail {
+  display: flex;
+  flex-direction: column;
+
+  .clinic-top-wrapper {
+    flex-grow: 1;
+
+    .img-background {
+      img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+      }
     }
-  }
 
-  .clinic-wrapper {
-    margin: 0px auto;
+    .clinic-wrapper {
+      margin: 0px auto;
 
-    .clinic-content {
-      position: sticky;
+      .clinic-content {
+        position: sticky;
 
-      margin-top: -220px;
-      background-image: linear-gradient(
-        rgba(255, 255, 255, 0.8),
-        rgba(255, 255, 255, 0.9),
-        white
-      );
+        margin-top: -220px;
+        background-image: linear-gradient(
+          rgba(255, 255, 255, 0.8),
+          rgba(255, 255, 255, 0.9),
+          white
+        );
 
-      .clinic-header {
-        box-shadow: 0 0 10px;
+        .clinic-header {
+          box-shadow: 0 0 10px;
 
-        .clinic-information {
-          display: flex;
-          gap: 30px;
-          padding: 30px;
+          .clinic-information {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
 
-          .clinic-information-left {
-            img {
-              object-fit: fill;
-              height: 100px;
-              width: 100px;
+            .clinic-information-left {
+              img {
+                object-fit: fill;
+                height: 100px;
+                width: 100px;
+              }
+            }
+
+            .clinic-information-right {
+              height: 100%;
             }
           }
+        }
+      }
 
-          .clinic-information-right {
-            height: 100%;
+      .clinic-menu {
+        box-shadow: 0 0 10px;
+        display: flex;
+        margin: 0 auto;
+        background-color: white;
+        justify-content: space-around;
+        font-size: 25px;
+        padding: 5px 0;
+        font-weight: 400;
+        position: sticky;
+        top: 60px;
+        margin-bottom: 20px;
+        z-index: 999;
+
+        div {
+          cursor: pointer;
+          text-transform: uppercase;
+          &:focus {
+            color: red;
           }
         }
       }
-    }
 
-    .clinic-menu {
-      box-shadow: 0 0 10px;
-      display: flex;
-      margin: 0 auto;
-      background-color: white;
-      justify-content: space-around;
-      font-size: 25px;
-      padding: 5px 0;
-      font-weight: 400;
-      position: sticky;
-      top: 60px;
-      margin-bottom: 20px;
-      z-index: 999;
-
-      div {
-        cursor: pointer;
-        text-transform: uppercase;
-        &:focus {
-          color: red;
-        }
+      .clinic-information1 {
+        background-color: #ffecb2;
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 30px;
       }
-    }
 
-    .clinic-information1 {
-      background-color: #ffecb2;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 30px;
-    }
-
-    .clinic-information2 {
-      background-color: #d4effc;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-
-    .clinic-doctor-list {
-      margin: 10px 0;
-
-      .clinic-doctor-list-title {
-        margin-bottom: 10px;
+      .clinic-information2 {
+        background-color: #d4effc;
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 20px;
       }
-    }
 
-    .clinic-introduction {
-      margin-top: 10px;
+      .clinic-doctor-list {
+        margin: 10px 0;
 
-      .clinic-data {
-        padding: 10px 10px;
-        text-align: justify;
-        h3 {
-          font-size: 16px;
-        }
-        table {
+        .clinic-doctor-list-title {
           margin-bottom: 10px;
+        }
+      }
+
+      .clinic-introduction {
+        margin-top: 10px;
+
+        .clinic-data {
+          padding: 10px 10px;
+          text-align: justify;
+          h3 {
+            font-size: 16px;
+          }
+          table {
+            margin-bottom: 10px;
+          }
         }
       }
     }

@@ -11,15 +11,50 @@ import About from './Section/About'
 import FooterHomePage from './FooterHomePage'
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      slidesToShow: 4,
+    }
+  }
+
+  componentDidMount() {
+    // Add event listener to check screen size on window resize
+    window.addEventListener('resize', this.handleWindowSizeChange)
+    // Call the handler function once initially to set initial slide count
+    // this.handleWindowSizeChange()
+
+    this.handleWindowSizeChange()
+  }
+
+  handleWindowSizeChange = () => {
+    const screenWidth = window.innerWidth
+    console.log(screenWidth)
+
+    if (screenWidth >= 1200) {
+      this.setState({ slidesToShow: 4 })
+    } else if (992 <= screenWidth && screenWidth <= 1199) {
+      this.setState({ slidesToShow: 4 })
+    } else if (768 <= screenWidth && screenWidth <= 991) {
+      this.setState({ slidesToShow: 3 })
+    } else if (576 <= screenWidth && screenWidth <= 767) {
+      this.setState({ slidesToShow: 2 })
+    } else {
+      this.setState({ slidesToShow: 2 })
+    }
+  }
+
   render() {
     let settings = {
       dots: false,
       infinite: false,
       speed: 500,
-      slidesToShow: 4,
+      slidesToShow: this.state.slidesToShow,
       slidesToScroll: 2,
     }
 
+    console.log(this.state.slidesToShow)
     return (
       <div>
         <HeaderHomePage isShowBanner={true} />

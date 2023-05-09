@@ -70,7 +70,7 @@ class ClinicDetail extends Component {
     let clinicData = this.state.clinicData
 
     return (
-      <>
+      <div className="clinic-detail">
         <HeaderHomePage />
         <div className="clinic-top-wrapper">
           <div className="img-background">
@@ -153,7 +153,9 @@ class ClinicDetail extends Component {
               </div>
               <div
                 className="clinic-data"
-                dangerouslySetInnerHTML={{ __html: clinicData.descriptionHTML }}
+                dangerouslySetInnerHTML={{
+                  __html: clinicData.descriptionHTML,
+                }}
               />
             </div>
 
@@ -172,7 +174,7 @@ class ClinicDetail extends Component {
           </div>
         </div>
         <FooterHomePage />
-      </>
+      </div>
     )
   }
 }

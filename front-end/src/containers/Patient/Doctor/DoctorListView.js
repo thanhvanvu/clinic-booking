@@ -23,6 +23,7 @@ class DoctorListView extends Component {
 
       doctorArr.map((doctor, index) => {
         let object = {}
+
         object.doctorId = doctor.doctorId
         object.name =
           doctor.doctorData.firstName + ' ' + doctor.doctorData.lastName
@@ -53,7 +54,7 @@ class DoctorListView extends Component {
     let doctorArr = this.state.doctorArr
 
     return (
-      <>
+      <div className="doctor-list-view">
         <HeaderHomePage />
         <div className="container-list-view-doctor wrapper">
           {doctorArr &&
@@ -61,7 +62,7 @@ class DoctorListView extends Component {
             doctorArr.map((doctor, index) => {
               return (
                 <div
-                  className="doctor-detail"
+                  className="doctor-detail-information"
                   key={index}
                   onClick={() => this.handleListViewDoctor(doctor.doctorId)}
                 >
@@ -76,7 +77,7 @@ class DoctorListView extends Component {
             })}
         </div>
         <FooterHomePage />
-      </>
+      </div>
     )
   }
 }

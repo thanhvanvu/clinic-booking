@@ -101,26 +101,152 @@
           width: 280px;
           cursor: pointer;
 
-          &.medical-facility {
-            background: url('../../assets/medicalFacility/benh-vien-cho-ray-h1.jpg')
-              center center no-repeat;
-          }
-
           &.outstanding-doctor {
             img {
               border-radius: 50%;
             }
-          }
-
-          &.hand-book {
-            background: url('../../assets/hand-book/190424-bac-si-ho-hap-gioi-tphcm.png')
-              center center no-repeat;
           }
         }
 
         .img-text {
           font-family: overpasRegular;
           padding-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+/* Extra large (xl) screen */
+@media only screen and (min-width: 1200px) {
+  /* CSS styles for extra large screens */
+  /* For example: */
+}
+
+/* Large (lg) screen */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* CSS styles for large screens */
+  .section-share {
+    .section-content {
+      width: 970px;
+    }
+  }
+}
+
+/* Medium (md) screen */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* CSS styles for medium screens */
+  .section-share {
+    .section-content {
+      width: 750px;
+
+      .section-header {
+        .header-text {
+        }
+      }
+    }
+  }
+}
+
+/* Small (sm) screen */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* CSS styles for small screens */
+  .section-share {
+    padding-bottom: 30px;
+    .section-content {
+      width: 100%;
+      padding: 0px 10px;
+      .section-header {
+        padding: 10px 0px;
+
+        .header-text {
+          font-size: 16px;
+          line-height: 30px;
+        }
+        .btn-more {
+          padding: 5px 20px;
+        }
+      }
+
+      .about-header {
+        font-size: 16px;
+        padding: 10px 0;
+      }
+      .about-content {
+        .content-youtube {
+          iframe {
+            width: 450px;
+            height: 250px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Extra small (xs) screen */
+@media only screen and (min-width: 481px) and (max-width: 575px) {
+  /* CSS styles for extra small screens */
+  .section-share {
+    .section-content {
+      width: 100%;
+      padding: 0px 10px;
+      .section-header {
+        padding: 10px 0px;
+
+        .header-text {
+          font-size: 16px;
+          line-height: 30px;
+        }
+        .btn-more {
+          padding: 5px 20px;
+        }
+      }
+
+      .about-header {
+        font-size: 16px;
+        padding: 10px 0;
+      }
+      .about-content {
+        .content-youtube {
+          iframe {
+            width: 450px;
+            height: 250px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+  .section-share {
+    .section-content {
+      width: 100%;
+      padding: 0px 10px;
+
+      .section-header {
+        padding: 10px 0px;
+
+        .header-text {
+          font-size: 16px;
+          line-height: 30px;
+        }
+        .btn-more {
+          padding: 5px 20px;
+        }
+      }
+
+      .about-header {
+        font-size: 16px;
+        padding: 10px 0;
+      }
+      .about-content {
+        .content-youtube {
+          iframe {
+            width: 350px;
+            height: 200px;
+          }
         }
       }
     }

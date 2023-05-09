@@ -1,4 +1,7 @@
 .container-specialist {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .specialist-top {
     .specialist-detail-transparent {
       background-image: linear-gradient(
@@ -33,8 +36,7 @@
   .specialist-bottom {
     background-color: #eeeeee;
     padding: 20px 0;
-    height: 100vh;
-
+    flex-grow: 1;
     .specialist-content-wrapper {
       margin: 0 auto;
 

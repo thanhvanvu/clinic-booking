@@ -45,8 +45,7 @@ class DoctorDetail extends Component {
   render() {
     let doctor = this.state.doctor
     return (
-      <>
-        {/* show header menu */}
+      <div className="doctor-detail">
         <HeaderHomePage isShowBanner={false} />
 
         <div className="profile-doctor wrapper">
@@ -74,7 +73,7 @@ class DoctorDetail extends Component {
         </div>
         <div className="doctor-feedback"></div>
         <FooterHomePage />
-      </>
+      </div>
     )
   }
 }

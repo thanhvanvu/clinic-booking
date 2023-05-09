@@ -434,7 +434,7 @@ class ClinicManage extends Component {
 
               <div className="img-logo">
                 <label className="content-label">
-                  <FormattedMessage id="manage-clinic.clinic-background" />
+                  <FormattedMessage id="manage-clinic.clinic-logo" />
                 </label>
                 <div className="clinic-image">
                   <input

@@ -1,38 +1,43 @@
-.profile-doctor {
-  margin: 0 auto;
-  margin-top: 30px;
-
-  .profile-doctor-doctor-detail {
-    width: 60%;
-  }
-}
-
-.doctor-appointment {
-  margin: 0 auto;
-  margin-top: 30px;
+.doctor-detail {
   display: flex;
-
-  .doctor-schedule {
-    width: 50%;
-    height: 200px;
-  }
-
-  .doctor-clinic-information {
-    width: 50%;
-    border-left: 1px solid #dddd;
-    padding-left: 20px;
-    padding-top: 75px;
-  }
-}
-
-.doctor-information {
-  margin-top: 30px;
-  border-top: 1px solid #cccccc;
-  border-bottom: 1px solid #cccccc;
-  padding: 20px 0;
-  background-color: #f9f9f9;
-  // height: 100%;
-  .doctor-information-content {
+  flex-direction: column;
+  height: 100%;
+  .profile-doctor {
     margin: 0 auto;
+    margin-top: 30px;
+
+    .profile-doctor-doctor-detail {
+      width: 60%;
+    }
+  }
+
+  .doctor-appointment {
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex;
+
+    .doctor-schedule {
+      width: 50%;
+      height: 200px;
+    }
+
+    .doctor-clinic-information {
+      width: 50%;
+      border-left: 1px solid #dddd;
+      padding-left: 20px;
+      padding-top: 75px;
+    }
+  }
+
+  .doctor-information {
+    margin-top: 30px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    padding: 20px 0;
+    background-color: #f9f9f9;
+    flex-grow: 1;
+    .doctor-information-content {
+      margin: 0 auto;
+    }
   }
 }
