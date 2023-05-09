@@ -1,31 +1,3 @@
-@import 'variables';
-
-.text-center {
-  text-align: center !important;
-}
-
-.text-left {
-  text-align: left !important;
-}
-
-.text-right {
-  text-align: right !important;
-}
-
-.text-red {
-  color: $common-red !important;
-}
-
-.wrapper {
-  width: 1170px;
-}
-
-.invalid {
-  border: 1px solid red !important;
-  animation: shake 0.5s;
-  border-radius: 5px;
-}
-
 /* Extra large (xl) screen */
 @media only screen and (min-width: 1200px) {
   /* CSS styles for extra large screens */
@@ -35,40 +7,22 @@
 /* Large (lg) screen */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   /* CSS styles for large screens */
-  .wrapper {
-    width: 970px;
-  }
 }
 
 /* Medium (md) screen */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   /* CSS styles for medium screens */
-  .wrapper {
-    width: 740px;
-  }
 }
 
 /* Small (sm) screen */
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   /* CSS styles for small screens */
-  .wrapper {
-    width: 100%;
-    padding: 0 15px;
-  }
 }
 
 /* Extra small (xs) screen */
 @media only screen and (min-width: 481px) and (max-width: 575px) {
   /* CSS styles for extra small screens */
-  .wrapper {
-    width: 100%;
-    padding: 0 15px;
-  }
 }
 
 @media only screen and (min-width: 375px) and (max-width: 480px) {
-  .wrapper {
-    width: 100%;
-    padding: 0 15px;
-  }
 }
