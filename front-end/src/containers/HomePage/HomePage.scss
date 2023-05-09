@@ -47,7 +47,7 @@
 }
 
 .section-share {
-  padding-bottom: 50px;
+  padding-bottom: 30px;
 
   &.section-medical-facility {
     background-color: #f5f5f5;
@@ -90,6 +90,7 @@
 
     .section-body {
       cursor: pointer;
+
       .image-custom {
         &:hover {
           .img-text {
@@ -129,6 +130,15 @@
   .section-share {
     .section-content {
       width: 970px;
+
+      .section-body {
+        .image-custom {
+          .bg-img {
+            width: 230px;
+            height: 150px;
+          }
+        }
+      }
     }
   }
 }
@@ -139,6 +149,15 @@
   .section-share {
     .section-content {
       width: 750px;
+
+      .section-body {
+        .image-custom {
+          .bg-img {
+            width: 180px;
+            height: 115px;
+          }
+        }
+      }
 
       .section-header {
         .header-text {
@@ -156,6 +175,16 @@
     .section-content {
       width: 100%;
       padding: 0px 10px;
+
+      .section-body {
+        .image-custom {
+          .bg-img {
+            width: 180px;
+            height: 115px;
+          }
+        }
+      }
+
       .section-header {
         padding: 10px 0px;
 
@@ -181,6 +210,14 @@
         }
       }
     }
+  }
+
+  .slick-next {
+    display: none !important;
+  }
+
+  .slick-prev {
+    display: none !important;
   }
 }
 
@@ -191,6 +228,16 @@
     .section-content {
       width: 100%;
       padding: 0px 10px;
+
+      .section-body {
+        .image-custom {
+          .bg-img {
+            width: 220px;
+            height: 140px;
+          }
+        }
+      }
+
       .section-header {
         padding: 10px 0px;
 
@@ -217,6 +264,14 @@
       }
     }
   }
+
+  .slick-next {
+    display: none !important;
+  }
+
+  .slick-prev {
+    display: none !important;
+  }
 }
 
 @media only screen and (min-width: 375px) and (max-width: 480px) {
@@ -224,6 +279,15 @@
     .section-content {
       width: 100%;
       padding: 0px 10px;
+
+      .section-body {
+        .image-custom {
+          .bg-img {
+            width: 170px;
+            height: 110px;
+          }
+        }
+      }
 
       .section-header {
         padding: 10px 0px;
@@ -250,5 +314,13 @@
         }
       }
     }
+  }
+
+  .slick-next {
+    display: none !important;
+  }
+
+  .slick-prev {
+    display: none !important;
   }
 }

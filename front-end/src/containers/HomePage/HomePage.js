@@ -15,7 +15,7 @@ class HomePage extends Component {
     super(props)
 
     this.state = {
-      slidesToShow: 4,
+      slidesToShow: null,
     }
   }
 
@@ -36,9 +36,9 @@ class HomePage extends Component {
     } else if (992 <= screenWidth && screenWidth <= 1199) {
       this.setState({ slidesToShow: 4 })
     } else if (768 <= screenWidth && screenWidth <= 991) {
-      this.setState({ slidesToShow: 3 })
+      this.setState({ slidesToShow: 4 })
     } else if (576 <= screenWidth && screenWidth <= 767) {
-      this.setState({ slidesToShow: 2 })
+      this.setState({ slidesToShow: 3 })
     } else {
       this.setState({ slidesToShow: 2 })
     }
@@ -52,7 +52,6 @@ class HomePage extends Component {
       slidesToShow: this.state.slidesToShow,
       slidesToScroll: 2,
     }
-
     return (
       <div>
         <HeaderHomePage isShowBanner={true} />

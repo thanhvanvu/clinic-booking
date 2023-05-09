@@ -38,6 +38,7 @@ class Specialist extends Component {
   render() {
     let specialistArr = this.state.specialistArr
     let settings = this.props.settings
+
     return (
       <div className="section-share section-specialist">
         <div className="section-content">

@@ -3,7 +3,7 @@
     width: 278px !important;
     border: 1px solid #eeeeee;
     background-color: white;
-    padding: 15px 0px 60px 0px;
+    padding: 15px 0px 15px 0px;
     cursor: pointer;
 
     .outer-background {
@@ -31,6 +31,113 @@
   &:hover {
     .doctor-name {
       color: #4194e5;
+    }
+  }
+}
+
+// test
+/* Extra large (xl) screen */
+@media only screen and (min-width: 1200px) {
+  /* CSS styles for extra large screens */
+  /* For example: */
+}
+
+/* Large (lg) screen */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* CSS styles for large screens */
+  .image-custom {
+    &.outstanding-doctor {
+      width: 235px !important;
+    }
+  }
+}
+
+/* Medium (md) screen */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* CSS styles for medium screens */
+  .image-custom {
+    &.outstanding-doctor {
+      width: 180px !important;
+
+      .outer-background {
+        .bg-img {
+          &.outstanding-doctor {
+            width: 100px !important;
+            height: 100px !important;
+          }
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Small (sm) screen */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* CSS styles for small screens */
+  .image-custom {
+    &.outstanding-doctor {
+      width: 180px !important;
+
+      .outer-background {
+        .bg-img {
+          &.outstanding-doctor {
+            width: 100px !important;
+            height: 100px !important;
+          }
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Extra small (xs) screen */
+@media only screen and (min-width: 481px) and (max-width: 575px) {
+  /* CSS styles for extra small screens */
+  .image-custom {
+    &.outstanding-doctor {
+      width: 220px !important;
+
+      .outer-background {
+        .bg-img {
+          &.outstanding-doctor {
+            width: 100px !important;
+            height: 100px !important;
+          }
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+  .image-custom {
+    &.outstanding-doctor {
+      width: 170px !important;
+
+      .outer-background {
+        .bg-img {
+          &.outstanding-doctor {
+            width: 100px !important;
+            height: 100px !important;
+          }
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+      }
     }
   }
 }

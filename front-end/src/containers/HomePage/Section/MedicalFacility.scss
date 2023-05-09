@@ -1,1 +1,89 @@
 // test
+/* Extra large (xl) screen */
+@media only screen and (min-width: 1200px) {
+  /* CSS styles for extra large screens */
+  /* For example: */
+}
+
+/* Large (lg) screen */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* CSS styles for large screens */
+  .section-medical-facility {
+    .section-content {
+      .section-body {
+        .image-custom {
+          img {
+            width: 230px;
+            height: 150px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Medium (md) screen */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* CSS styles for medium screens */
+  .section-medical-facility {
+    .section-content {
+      .section-body {
+        .image-custom {
+          img {
+            width: 180px;
+            height: 115px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Small (sm) screen */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* CSS styles for small screens */
+  .section-medical-facility {
+    .section-content {
+      .section-body {
+        .image-custom {
+          img {
+            width: 180px;
+            height: 115px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Extra small (xs) screen */
+@media only screen and (min-width: 481px) and (max-width: 575px) {
+  /* CSS styles for extra small screens */
+  .section-medical-facility {
+    .section-content {
+      .section-body {
+        .image-custom {
+          img {
+            width: 220px;
+            height: 140px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 375px) and (max-width: 480px) {
+  .section-medical-facility {
+    .section-content {
+      .section-body {
+        .image-custom {
+          img {
+            width: 170px;
+            height: 110px;
+          }
+        }
+      }
+    }
+  }
+}
