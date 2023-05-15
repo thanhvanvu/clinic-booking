@@ -9,6 +9,7 @@ import ProfileDoctor from './ProfileDoctor'
 import * as actions from '../../../store/actions'
 import FooterHomePage from '../../HomePage/FooterHomePage'
 import { LANGUAGES } from '../../../utils'
+import CommentFacebook from '../../../components/CommentFacebook'
 
 class DoctorDetail extends Component {
   constructor(props) {
@@ -17,8 +18,11 @@ class DoctorDetail extends Component {
       previewImg: '',
       doctor: [],
       doctorId: '',
+      commentFacebookWidth: '',
     }
   }
+
+  wrapperRef = React.createRef()
 
   async componentDidMount() {
     if (
@@ -30,6 +34,8 @@ class DoctorDetail extends Component {
       this.props.getDetailDoctorByIdRedux(doctorId)
       this.setState({ doctorId: doctorId })
     }
+
+    this.handleWindowSizeChange()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -42,8 +48,27 @@ class DoctorDetail extends Component {
     }
   }
 
+  handleWindowSizeChange = () => {
+    const screenWidth = window.innerWidth
+
+    if (screenWidth >= 1200) {
+      this.setState({ commentFacebookWidth: 1170 })
+    } else if (992 <= screenWidth && screenWidth <= 1199) {
+      this.setState({ commentFacebookWidth: 970 })
+    } else if (768 <= screenWidth && screenWidth <= 991) {
+      this.setState({ commentFacebookWidth: 740 })
+    } else if (576 <= screenWidth && screenWidth <= 767) {
+      this.setState({ commentFacebookWidth: screenWidth })
+    } else {
+      this.setState({ commentFacebookWidth: screenWidth })
+    }
+  }
+
   render() {
     let doctor = this.state.doctor
+    let pageHref = window.location.href
+    let commentFacebookWidth = this.state.commentFacebookWidth
+
     return (
       <div className="doctor-detail">
         <HeaderHomePage isShowBanner={false} />
@@ -65,13 +90,19 @@ class DoctorDetail extends Component {
           {doctor && doctor.DoctorInfo && (
             <div
               className="doctor-information-content wrapper"
+              ref={this.wrapperRef}
               dangerouslySetInnerHTML={{
                 __html: doctor.DoctorInfo.contentHTML,
               }}
             ></div>
           )}
         </div>
-        <div className="doctor-feedback"></div>
+        <div className="doctor-feedback">
+          <CommentFacebook
+            pageHref={pageHref}
+            commentFacebookWidth={commentFacebookWidth}
+          />
+        </div>
         <FooterHomePage />
       </div>
     )

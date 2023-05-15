@@ -9,6 +9,7 @@ import './ProfileDoctor.scss'
 import { handleGetProfileDoctorByIf } from '../../../services/userService'
 import { LANGUAGES } from '../../../utils'
 import { withRouter } from 'react-router'
+import LikeAndShareFacebook from '../../../components/LikeAndShareFacebook'
 
 // This component will get doctorId as a props from parent component
 // doctorId: the id of the doctor will be sent from parent component
@@ -100,6 +101,7 @@ class ProfileDoctor extends Component {
   }
 
   render() {
+    let pageHref = window.location.href
     let { isShowTimeBooking, selectedScheduleHour, doctorSCSS, cityData } =
       this.props
     let doctor = this.state.doctorProfile
@@ -168,6 +170,7 @@ class ProfileDoctor extends Component {
               <div className="doctor-summary-content">
                 {doctor && doctor.DoctorInfo && doctor.DoctorInfo.description}
               </div>
+              <LikeAndShareFacebook pageHref={pageHref} />
 
               {doctorSCSS ? (
                 <div className="doctoc-city">
