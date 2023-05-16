@@ -15,6 +15,7 @@ const buildUrlEmail = (doctorId) => {
 const createDoctorAppointment = async (req, res) => {
   try {
     let appointmentData = req.body
+
     if (
       !appointmentData.addressAppointment ||
       !appointmentData.nameClinicAppointment ||

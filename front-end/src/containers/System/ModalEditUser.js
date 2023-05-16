@@ -135,7 +135,7 @@ class ModalEditUser extends Component {
                     <input
                       type="text"
                       className="form-control"
-                      id="inputAddress"
+                      id="address"
                       placeholder="1234 Main St"
                       name="address"
                       value={this.state.address}

@@ -165,10 +165,14 @@ class ClinicManage extends Component {
   handleSelectclinic = (selectedClinic) => {
     let allClinic = this.state.allClinic
 
+    console.log(allClinic)
+
     // compare selectedClinic with array of all Clinic
     let selectedClinicData = allClinic.find(
       (clinic) => clinic.id === selectedClinic.value
     )
+
+    console.log(selectedClinicData)
 
     let previewImg
     if (selectedClinicData && selectedClinicData.image) {
@@ -189,10 +193,10 @@ class ClinicManage extends Component {
       clinicCity: selectedClinicData.city,
       clinicContentMarkdown: selectedClinicData.descriptionMarkdown,
       clinicContentHTML: selectedClinicData.descriptionHTML,
-      clinicImage: selectedClinicData.image,
+      clinicImage: previewImg,
       clinicPreviewImg: previewImg,
 
-      clinicLogoImage: selectedClinicData.logo,
+      clinicLogoImage: previewLogoImg,
       clinicLogoPreviewImg: previewLogoImg,
 
       selectedClinic: selectedClinic,
@@ -328,7 +332,6 @@ class ClinicManage extends Component {
   }
 
   render() {
-    console.log(this.state)
     let cityArr = this.state.cityArr
     let inputValidation = this.state.inputValidation
     let language = this.props.language

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Booking.belongsTo(models.User, {
-        foreignKey: 'PatientId',
+        foreignKey: 'patientId',
         as: 'patientData',
       })
 

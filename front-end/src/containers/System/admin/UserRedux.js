@@ -429,6 +429,7 @@ class UserRedux extends Component {
                   }
                   type="text"
                   name="address"
+                  id="address"
                   value={this.state.userData.address}
                   onChange={(event) => this.handleOnchangeInput(event)}
                 />

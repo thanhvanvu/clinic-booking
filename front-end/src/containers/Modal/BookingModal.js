@@ -71,6 +71,22 @@ class BookingModal extends Component {
     }
   }
 
+  handleGenderChange = (event) => {
+    this.setState({
+      isValidInput: { ...this.state.isValidInput, gender: true },
+      gender: event.target.value,
+    })
+  }
+
+  handleOnchangeBooking = (event) => {
+    let newState = {
+      ...this.state,
+      [event.target.name]: event.target.value,
+      isValidInput: { ...this.state.isValidInput, [event.target.name]: true },
+    }
+    this.setState(newState)
+  }
+
   handleCreateBookingAppointment = async () => {
     if (window.confirm('Are you sure to book the appointment ?')) {
       // check valid input
@@ -81,6 +97,8 @@ class BookingModal extends Component {
         gender: this.state.gender,
         phoneNumber: this.state.phoneNumber,
       })
+
+      console.log(isValid)
 
       if (isValid && isValid[1]) {
         this.setState({
@@ -123,22 +141,6 @@ class BookingModal extends Component {
     }
   }
 
-  handleGenderChange = (event) => {
-    this.setState({
-      isValidInput: { ...this.state.isValidInput, gender: true },
-      gender: event.target.value,
-    })
-  }
-
-  handleOnchangeBooking = (event) => {
-    let newState = {
-      ...this.state,
-      [event.target.name]: event.target.value,
-      isValidInput: { ...this.state.isValidInput, [event.target.name]: true },
-    }
-    this.setState(newState)
-  }
-
   render() {
     let {
       isModalBooking,
@@ -157,6 +159,7 @@ class BookingModal extends Component {
     let doctorClinicPrice = this.state.doctorClinicPrice
     let isValid = this.state.isValidInput
 
+    console.log(this.state)
     return (
       <LoadingOverlay active={this.state.isLoading} spinner text="Loading...">
         <Modal
