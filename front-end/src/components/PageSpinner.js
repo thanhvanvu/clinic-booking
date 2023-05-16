@@ -14,7 +14,7 @@ class PageSpinner extends Component {
 
   render() {
     return (
-      <div className="spinner">
+      <div className="spinner wrapper">
         <FadeLoader color="#549DE5" size={150} margin={25} height={15} />
       </div>
     )

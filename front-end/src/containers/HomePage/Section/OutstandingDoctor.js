@@ -17,9 +17,7 @@ class OutstandingDoctor extends Component {
     }
   }
   componentDidMount() {
-    console.log(this.props.isLoading)
     this.props.fetchTopDoctors()
-    console.log(this.props.isLoading)
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.topDoctors !== this.props.topDoctors) {
