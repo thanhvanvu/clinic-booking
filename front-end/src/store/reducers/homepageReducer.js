@@ -2,6 +2,7 @@ import actionTypes from '../actions/actionTypes'
 
 const initialState = {
   topDoctors: [],
+  isLoading: true,
   currentDoctor: [],
 }
 
@@ -10,6 +11,8 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
       // always make a copy of state, never modify the initial state directly
       state.topDoctors = action.data
+      state.isLoading = false
+
       return {
         ...state,
       }

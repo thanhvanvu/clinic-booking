@@ -7,16 +7,21 @@ import { handleGetAllClinic } from '../../../services/clinicService'
 import { CommonUtils } from '../../../utils'
 import { FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
+import ListSpinner from '../../../components/ListSpinner'
 
 class MedicalFacility extends Component {
   constructor(props) {
     super(props)
     this.state = {
       allClinicArr: [],
+      isLoading: false,
     }
   }
 
   async componentDidMount() {
+    this.setState({
+      isLoading: true,
+    })
     // call API to get all clinic
     let response = await handleGetAllClinic()
     if (response && response.errCode === 0) {
@@ -30,6 +35,7 @@ class MedicalFacility extends Component {
 
       this.setState({
         allClinicArr: allClinicData,
+        isLoading: false,
       })
     }
   }
@@ -46,6 +52,7 @@ class MedicalFacility extends Component {
   render() {
     let settings = this.props.settings
     let allClinicArr = this.state.allClinicArr
+    let isLoading = this.state.isLoading
 
     return (
       <div className="section-share section-medical-facility">
@@ -63,6 +70,7 @@ class MedicalFacility extends Component {
             </button>
           </div>
           <div className="section-body">
+            {isLoading && <ListSpinner />}
             <Slider {...settings}>
               {allClinicArr &&
                 allClinicArr.length > 0 &&

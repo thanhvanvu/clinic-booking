@@ -11,8 +11,6 @@ import Select from 'react-select'
 import isEmpty from 'lodash/isEmpty'
 
 import {
-  getDetailDoctorById,
-  handleUpdateInfoDoctorById,
   handleGetAllCode,
   handleGetDoctorClinicInfo,
   handleCreateDoctorClinicInfo,

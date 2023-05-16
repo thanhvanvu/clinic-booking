@@ -6,20 +6,26 @@ import Slider from 'react-slick'
 import { handleGetAllSpecialist } from '../../../services/specialistService'
 import { CommonUtils } from '../../../utils'
 import { withRouter } from 'react-router'
+import ListSpinner from '../../../components/ListSpinner'
 
 class Specialist extends Component {
   constructor(props) {
     super(props)
     this.state = {
       specialistArr: [],
+      isLoading: false,
     }
   }
   async componentDidMount() {
+    this.setState({
+      isLoading: true,
+    })
     // call API to get all specialist
     let response = await handleGetAllSpecialist()
     if (response && response.errCode === 0) {
       this.setState({
         specialistArr: response.data,
+        isLoading: false,
       })
     }
   }
@@ -38,7 +44,7 @@ class Specialist extends Component {
   render() {
     let specialistArr = this.state.specialistArr
     let settings = this.props.settings
-
+    let isLoading = this.state.isLoading
     return (
       <div className="section-share section-specialist">
         <div className="section-content">
@@ -54,6 +60,8 @@ class Specialist extends Component {
             </button>
           </div>
           <div className="section-body">
+            {isLoading && <ListSpinner />}
+
             <Slider {...settings}>
               {specialistArr &&
                 specialistArr.length > 0 &&

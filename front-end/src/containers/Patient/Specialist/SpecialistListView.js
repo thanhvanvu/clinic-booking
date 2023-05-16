@@ -6,15 +6,20 @@ import HeaderHomePage from '../../HomePage/HeaderHomePage'
 import FooterHomePage from '../../HomePage/FooterHomePage'
 import { handleGetAllSpecialist } from '../../../services/specialistService'
 import { CommonUtils } from '../../../utils'
+import PageSpinner from '../../../components/PageSpinner'
 class SpecialistListView extends Component {
   constructor(props) {
     super(props)
     this.state = {
       specialistArr: [],
+      isLoading: false,
     }
   }
 
   async componentDidMount() {
+    this.setState({
+      isLoading: true,
+    })
     // call API to get all specialist
     let response = await handleGetAllSpecialist()
     if (response && response.errCode === 0) {
@@ -25,6 +30,7 @@ class SpecialistListView extends Component {
       })
       this.setState({
         specialistArr: specialistArr,
+        isLoading: false,
       })
     }
   }
@@ -38,9 +44,11 @@ class SpecialistListView extends Component {
 
   render() {
     let specialistArr = this.state.specialistArr
+    let isLoading = this.state.isLoading
     return (
       <div className="specialist-list-view">
         <HeaderHomePage />
+        {isLoading && <PageSpinner />}
         <div className="container-list-view-specialist wrapper">
           {specialistArr &&
             specialistArr.length > 0 &&

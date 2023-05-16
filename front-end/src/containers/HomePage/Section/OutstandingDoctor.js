@@ -8,6 +8,7 @@ import { CommonUtils } from '../../../utils'
 import { LANGUAGES } from '../../../utils'
 import { FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router'
+import ListSpinner from '../../../components/ListSpinner'
 class OutstandingDoctor extends Component {
   constructor(props) {
     super(props)
@@ -16,7 +17,9 @@ class OutstandingDoctor extends Component {
     }
   }
   componentDidMount() {
+    console.log(this.props.isLoading)
     this.props.fetchTopDoctors()
+    console.log(this.props.isLoading)
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.topDoctors !== this.props.topDoctors) {
@@ -39,6 +42,8 @@ class OutstandingDoctor extends Component {
     let settings = this.props.settings
     let topDoctorArr = this.state.topDoctorArr
     let language = this.props.language
+    let isLoading = this.props.isLoading
+
     return (
       <div className="section-share section-outstanding-doctor">
         <div className="section-content">
@@ -54,6 +59,7 @@ class OutstandingDoctor extends Component {
             </button>
           </div>
           <div className="section-body">
+            {isLoading && <ListSpinner />}
             <Slider {...settings}>
               {topDoctorArr &&
                 topDoctorArr.length > 0 &&
@@ -102,6 +108,7 @@ const mapStateToProps = (state) => {
     language: state.app.language,
     isLoggedIn: state.user.isLoggedIn,
     topDoctors: state.homepage.topDoctors,
+    isLoading: state.homepage.isLoading,
   }
 }
 

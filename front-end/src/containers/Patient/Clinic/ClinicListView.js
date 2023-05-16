@@ -6,15 +6,20 @@ import HeaderHomePage from '../../HomePage/HeaderHomePage'
 import FooterHomePage from '../../HomePage/FooterHomePage'
 import { CommonUtils } from '../../../utils'
 import { handleGetAllClinic } from '../../../services/clinicService'
+import PageSpinner from '../../../components/PageSpinner'
 class ClinicListView extends Component {
   constructor(props) {
     super(props)
     this.state = {
       clinicArrSortedByAlphabet: [],
+      isLoading: false,
     }
   }
 
   async componentDidMount() {
+    this.setState({
+      isLoading: true,
+    })
     // call API to get all clinic information and sort clinic alphabetically
     let response = await handleGetAllClinic()
     if (response && response.errCode === 0) {
@@ -95,6 +100,7 @@ class ClinicListView extends Component {
 
       this.setState({
         clinicArrSortedByAlphabet: clinicArrSortedByAlphabet,
+        isLoading: false,
       })
     }
   }
@@ -107,12 +113,15 @@ class ClinicListView extends Component {
 
   render() {
     let clinicArrSortedByAlphabet = this.state.clinicArrSortedByAlphabet
-
+    let isLoading = this.state.isLoading
     return (
       <div className="clinic-list-view">
         <HeaderHomePage />
+        {isLoading && <PageSpinner />}
         <div className="container-list-view-clinic wrapper">
-          <div className="clinic-title">Cơ sở y tế</div>
+          <div className="clinic-title">
+            <FormattedMessage id="homepage.clinic.clinic-list-view-title" />
+          </div>
 
           {clinicArrSortedByAlphabet &&
             clinicArrSortedByAlphabet.length > 0 &&
