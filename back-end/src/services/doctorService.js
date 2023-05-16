@@ -345,35 +345,27 @@ const handleBulkCreateSchedule = async (scheduleInfo) => {
 
 const handleGetScheduleByDoctorId = async (doctorId, date) => {
   try {
-    if (!doctorId && !date) {
-      return {
-        status: 'Fail',
-        errCode: 1,
-        message: 'Missing parameter!',
-      }
-    } else {
-      let existingSchedules = await db.Schedule.findAll({
-        where: {
-          doctorId: doctorId,
-          date: new Date(date),
+    let existingSchedules = await db.Schedule.findAll({
+      where: {
+        doctorId: doctorId,
+        date: new Date(date),
+      },
+      raw: true,
+      include: [
+        {
+          model: db.Allcode,
+          as: 'timeTypeData',
+          attributes: ['valueEN', 'valueES', 'valueVI'],
         },
-        raw: true,
-        include: [
-          {
-            model: db.Allcode,
-            as: 'timeTypeData',
-            attributes: ['valueEN', 'valueES', 'valueVI'],
-          },
-        ],
-        nest: true, // make a nest object with db Allcode
-      })
+      ],
+      nest: true, // make a nest object with db Allcode
+    })
 
-      return {
-        status: 'Success',
-        errCode: 0,
-        message: 'OK!',
-        data: existingSchedules,
-      }
+    return {
+      status: 'Success',
+      errCode: 0,
+      message: 'OK!',
+      data: existingSchedules,
     }
   } catch (error) {
     console.log(error)

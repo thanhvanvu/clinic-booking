@@ -19,8 +19,6 @@ const handleBookingDoctorAppointment = async (appointmentData, token) => {
       raw: true,
     })
 
-    console.log('>>>>check', patientUser[0].id)
-
     // then create a booking appointment, if timeType duplicated, do not create
     if (patientUser && patientUser[0]) {
       await db.Booking.findOrCreate({

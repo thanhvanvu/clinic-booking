@@ -163,6 +163,14 @@ const getScheduleByDoctorId = async (req, res) => {
     let doctorId = req.query.doctorId
     let date = req.query.date
 
+    if (!doctorId || !date) {
+      return res.status(200).json({
+        errCode: 1,
+        status: 'Fail',
+        message: 'Missing parameter',
+      })
+    }
+
     let response = await doctorService.handleGetScheduleByDoctorId(
       doctorId,
       date

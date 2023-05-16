@@ -58,6 +58,7 @@ class DoctorScheduleManage extends Component {
       if (this.state.date === '') {
       } else {
         // call API here
+
         let doctorId = this.state.selectedDoctor.value
         let date = this.state.date
         let response = await handleGetScheduleByDoctorId(doctorId, date)
@@ -193,7 +194,7 @@ class DoctorScheduleManage extends Component {
           })
         }
         this.setState({
-          selectedDoctor: '',
+          selectedDoctor: { image: '', label: '', value: '' },
           previewImg: '',
           maxNumber: 0,
           timeArr: timeArr,
